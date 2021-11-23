@@ -2,6 +2,7 @@
 *.iws
 *.iml
 *.ipr
+/target
 
 *.log
 
