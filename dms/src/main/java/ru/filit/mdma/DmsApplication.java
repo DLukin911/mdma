@@ -5,9 +5,9 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.boot.web.servlet.support.SpringBootServletInitializer;
 
-public class MdmaApplication {
+public class DmsApplication {
 
-  public MdmaApplication() {
+  public DmsApplication() {
   }
 
   @SpringBootApplication(
@@ -19,11 +19,11 @@ public class MdmaApplication {
     }
 
     protected SpringApplicationBuilder configure(SpringApplicationBuilder application) {
-      return application.sources(new Class[]{ApplicationConfig.class});
+      return application.sources(new Class[]{DmsApplication.ApplicationConfig.class});
     }
 
     public static void main(String[] args) {
-      SpringApplication.run(ApplicationConfig.class, args);
+      SpringApplication.run(DmsApplication.ApplicationConfig.class, args);
     }
   }
 }
