@@ -1,57 +1,40 @@
 package ru.filit.mdma.dm.repository;
 
+import static ru.filit.mdma.dm.util.RepositoryUtil.getMapper;
+
 import com.fasterxml.jackson.core.type.TypeReference;
-import com.fasterxml.jackson.databind.DeserializationFeature;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.ObjectReader;
-import com.fasterxml.jackson.dataformat.yaml.YAMLFactory;
 import java.io.File;
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.Cacheable;
+import org.springframework.cache.annotation.EnableCaching;
 import org.springframework.stereotype.Repository;
-import ru.filit.mdma.dm.JsonUtil;
 import ru.filit.oas.dm.model.Client;
 
 @Repository
+@EnableCaching
 public class EntityRepository {
-  ClassLoader classLoader = Thread.currentThread().getContextClassLoader();
-  File file = new File(classLoader.getResource("database/entity-repository.yaml").getFile());
 
-  // Instantiating a new ObjectMapper as a YAMLFactory
-  static ObjectMapper om = new ObjectMapper(new YAMLFactory());
-
-
-  public List<Client> getClient() {
+  @Cacheable("clientList")
+  public List<Client> getClientList(File fromFile) {
     List<Client> clientList = null;
-    om.configure(DeserializationFeature.ACCEPT_SINGLE_VALUE_AS_ARRAY, true);
-    {
-      try {
-        clientList = om.readValue(file, new TypeReference<List<Client>>(){});
-      } catch (IOException e) {
-        e.printStackTrace();
-      }
+    try {
+      clientList = getMapper().readValue(fromFile, new TypeReference<List<Client>>() {
+      });
+    } catch (IOException e) {
+      e.printStackTrace();
     }
     return clientList;
   }
 
-  public void setClient() {
-
-    Client client= new Client();
-    client.setId("111");
-    client.lastname("232323");
-    client.setFirstname("f5435435435");
-    client.setPatronymic("fgfgfgf");
-    client.setBirthDate(19000321L);
-    client.setPassportSeries("bnbnbn");
-    client.setPassportNumber("777777777");
-    client.setInn("7777777777");
-    client.setAddress("7777777777777");
-
+  @CacheEvict(value = "clientList", allEntries = true)
+  public List<Client> saveClientList(List<Client> clientList, File toFile) {
     try {
-      om.writeValue(new File("src/main/resources/database/person2.yaml"), client);
+      getMapper().writeValue(toFile, clientList);
     } catch (IOException e) {
       e.printStackTrace();
     }
+    return clientList;
   }
 }
