@@ -6,9 +6,10 @@ import java.io.File;
 import lombok.experimental.UtilityClass;
 
 @UtilityClass
-public class RepositoryUtil {
+public class FileUtil {
 
-  private final String ENTITY_REPOSITORY_FILE = "src/main/resources/database/entity-repository.yaml";
+  private PropertiesReaderUtil propsReader = new PropertiesReaderUtil("storage.properties");
+  private String ENTITY_REPOSITORY_FILE = propsReader.get("entityRepository.path");
   private final File entityFile = new File(ENTITY_REPOSITORY_FILE);
   private final ObjectMapper mapper = new ObjectMapper(new YAMLFactory());
 
