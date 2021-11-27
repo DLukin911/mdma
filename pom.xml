@@ -31,7 +31,7 @@
     <java.version>16</java.version>
     <j2ee.version>8.0</j2ee.version>
     <lombok.version>1.18.22</lombok.version>
-    <org.mapstruct.version>1.2.0.Final</org.mapstruct.version>
+    <org.mapstruct.version>1.4.2.Final</org.mapstruct.version>
     <spring.boot.version>2.6.0</spring.boot.version>
     <spring.version>5.2.18.RELEASE</spring.version>
 
