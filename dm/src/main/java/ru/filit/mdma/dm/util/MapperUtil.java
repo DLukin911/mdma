@@ -9,17 +9,17 @@ import ru.filit.oas.dm.web.dto.ClientDto;
 import ru.filit.oas.dm.web.dto.ClientSearchDto;
 
 /**
- * Описание.
+ * Класс для маппинга сущностей приложения DM.
  */
 @Mapper
 public abstract class MapperUtil {
 
   public static MapperUtil INSTANCE = Mappers.getMapper(MapperUtil.class);
 
-  //******** Converting methods from Client Entity to DTO*******
+  //******** Converting methods from Entity to DTO*******
 
   /**
-   * Описание.
+   * Преобразование транспротного обьекта для поиска Клиента в сущность Клиент.
    */
   @Mappings({
       @Mapping(target = "birthDate", expression = "java(changeBirthDateToLong(clientSearchDto.getBirthDate()))"),
@@ -28,14 +28,17 @@ public abstract class MapperUtil {
   })
   public abstract Client clientForSearch(ClientSearchDto clientSearchDto);
 
-  //******** Converting methods from DTO to Client Entity*******
+  //******** Converting methods from DTO to Entity*******
 
   /**
-   * Описание.
+   * Преобразование сущности Клиента в транспортный обьект.
    */
   @Mapping(target = "birthDate", expression = "java(changeBirthDateToString(client.getBirthDate()))")
   public abstract ClientDto convert(Client client);
 
+  /**
+   * Разделение паспортных данных на серию и номер.
+   */
   protected String getPassportSplitNumber(String passport, int num) {
     if (passport == null) {
       return null;
@@ -43,6 +46,9 @@ public abstract class MapperUtil {
     return passport.split(" ")[num];
   }
 
+  /**
+   * Преобразуем дату рождения в Long, убирая пробелы из строки.
+   */
   protected Long changeBirthDateToLong(String birthDate) {
     if (birthDate == null) {
       return null;
@@ -50,6 +56,9 @@ public abstract class MapperUtil {
     return Long.parseLong(birthDate.replaceAll("[^0-9]", ""));
   }
 
+  /**
+   * Преобразуем дату рождения в String, добавляя дефисы для получения формата YYYY-MM-DD.
+   */
   protected String changeBirthDateToString(Long birthDate) {
     if (birthDate == null) {
       return null;

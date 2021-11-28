@@ -3,7 +3,7 @@
 *.iml
 *.ipr
 /target
-
+logs
 *.log
 
 target/

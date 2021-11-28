@@ -5,6 +5,9 @@ import com.fasterxml.jackson.dataformat.yaml.YAMLFactory;
 import java.io.File;
 import lombok.experimental.UtilityClass;
 
+/**
+ * Класс для чтения файлов.
+ */
 @UtilityClass
 public class FileUtil {
 

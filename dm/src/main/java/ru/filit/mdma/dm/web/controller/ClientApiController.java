@@ -1,9 +1,15 @@
 package ru.filit.mdma.dm.web.controller;
 
 import java.util.List;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import ru.filit.mdma.dm.service.EntityService;
 import ru.filit.oas.dm.web.controller.ClientApi;
 import ru.filit.oas.dm.web.dto.AccountDto;
 import ru.filit.oas.dm.web.dto.AccountNumberDto;
@@ -17,8 +23,15 @@ import ru.filit.oas.dm.web.dto.LoanPaymentDto;
 import ru.filit.oas.dm.web.dto.OperationDto;
 import ru.filit.oas.dm.web.dto.OperationSearchDto;
 
+@Slf4j
 @RestController
+@RequestMapping(value = ClientApiController.REST_URL, produces = MediaType.APPLICATION_JSON_VALUE,
+    consumes = MediaType.APPLICATION_JSON_VALUE)
 public class ClientApiController implements ClientApi {
+
+  public static final String REST_URL = "/dm/client";
+
+  private static final EntityService entityService = new EntityService();
 
   /**
    * POST /client/account : Запрос счетов клиента
@@ -55,15 +68,22 @@ public class ClientApiController implements ClientApi {
   }
 
   /**
-   * POST /client : Запрос клиентов
-   *
+   * POST /dm/client : Запрос клиентов
    * @param clientSearchDto (required)
    * @return Информации о клиенте найдена (status code 200)
    */
+  @PostMapping
   @Override
-  public ResponseEntity<List<ClientDto>> getClient(ClientSearchDto clientSearchDto) {
+  public ResponseEntity<List<ClientDto>> getClient(@RequestBody ClientSearchDto clientSearchDto) {
+    log.info("Поиск клиентов по входящим данным: {}", clientSearchDto);
+    List<ClientDto> clientDtoList = entityService.getClient(clientSearchDto);
+    if (clientDtoList.isEmpty()) {
+      log.info("Клиенты не найдены.");
+      return ResponseEntity.badRequest().body(clientDtoList);
+    }
+    log.info("Клиенты успешно найдены {}", clientDtoList);
 
-    return null;
+    return new ResponseEntity<>(clientDtoList, HttpStatus.OK);
   }
 
   /**

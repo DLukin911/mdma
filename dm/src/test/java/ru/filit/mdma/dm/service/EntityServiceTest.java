@@ -9,9 +9,11 @@ import static ru.filit.mdma.dm.testdata.EntityServiceTestData.clientSearchDtoTwo
 
 import java.util.List;
 import org.junit.Assert;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import ru.filit.mdma.dm.util.exception.NotFoundException;
 import ru.filit.oas.dm.web.dto.ClientDto;
 
 @SpringBootTest
@@ -35,9 +37,9 @@ class EntityServiceTest {
     Assert.assertEquals(clientList.get(1).getId(), clientDto3.getId());
   }
 
-  @Test
+  @Test()
   void testShouldGetNullListClientDtoForRequestDataWhenRequestEmpty() {
-    List<ClientDto> clientList = entityService.getClient(clientSearchDtoNull);
-    assertTrue(clientList.size() == 0);
+    Assertions.assertThrows(NotFoundException.class,
+        () -> entityService.getClient(clientSearchDtoNull));
   }
 }

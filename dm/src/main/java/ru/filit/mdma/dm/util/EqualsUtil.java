@@ -3,57 +3,63 @@ package ru.filit.mdma.dm.util;
 import lombok.experimental.UtilityClass;
 import ru.filit.oas.dm.model.Client;
 
+/**
+ * Класс для сравнения полей сущностей.
+ */
 @UtilityClass
 public class EqualsUtil {
 
-  public boolean isEqualsClient(Client clientForSearch, Client clientDto) {
+  /**
+   * Сравнение полей Клиента для поиска и обьекта Клиент.
+   */
+  public boolean isEqualsClient(Client clientForSearch, Client client) {
     boolean isEquals = false;
-    if (clientForSearch.getId() != null && clientDto.getId() != null) {
-      isEquals = clientForSearch.getId().equals(clientDto.getId()) ? true : false;
+    if (clientForSearch.getId() != null && client.getId() != null) {
+      isEquals = clientForSearch.getId().equals(client.getId()) ? true : false;
       if (isEquals != true) {
         return isEquals;
       }
     }
-    if (clientForSearch.getLastname() != null && clientDto.getLastname() != null) {
-      isEquals = clientForSearch.getLastname().equals(clientDto.getLastname()) ? true : false;
+    if (clientForSearch.getLastname() != null && client.getLastname() != null) {
+      isEquals = clientForSearch.getLastname().equals(client.getLastname()) ? true : false;
       if (isEquals != true) {
         return isEquals;
       }
     }
-    if (clientForSearch.getFirstname() != null && clientDto.getLastname() != null) {
-      isEquals = clientForSearch.getFirstname().equals(clientDto.getFirstname()) ? true : false;
+    if (clientForSearch.getFirstname() != null && client.getLastname() != null) {
+      isEquals = clientForSearch.getFirstname().equals(client.getFirstname()) ? true : false;
       if (isEquals != true) {
         return isEquals;
       }
     }
-    if (clientForSearch.getPatronymic() != null && clientDto.getPatronymic() != null) {
-      isEquals = clientForSearch.getPatronymic().equals(clientDto.getPatronymic()) ? true : false;
+    if (clientForSearch.getPatronymic() != null && client.getPatronymic() != null) {
+      isEquals = clientForSearch.getPatronymic().equals(client.getPatronymic()) ? true : false;
       if (isEquals != true) {
         return isEquals;
       }
     }
-    if (clientForSearch.getBirthDate() != null && clientDto.getBirthDate() != null) {
-      isEquals = clientForSearch.getBirthDate().equals(clientDto.getBirthDate()) ? true : false;
+    if (clientForSearch.getBirthDate() != null && client.getBirthDate() != null) {
+      isEquals = clientForSearch.getBirthDate().equals(client.getBirthDate()) ? true : false;
       if (isEquals != true) {
         return isEquals;
       }
     }
-    if (clientForSearch.getPassportSeries() != null && clientDto.getPassportSeries() != null) {
+    if (clientForSearch.getPassportSeries() != null && client.getPassportSeries() != null) {
       isEquals =
-          clientForSearch.getPassportSeries().equals(clientDto.getPassportSeries()) ? true : false;
+          clientForSearch.getPassportSeries().equals(client.getPassportSeries()) ? true : false;
       if (isEquals != true) {
         return isEquals;
       }
     }
-    if (clientForSearch.getPassportNumber() != null && clientDto.getPassportNumber() != null) {
+    if (clientForSearch.getPassportNumber() != null && client.getPassportNumber() != null) {
       isEquals =
-          clientForSearch.getPassportNumber().equals(clientDto.getPassportNumber()) ? true : false;
+          clientForSearch.getPassportNumber().equals(client.getPassportNumber()) ? true : false;
       if (isEquals != true) {
         return isEquals;
       }
     }
-    if (clientForSearch.getInn() != null && clientDto.getInn() != null) {
-      isEquals = clientForSearch.getInn().equals(clientDto.getInn()) ? true : false;
+    if (clientForSearch.getInn() != null && client.getInn() != null) {
+      isEquals = clientForSearch.getInn().equals(client.getInn()) ? true : false;
       if (isEquals != true) {
         return isEquals;
       }

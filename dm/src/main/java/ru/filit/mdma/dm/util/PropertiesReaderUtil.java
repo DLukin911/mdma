@@ -4,6 +4,9 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.Properties;
 
+/**
+ * Класс для возможности чтения properties файлов.
+ */
 public class PropertiesReaderUtil {
 
   private final Properties props = new Properties();
