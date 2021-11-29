@@ -11,12 +11,11 @@ import org.junit.Assert;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
+import ru.filit.mdma.dm.AbstractTest;
 import ru.filit.mdma.dm.util.exception.NotFoundException;
 import ru.filit.oas.dm.web.dto.ClientDto;
 
-@SpringBootTest
-class EntityServiceTest {
+class EntityServiceTest extends AbstractTest {
 
   @Autowired
   private EntityService entityService;

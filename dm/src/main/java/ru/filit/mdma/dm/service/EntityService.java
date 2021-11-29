@@ -20,7 +20,11 @@ import ru.filit.oas.dm.web.dto.ClientSearchDto;
 @Service
 public class EntityService {
 
-  private static final EntityRepository entityRepository = new EntityRepository();
+  private final EntityRepository entityRepository;
+
+  public EntityService(EntityRepository entityRepository) {
+    this.entityRepository = entityRepository;
+  }
 
   /**
    * Запрос списка сущностей Клиент через транспортный объект поиска Клиента.

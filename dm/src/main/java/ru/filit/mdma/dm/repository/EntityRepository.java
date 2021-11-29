@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Repository;
 import ru.filit.mdma.dm.util.FileUtil;
 import ru.filit.oas.dm.model.Client;
@@ -27,8 +28,10 @@ public class EntityRepository {
   /**
    * Получение списка сущностей Клиента.
    */
+  @Cacheable("clientList")
   public List<Client> getClientList() {
-    log.info("Запрос списка всех клиентов из кеша");
+    log.info("Запрос списка всех клиентов из clientCache");
+
     return clientCache.values().stream().toList();
   }
 
@@ -37,6 +40,7 @@ public class EntityRepository {
    */
   public Client getClientById(String id) {
     log.info("Запрос сущности Клиент по id: {}", id);
+
     return clientCache.get(id);
   }
 
@@ -53,7 +57,6 @@ public class EntityRepository {
     } catch (IOException e) {
       e.printStackTrace();
     }
-
     clientCache = clientList.stream().collect(Collectors.toMap(Client::getId, client -> client));
   }
 }

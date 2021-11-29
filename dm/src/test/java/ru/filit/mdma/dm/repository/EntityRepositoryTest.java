@@ -9,11 +9,10 @@ import static ru.filit.mdma.dm.testdata.EntityRepositoryTestData.clientList;
 import java.util.List;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
+import ru.filit.mdma.dm.AbstractTest;
 import ru.filit.oas.dm.model.Client;
 
-@SpringBootTest
-class EntityRepositoryTest {
+class EntityRepositoryTest extends AbstractTest {
 
   @Autowired
   private EntityRepository entityRepository;

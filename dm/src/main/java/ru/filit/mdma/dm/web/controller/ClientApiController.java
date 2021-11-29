@@ -25,13 +25,17 @@ import ru.filit.oas.dm.web.dto.OperationSearchDto;
 
 @Slf4j
 @RestController
-@RequestMapping(value = ClientApiController.REST_URL, produces = MediaType.APPLICATION_JSON_VALUE,
-    consumes = MediaType.APPLICATION_JSON_VALUE)
+@RequestMapping(value = ClientApiController.REST_URL, produces = "application/json; charset=UTF-8",
+    consumes = "application/json; charset=UTF-8")
 public class ClientApiController implements ClientApi {
 
-  public static final String REST_URL = "/dm/client";
+  private final EntityService entityService;
 
-  private static final EntityService entityService = new EntityService();
+  public ClientApiController(EntityService entityService) {
+    this.entityService = entityService;
+  }
+
+  public static final String REST_URL = "/dm/client";
 
   /**
    * POST /client/account : Запрос счетов клиента
