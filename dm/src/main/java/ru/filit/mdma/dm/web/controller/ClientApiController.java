@@ -3,10 +3,8 @@ package ru.filit.mdma.dm.web.controller;
 import java.util.List;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import ru.filit.mdma.dm.service.EntityService;
@@ -23,19 +21,22 @@ import ru.filit.oas.dm.web.dto.LoanPaymentDto;
 import ru.filit.oas.dm.web.dto.OperationDto;
 import ru.filit.oas.dm.web.dto.OperationSearchDto;
 
+/**
+ * Реализация API интерфейса Клиента.
+ */
 @Slf4j
 @RestController
 @RequestMapping(value = ClientApiController.REST_URL, produces = "application/json; charset=UTF-8",
     consumes = "application/json; charset=UTF-8")
 public class ClientApiController implements ClientApi {
 
+  public static final String REST_URL = "/dm/client";
+
   private final EntityService entityService;
 
   public ClientApiController(EntityService entityService) {
     this.entityService = entityService;
   }
-
-  public static final String REST_URL = "/dm/client";
 
   /**
    * POST /client/account : Запрос счетов клиента
@@ -78,7 +79,7 @@ public class ClientApiController implements ClientApi {
    */
   @PostMapping
   @Override
-  public ResponseEntity<List<ClientDto>> getClient(@RequestBody ClientSearchDto clientSearchDto) {
+  public ResponseEntity<List<ClientDto>> getClient(ClientSearchDto clientSearchDto) {
     log.info("Поиск клиентов по входящим данным: {}", clientSearchDto);
     List<ClientDto> clientDtoList = entityService.getClient(clientSearchDto);
     if (clientDtoList.isEmpty()) {
@@ -132,10 +133,5 @@ public class ClientApiController implements ClientApi {
   @Override
   public ResponseEntity<ContactDto> saveContact(ContactDto contactDto) {
     return null;
-  }
-
-  @RequestMapping(value = "/hello")
-  public String hello() {
-    return "Hello World from Tomcat";
   }
 }

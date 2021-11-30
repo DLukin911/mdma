@@ -60,7 +60,7 @@
             </goals>
             <configuration>
               <inputSpec>
-                ${project.basedir}/src/main/resources/crm-bh.yml
+                ${project.basedir}/src/main/resources/oas/crm-bh.yml
               </inputSpec>
               <generatorName>spring</generatorName>
               <generateApis>true</generateApis>
@@ -76,7 +76,7 @@
             </goals>
             <configuration>
               <inputSpec>
-                ${project.basedir}/src/main/resources/crm-bh-entity.yml
+                ${project.basedir}/src/main/resources/oas/crm-bh-entity.yml
               </inputSpec>
               <generatorName>spring</generatorName>
               <generateModels>true</generateModels>
