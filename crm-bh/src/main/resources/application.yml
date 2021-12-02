@@ -2,14 +2,19 @@ spring:
   profiles:
     active: dev
   application:
-    name: crm
+    name: crm-bh
+  jackson:
+    default-property-inclusion: non_null
+  mvc:
+    throw-exception-if-no-handler-found: true
+    static-path-pattern: /static
 logging:
   pattern:
     console: "%d{HH:mm:ss.SSS} %highlight(%-5level) %cyan(%class{50}.%M:%L) - %msg%n"
     file: "%d{yyyy-MM-dd HH:mm:ss} [%thread] %-5level %logger{36} - %msg%n"
   level:
-    root: WARN
-    ru.filit.mdma.dm: DEBUG
+    root: INFO
+    ru.filit.mdma.crm-bh: DEBUG
   file:
     name: "crm-bh/logs/application-debug.log"
 server:

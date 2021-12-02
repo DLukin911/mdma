@@ -1,4 +1,4 @@
-package ru.filit.mdma.dm.web.controller;
+package ru.filit.mdma.crm.web;
 
 import static org.springframework.boot.web.error.ErrorAttributeOptions.Include.MESSAGE;
 
@@ -15,10 +15,10 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.NoHandlerFoundException;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
-import ru.filit.mdma.dm.util.exception.NotFoundException;
+import ru.filit.mdma.crm.util.exception.NotFoundException;
 
 /**
- * Перехватчик исключений приложения DM.
+ * Перехватчик исключений веб приложения CRM-BH.
  */
 @Slf4j
 @RestControllerAdvice
@@ -35,8 +35,8 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
   }
 
   @ExceptionHandler(Exception.class)
-  public ResponseEntity<?> persistException(WebRequest request, Exception nf) {
-    log.error("NotFoundException: {}", nf.getMessage());
+  public ResponseEntity<?> persistException(WebRequest request, Exception ex) {
+    log.error("Internal error: {}", ex.getMessage());
     return createResponseEntity(getDefaultBody(request, ErrorAttributeOptions.of(MESSAGE), null),
         HttpStatus.INTERNAL_SERVER_ERROR);
   }

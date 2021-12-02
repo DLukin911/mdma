@@ -1,12 +1,19 @@
 package ru.filit.mdma.crm.web;
 
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.util.List;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.ParameterizedTypeReference;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import ru.filit.mdma.crm.config.RestTemplateConfig;
+import org.springframework.web.client.RestTemplate;
+import ru.filit.mdma.crm.util.exception.NotFoundException;
 import ru.filit.oas.crm.web.controller.ClientApi;
 import ru.filit.oas.crm.web.dto.AccountNumberDto;
 import ru.filit.oas.crm.web.dto.ClientDto;
@@ -28,24 +35,41 @@ public class ClientApiController implements ClientApi {
 
   public static final String REST_URL = "/api/client";
 
-  private final RestTemplateConfig restTemplate;
+  private final RestTemplate restTemplate;
 
-  public ClientApiController(
-      RestTemplateConfig restTemplate) {
+  @Autowired
+  public ClientApiController(RestTemplate restTemplate) {
     this.restTemplate = restTemplate;
   }
 
   /**
-   * POST /client/find : Поиск клиентов
-   *
-   * @param clientSearchDto (required)
-   * @return Поиск клиентов выполнен (status code 200)
+   * Поиск Клиентов по заданному запросу.
    */
-  @PostMapping
+  @PostMapping("/find")
   @Override
   public ResponseEntity<List<ClientDto>> findClient(ClientSearchDto clientSearchDto) {
+    log.info("Поиск клиентов по входящим данным: {}", clientSearchDto);
 
-    return null;
+    final String baseUrl = "http://localhost:8081/dm/client/";
+    URI uri = null;
+    try {
+      uri = new URI(baseUrl);
+    } catch (URISyntaxException e) {
+      e.printStackTrace();
+    }
+    HttpEntity requestEntity = new HttpEntity(clientSearchDto);
+    ResponseEntity<List<ClientDto>> responseEntity = null;
+    try {
+      responseEntity = restTemplate.exchange(uri, HttpMethod.POST, requestEntity,
+          new ParameterizedTypeReference<List<ClientDto>>() {
+          }
+      );
+      log.info("Ответ на запрос получен: {}", responseEntity);
+
+      return responseEntity;
+    } catch (Exception e) {
+      throw new NotFoundException("По данному запросу информация не найдена.");
+    }
   }
 
   /**
