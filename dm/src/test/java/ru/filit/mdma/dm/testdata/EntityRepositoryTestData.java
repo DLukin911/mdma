@@ -16,7 +16,7 @@ public class EntityRepositoryTestData {
     client1.setLastname("Ворошилов");
     client1.setFirstname("Клим");
     client1.setPatronymic("Ефимович");
-    client1.setBirthDate(19000428L);
+    client1.setBirthDate(-2198880000000L);
     client1.setPassportSeries("6215");
     client1.setPassportNumber("352617");
     client1.setInn("773626104512");
@@ -26,7 +26,7 @@ public class EntityRepositoryTestData {
     client2.setLastname("Петров");
     client2.setFirstname("Илья");
     client2.setPatronymic("Михайлович");
-    client2.setBirthDate(19800619L);
+    client2.setBirthDate(903657600000L);
     client2.setPassportSeries("4574");
     client2.setPassportNumber("120087");
     client2.setInn("7895415794254");
@@ -34,7 +34,7 @@ public class EntityRepositoryTestData {
     client3.setId("234021");
     client3.setLastname("Ворошилов");
     client3.setFirstname("Лумумба");
-    client3.setBirthDate(19000428L);
+    client3.setBirthDate(895657403600L);
     client3.setPassportSeries("3589");
     client3.setPassportNumber("100423");
     client3.setInn("2315410093219");

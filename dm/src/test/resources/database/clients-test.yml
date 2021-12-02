@@ -1,9 +1,8 @@
----
 - id: "95471"
   lastname: "Ворошилов"
   firstname: "Клим"
   patronymic: "Ефимович"
-  birthDate: 19000428
+  birthDate: -2198880000000
   passportSeries: "6215"
   passportNumber: "352617"
   inn: "773626104512"
@@ -12,7 +11,7 @@
   lastname: "Петров"
   firstname: "Илья"
   patronymic: "Михайлович"
-  birthDate: 19800619
+  birthDate: 903657600000
   passportSeries: "4574"
   passportNumber: "120087"
   inn: "7895415794254"
@@ -21,7 +20,7 @@
   lastname: "Ворошилов"
   firstname: "Лумумба"
   patronymic: null
-  birthDate: 19000428
+  birthDate: 895657403600
   passportSeries: "3589"
   passportNumber: "100423"
   inn: "2315410093219"

@@ -12,8 +12,8 @@ import lombok.experimental.UtilityClass;
 public class FileUtil {
 
   private PropertiesReaderUtil propsReader = new PropertiesReaderUtil("storage.properties");
-  private String ENTITY_REPOSITORY_FILE = propsReader.get("entityRepository.path");
-  private final File entityFile = new File(ENTITY_REPOSITORY_FILE);
+  private String CLIENTS_FILE = propsReader.get("clients.path");
+  private final File entityFile = new File(CLIENTS_FILE);
   private final ObjectMapper mapper = new ObjectMapper(new YAMLFactory());
 
   public File getEntityFile() {

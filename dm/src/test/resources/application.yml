@@ -1,6 +1,8 @@
 spring:
   profiles:
     active: test
+  jackson:
+    default-property-inclusion: non_null
 logging:
   pattern:
     console: "%d{HH:mm:ss.SSS} %highlight(%-5level) %cyan(%class{50}.%M:%L) - %msg%n"

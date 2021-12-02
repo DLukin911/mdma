@@ -2,16 +2,13 @@ package ru.filit.mdma.dm.web;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.ResultActions;
 import org.springframework.test.web.servlet.request.MockHttpServletRequestBuilder;
+import ru.filit.mdma.dm.AbstractTest;
 
-@SpringBootTest
 @AutoConfigureMockMvc
-@ActiveProfiles("test")
-public abstract class AbstractControllerTest {
+public abstract class AbstractControllerTest extends AbstractTest {
 
   @Autowired
   protected MockMvc mockMvc;

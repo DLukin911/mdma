@@ -155,3 +155,16 @@ components:
           type: string
         property:
           type: string
+    ClientLevel:
+      type: string
+      description: Уровни клиентов Банка
+      enum:
+        - LOW
+        - MIDDLE
+        - SILVER
+        - GOLD
+      x-enum-varnames:
+        - Low
+        - Middle
+        - Silver
+        - Gold
