@@ -2,6 +2,7 @@ package ru.filit.mdma.dm.repository;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -10,7 +11,9 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Repository;
 import ru.filit.mdma.dm.util.FileUtil;
+import ru.filit.oas.dm.model.Account;
 import ru.filit.oas.dm.model.Client;
+import ru.filit.oas.dm.model.Contact;
 
 /**
  * Класс для работы с базами данных на основе YAML файлов.
@@ -20,9 +23,13 @@ import ru.filit.oas.dm.model.Client;
 public class EntityRepository {
 
   private static Map<String, Client> clientCache = new HashMap<>();
+  private static List<Contact> contactCache = new ArrayList<>();
+  private static List<Account> accountCache = new ArrayList<>();
 
   static {
     enableClientCache();
+    enableContactCache();
+    enableAccountCache();
   }
 
   /**
@@ -45,6 +52,28 @@ public class EntityRepository {
   }
 
   /**
+   * Получение сущности Контакта клиента по Id.
+   */
+  public List<Contact> getContactByClientId(String id) {
+    log.info("Запрос сущности Контакт клиента по id: {}", id);
+
+    return contactCache.stream()
+        .filter(contact -> contact.getClientId().equals(id))
+        .collect(Collectors.toList());
+  }
+
+  /**
+   * Получение сущности Аккаунт клиента по Id.
+   */
+  public List<Account> getAccountByClientId(String id) {
+    log.info("Запрос сущности Аккаунт клиента по id: {}", id);
+
+    return accountCache.stream()
+        .filter(contact -> contact.getClientId().equals(id))
+        .collect(Collectors.toList());
+  }
+
+  /**
    * Активация кеша сущности Клиент (id, Клиент).
    */
   private static void enableClientCache() {
@@ -52,11 +81,39 @@ public class EntityRepository {
     List<Client> clientList = null;
     try {
       clientList = FileUtil.getMapper()
-          .readValue(FileUtil.getEntityFile(), new TypeReference<List<Client>>() {
+          .readValue(FileUtil.getClientsFile(), new TypeReference<List<Client>>() {
           });
     } catch (IOException e) {
       e.printStackTrace();
     }
     clientCache = clientList.stream().collect(Collectors.toMap(Client::getId, client -> client));
+  }
+
+  /**
+   * Активация кеша сущности Контакт клиента (id, Контакт).
+   */
+  private static void enableContactCache() {
+    log.info("Запрос списка всех контактов клиентов из базы данных");
+    try {
+      contactCache = FileUtil.getMapper()
+          .readValue(FileUtil.getContactsFile(), new TypeReference<List<Contact>>() {
+          });
+    } catch (IOException e) {
+      e.printStackTrace();
+    }
+  }
+
+  /**
+   * Активация кеша сущности Аккаунт клиента (id, Аккаунт).
+   */
+  private static void enableAccountCache() {
+    log.info("Запрос списка всех аккаунтов клиентов из базы данных");
+    try {
+      accountCache = FileUtil.getMapper()
+          .readValue(FileUtil.getAccountsFile(), new TypeReference<List<Account>>() {
+          });
+    } catch (IOException e) {
+      e.printStackTrace();
+    }
   }
 }

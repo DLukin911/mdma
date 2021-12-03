@@ -1,6 +1,7 @@
 package ru.filit.mdma.dm.testdata;
 
 import ru.filit.oas.dm.web.dto.ClientDto;
+import ru.filit.oas.dm.web.dto.ClientIdDto;
 import ru.filit.oas.dm.web.dto.ClientSearchDto;
 
 public class EntityServiceTestData {
@@ -11,6 +12,9 @@ public class EntityServiceTestData {
   public static final ClientDto clientDto1 = new ClientDto();
   public static final ClientDto clientDto2 = new ClientDto();
   public static final ClientDto clientDto3 = new ClientDto();
+
+  public static final ClientIdDto clientIdDto = new ClientIdDto();
+  public static final ClientIdDto clientWrongIdDto = new ClientIdDto();
 
   static {
     clientSearchDto.setId("95471");
@@ -49,5 +53,8 @@ public class EntityServiceTestData {
     clientDto3.setPassportSeries("3589");
     clientDto3.setPassportNumber("100423");
     clientDto3.setInn("2315410093219");
+
+    clientIdDto.setId("95471");
+    clientWrongIdDto.setId("777777777777");
   }
 }

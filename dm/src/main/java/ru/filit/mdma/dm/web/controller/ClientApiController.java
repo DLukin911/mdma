@@ -39,14 +39,21 @@ public class ClientApiController implements ClientApi {
   }
 
   /**
-   * POST /client/account : Запрос счетов клиента
-   *
-   * @param clientIdDto (required)
-   * @return Информации о счетах найдена (status code 200)
+   * Запрос списка Счетов клиента по его ID.
    */
+  @PostMapping("/account")
   @Override
   public ResponseEntity<List<AccountDto>> getAccount(ClientIdDto clientIdDto) {
-    return null;
+    log.info("Поиск Счетов клиента по входящим данным: {}", clientIdDto.getId());
+
+    List<AccountDto> accountDtoList = entityService.getAccount(clientIdDto);
+    if (accountDtoList.isEmpty()) {
+      log.info("Счета не найдены.");
+      return ResponseEntity.badRequest().body(accountDtoList);
+    }
+    log.info("Счета успешно найдены {}", accountDtoList);
+
+    return new ResponseEntity<>(accountDtoList, HttpStatus.OK);
   }
 
   /**
@@ -73,14 +80,13 @@ public class ClientApiController implements ClientApi {
   }
 
   /**
-   * POST /dm/client : Запрос клиентов
-   * @param clientSearchDto (required)
-   * @return Информации о клиенте найдена (status code 200)
+   * Запрос списка Клиентов по заданным параметрам.
    */
   @PostMapping
   @Override
   public ResponseEntity<List<ClientDto>> getClient(ClientSearchDto clientSearchDto) {
     log.info("Поиск клиентов по входящим данным: {}", clientSearchDto);
+
     List<ClientDto> clientDtoList = entityService.getClient(clientSearchDto);
     if (clientDtoList.isEmpty()) {
       log.info("Клиенты не найдены.");
@@ -103,14 +109,21 @@ public class ClientApiController implements ClientApi {
   }
 
   /**
-   * POST /client/contact : Запрос контактов клиента
-   *
-   * @param clientIdDto (required)
-   * @return Информации о контактах найдена (status code 200)
+   * Запрос списка Контактов клиента по его ID.
    */
+  @PostMapping("/contact")
   @Override
   public ResponseEntity<List<ContactDto>> getContact(ClientIdDto clientIdDto) {
-    return null;
+    log.info("Поиск Контактов клиента по входящим данным: {}", clientIdDto.getId());
+
+    List<ContactDto> сontactDtoList = entityService.getContact(clientIdDto);
+    if (сontactDtoList.isEmpty()) {
+      log.info("Контакты не найдены.");
+      return ResponseEntity.badRequest().body(сontactDtoList);
+    }
+    log.info("Контакты успешно найдены {}", сontactDtoList);
+
+    return new ResponseEntity<>(сontactDtoList, HttpStatus.OK);
   }
 
   /**
