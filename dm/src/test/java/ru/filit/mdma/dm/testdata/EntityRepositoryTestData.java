@@ -7,12 +7,16 @@ import static ru.filit.oas.dm.model.Account.TypeEnum.OVERDRAFT;
 import static ru.filit.oas.dm.model.Account.TypeEnum.PAYMENT;
 import static ru.filit.oas.dm.model.Contact.TypeEnum.EMAIL;
 import static ru.filit.oas.dm.model.Contact.TypeEnum.PHONE;
+import static ru.filit.oas.dm.model.Operation.TypeEnum.EXPENSE;
+import static ru.filit.oas.dm.model.Operation.TypeEnum.RECEIPT;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 import ru.filit.oas.dm.model.Account;
 import ru.filit.oas.dm.model.Client;
 import ru.filit.oas.dm.model.Contact;
+import ru.filit.oas.dm.model.Operation;
 
 public class EntityRepositoryTestData {
 
@@ -28,6 +32,11 @@ public class EntityRepositoryTestData {
   public static final Account accountOneClient = new Account();
   public static final Account accountTwoClient = new Account();
   public static final List<Account> accountList = new ArrayList<>();
+
+  public static final Operation operation1 = new Operation();
+  public static final Operation operation2 = new Operation();
+  public static final Operation operation3 = new Operation();
+  public static final List<Operation> operationList = new ArrayList<>();
 
   static {
     client1.setId("95471");
@@ -92,5 +101,27 @@ public class EntityRepositoryTestData {
 
     accountList.add(accountOneClient);
     accountList.add(accountTwoClient);
+
+    operation1.setType(RECEIPT);
+    operation1.setAccountNumber("40817810853110005823");
+    operation1.setOperDate(1634646960000L);
+    operation1.setAmount(BigDecimal.valueOf(5000.00));
+    operation1.setDescription("VSP 5311 MOSKVA RUS");
+
+    operation2.setType(EXPENSE);
+    operation2.setAccountNumber("40817810853110005823");
+    operation2.setOperDate(1634062500000L);
+    operation2.setAmount(BigDecimal.valueOf(4926.59));
+    operation2.setDescription("YM OZON 1 GOROD MOSKVA RUS");
+
+    operation3.setType(EXPENSE);
+    operation3.setAccountNumber("40817810853110005823");
+    operation3.setOperDate(1631202000000L);
+    operation3.setAmount(BigDecimal.valueOf(215.00));
+    operation3.setDescription("МУП Водоканал. Оплата услуг");
+
+    operationList.add(operation1);
+    operationList.add(operation2);
+    operationList.add(operation3);
   }
 }

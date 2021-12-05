@@ -17,9 +17,14 @@ public class FileUtil {
   private final String CLIENTS_FILE = propsReader.get("clients.path");
   private final String CONTACTS_FILE = propsReader.get("contacts.path");
   private final String ACCOUNTS_FILE = propsReader.get("accounts.path");
+  private final String OPERATIONS_FILE = propsReader.get("operations.path");
+  private final String BALANCES_FILE = propsReader.get("balances.path");
+
   private final File clientsFile = new File(CLIENTS_FILE);
   private final File contactsFile = new File(CONTACTS_FILE);
   private final File accountsFile = new File(ACCOUNTS_FILE);
+  private final File operationsFile = new File(OPERATIONS_FILE);
+  private final File balancesFile = new File(BALANCES_FILE);
 
   public File getClientsFile() {
     return clientsFile;
@@ -31,6 +36,14 @@ public class FileUtil {
 
   public File getAccountsFile() {
     return accountsFile;
+  }
+
+  public File getOperationsFile() {
+    return operationsFile;
+  }
+
+  public File getBalancesFile() {
+    return balancesFile;
   }
 
   public ObjectMapper getMapper() {

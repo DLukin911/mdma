@@ -1,5 +1,6 @@
 package ru.filit.mdma.dm.service;
 
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 import static ru.filit.mdma.dm.testdata.EntityServiceTestData.clientDto1;
 import static ru.filit.mdma.dm.testdata.EntityServiceTestData.clientIdDto;
@@ -7,6 +8,11 @@ import static ru.filit.mdma.dm.testdata.EntityServiceTestData.clientSearchDto;
 import static ru.filit.mdma.dm.testdata.EntityServiceTestData.clientSearchDtoNull;
 import static ru.filit.mdma.dm.testdata.EntityServiceTestData.clientSearchDtoTwoEquals;
 import static ru.filit.mdma.dm.testdata.EntityServiceTestData.clientWrongIdDto;
+import static ru.filit.mdma.dm.testdata.EntityServiceTestData.operationDto1;
+import static ru.filit.mdma.dm.testdata.EntityServiceTestData.operationDto2;
+import static ru.filit.mdma.dm.testdata.EntityServiceTestData.operationDto3;
+import static ru.filit.mdma.dm.testdata.EntityServiceTestData.operationSearchDto;
+import static ru.filit.mdma.dm.testdata.EntityServiceTestData.operationSearchDtoWrong;
 
 import java.util.List;
 import org.junit.Assert;
@@ -18,6 +24,7 @@ import ru.filit.mdma.dm.util.exception.NotFoundException;
 import ru.filit.oas.dm.web.dto.AccountDto;
 import ru.filit.oas.dm.web.dto.ClientDto;
 import ru.filit.oas.dm.web.dto.ContactDto;
+import ru.filit.oas.dm.web.dto.OperationDto;
 
 class EntityServiceTest extends AbstractTest {
 
@@ -87,5 +94,29 @@ class EntityServiceTest extends AbstractTest {
   void testShouldThrowsExceptionForRequestDataWhenRequestContactNullAcc() {
     Assertions.assertThrows(NotFoundException.class,
         () -> entityService.getAccount(null));
+  }
+
+  @Test
+  void testShouldGetOperationDtoForRequestData() {
+    List<OperationDto> operationDtoList = entityService.getAccountOperations(operationSearchDto);
+    assertTrue(operationDtoList.size() == 3);
+    assertEquals(operationDto1.getOperDate(), operationDtoList.get(0).getOperDate());
+    assertEquals(operationDto1.getAmount(), operationDtoList.get(0).getAmount());
+    assertEquals(operationDto2.getOperDate(), operationDtoList.get(1).getOperDate());
+    assertEquals(operationDto2.getAmount(), operationDtoList.get(1).getAmount());
+    assertEquals(operationDto3.getOperDate(), operationDtoList.get(2).getOperDate());
+    assertEquals(operationDto3.getAmount(), operationDtoList.get(2).getAmount());
+  }
+
+  @Test()
+  void testShouldThrowsExceptionForRequestDataWhenRequestAccNumWrong() {
+    Assertions.assertThrows(NotFoundException.class,
+        () -> entityService.getAccountOperations(operationSearchDtoWrong));
+  }
+
+  @Test()
+  void testShouldThrowsExceptionForRequestDataWhenRequestOperationNull() {
+    Assertions.assertThrows(NotFoundException.class,
+        () -> entityService.getAccountOperations(null));
   }
 }

@@ -6,6 +6,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static ru.filit.mdma.dm.testdata.EntityWebTestData.jsonAccount1;
 import static ru.filit.mdma.dm.testdata.EntityWebTestData.jsonClient1;
 import static ru.filit.mdma.dm.testdata.EntityWebTestData.jsonContact1;
+import static ru.filit.mdma.dm.testdata.EntityWebTestData.jsonOperationList;
 
 import java.nio.charset.StandardCharsets;
 import org.junit.jupiter.api.Test;
@@ -72,6 +73,27 @@ class EntityControllerTest extends AbstractControllerTest {
   @Test
   void getAccountNotFound() throws Exception {
     perform(MockMvcRequestBuilders.post(REST_URL + "/account")
+        .contentType(MediaType.APPLICATION_JSON))
+        .andDo(print())
+        .andExpect(status().isBadRequest());
+  }
+
+  @Test
+  void getOperation() throws Exception {
+    perform(MockMvcRequestBuilders.post(REST_URL + "/account/operation").content("{\n"
+        + "\"accountNumber\": \"40817810853110005823\",\n"
+        + "\"quantity\": \"3\"\n"
+        + "}").contentType(MediaType.APPLICATION_JSON))
+        .andDo(print())
+        .andExpect(status().isOk())
+        .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
+        .andExpect(content().encoding(StandardCharsets.UTF_8))
+        .andExpect(content().string(jsonOperationList));
+  }
+
+  @Test
+  void getOperationNotFound() throws Exception {
+    perform(MockMvcRequestBuilders.post(REST_URL + "/account/operation")
         .contentType(MediaType.APPLICATION_JSON))
         .andDo(print())
         .andExpect(status().isBadRequest());

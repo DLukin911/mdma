@@ -3,6 +3,8 @@ package ru.filit.mdma.dm.testdata;
 import ru.filit.oas.dm.web.dto.ClientDto;
 import ru.filit.oas.dm.web.dto.ClientIdDto;
 import ru.filit.oas.dm.web.dto.ClientSearchDto;
+import ru.filit.oas.dm.web.dto.OperationDto;
+import ru.filit.oas.dm.web.dto.OperationSearchDto;
 
 public class EntityServiceTestData {
 
@@ -15,6 +17,12 @@ public class EntityServiceTestData {
 
   public static final ClientIdDto clientIdDto = new ClientIdDto();
   public static final ClientIdDto clientWrongIdDto = new ClientIdDto();
+
+  public static final OperationSearchDto operationSearchDto = new OperationSearchDto();
+  public static final OperationSearchDto operationSearchDtoWrong = new OperationSearchDto();
+  public static final OperationDto operationDto1 = new OperationDto();
+  public static final OperationDto operationDto2 = new OperationDto();
+  public static final OperationDto operationDto3 = new OperationDto();
 
   static {
     clientSearchDto.setId("95471");
@@ -56,5 +64,16 @@ public class EntityServiceTestData {
 
     clientIdDto.setId("95471");
     clientWrongIdDto.setId("777777777777");
+
+    operationSearchDto.setAccountNumber("40817810853110005823");
+    operationSearchDto.quantity("3");
+    operationSearchDtoWrong.setAccountNumber("7777777777777777");
+    operationSearchDtoWrong.quantity("3");
+    operationDto1.setOperDate("2021-10-19T12:36:13");
+    operationDto1.setAmount("5000.00");
+    operationDto2.setOperDate("2021-10-12T18:15:12");
+    operationDto2.setAmount("4926.59");
+    operationDto3.setOperDate("2021-09-09T15:40:11");
+    operationDto3.setAmount("215.00");
   }
 }

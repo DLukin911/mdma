@@ -68,15 +68,22 @@ public class ClientApiController implements ClientApi {
   }
 
   /**
-   * POST /client/account/operation : Запрос операций по счету
-   *
-   * @param operationSearchDto (required)
-   * @return Операции по счету найдены (status code 200)
+   * Запрос Операций по счету клиента с ограничением количества вывода элементов.
    */
+  @PostMapping("/account/operation")
   @Override
   public ResponseEntity<List<OperationDto>> getAccountOperations(
       OperationSearchDto operationSearchDto) {
-    return null;
+    log.info("Поиск Операций счета клиента по входящим данным: {}", operationSearchDto);
+
+    List<OperationDto> operationDtoList = entityService.getAccountOperations(operationSearchDto);
+    if (operationDtoList.isEmpty()) {
+      log.info("Операции по счету не найдены.");
+      return ResponseEntity.badRequest().body(operationDtoList);
+    }
+    log.info("Операции по счету успешно найдены {}", operationDtoList);
+
+    return new ResponseEntity<>(operationDtoList, HttpStatus.OK);
   }
 
   /**

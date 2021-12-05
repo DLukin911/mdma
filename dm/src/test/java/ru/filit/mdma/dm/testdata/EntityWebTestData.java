@@ -18,4 +18,13 @@ public class EntityWebTestData {
       + "{\"number\":\"40817810853110005823\",\"clientId\":\"95471\",\"type\":\"OVERDRAFT\","
       + "\"currency\":\"RUR\",\"status\":\"ACTIVE\",\"openDate\":\"2018-11-16\","
       + "\"deferment\":\"20\",\"shortcut\":\"5823\"}]";
+
+  public static final String jsonOperationList = "[{\"type\":\"RECEIPT\","
+      + "\"accountNumber\":\"40817810853110005823\",\"operDate\":\"2021-10-19T12:36:13\","
+      + "\"amount\":\"5000.00\",\"description\":\"VSP 5311 MOSKVA RUS\"},{\"type\":\"EXPENSE\","
+      + "\"accountNumber\":\"40817810853110005823\",\"operDate\":\"2021-10-12T18:15:12\","
+      + "\"amount\":\"4926.59\",\"description\":\"YM OZON 1 GOROD MOSKVA RUS\"},"
+      + "{\"type\":\"EXPENSE\",\"accountNumber\":\"40817810853110005823\","
+      + "\"operDate\":\"2021-09-09T15:40:11\",\"amount\":\"215.00\","
+      + "\"description\":\"МУП Водоканал. Оплата услуг\"}]";
 }

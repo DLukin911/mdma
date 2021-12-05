@@ -1,5 +1,6 @@
 package ru.filit.mdma.dm.service;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -10,13 +11,19 @@ import ru.filit.mdma.dm.util.EqualsUtil;
 import ru.filit.mdma.dm.util.MapperUtil;
 import ru.filit.mdma.dm.util.exception.NotFoundException;
 import ru.filit.oas.dm.model.Account;
+import ru.filit.oas.dm.model.AccountBalance;
 import ru.filit.oas.dm.model.Client;
 import ru.filit.oas.dm.model.Contact;
+import ru.filit.oas.dm.model.Operation;
 import ru.filit.oas.dm.web.dto.AccountDto;
+import ru.filit.oas.dm.web.dto.AccountNumberDto;
 import ru.filit.oas.dm.web.dto.ClientDto;
 import ru.filit.oas.dm.web.dto.ClientIdDto;
 import ru.filit.oas.dm.web.dto.ClientSearchDto;
 import ru.filit.oas.dm.web.dto.ContactDto;
+import ru.filit.oas.dm.web.dto.CurrentBalanceDto;
+import ru.filit.oas.dm.web.dto.OperationDto;
+import ru.filit.oas.dm.web.dto.OperationSearchDto;
 
 /**
  * Класс для сервисных операций с сущностями.
@@ -97,5 +104,52 @@ public class EntityService {
     }
 
     return accountDtoList;
+  }
+
+  /**
+   * Запрос операций по счету клиента.
+   */
+  public List<OperationDto> getAccountOperations(OperationSearchDto operationSearchDto) {
+    log.info("Запрос операций по счету клиента из Entity Repository, параметры запроса: {}",
+        operationSearchDto);
+
+    if (operationSearchDto == null) {
+      throw new NotFoundException("По данному запросу информация не найдена.");
+    }
+    List<Operation> operationList =
+        entityRepository.getOperationListByAccountNumber(operationSearchDto.getAccountNumber(),
+            operationSearchDto.getQuantity());
+    if (operationList.isEmpty()) {
+      throw new NotFoundException("По данному счету операции не найдены.");
+    }
+    List<OperationDto> operationDtoList = new ArrayList<>();
+    for (Operation operation : operationList) {
+      operationDtoList.add(MapperUtil.INSTANCE.convert(operation));
+    }
+
+    return operationDtoList;
+  }
+
+  /**
+   * Запрос Баланса по счету Клиента.
+   */
+  public CurrentBalanceDto getAccountBalance(AccountNumberDto accountNumberDto) {
+    log.info("Запрос баланса по счету Клиента из Entity Repository, параметры запроса: {}",
+        accountNumberDto);
+
+    if (accountNumberDto == null) {
+      throw new NotFoundException("По данному запросу информация не найдена.");
+    }
+    AccountBalance accountBalance =
+        entityRepository.getAccountBalance(accountNumberDto.getAccountNumber());
+    if (accountBalance == null) {
+      throw new NotFoundException("По данному счету информация не найдена.");
+    }
+    BigDecimal totalBalance = accountBalance.getAmount(); //?
+
+    CurrentBalanceDto сurrentBalanceDto = new CurrentBalanceDto();
+    сurrentBalanceDto.setBalanceAmount(String.valueOf(totalBalance));
+
+    return сurrentBalanceDto;
   }
 }

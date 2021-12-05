@@ -3,6 +3,7 @@ package ru.filit.mdma.dm.repository;
 import com.fasterxml.jackson.core.type.TypeReference;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -12,8 +13,10 @@ import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Repository;
 import ru.filit.mdma.dm.util.FileUtil;
 import ru.filit.oas.dm.model.Account;
+import ru.filit.oas.dm.model.AccountBalance;
 import ru.filit.oas.dm.model.Client;
 import ru.filit.oas.dm.model.Contact;
+import ru.filit.oas.dm.model.Operation;
 
 /**
  * Класс для работы с базами данных на основе YAML файлов.
@@ -25,11 +28,15 @@ public class EntityRepository {
   private static Map<String, Client> clientCache = new HashMap<>();
   private static List<Contact> contactCache = new ArrayList<>();
   private static List<Account> accountCache = new ArrayList<>();
+  private static List<Operation> operationCache = new ArrayList<>();
+  private static List<AccountBalance> accountBalanceCache = new ArrayList<>();
 
   static {
     enableClientCache();
     enableContactCache();
     enableAccountCache();
+    enableOperationCache();
+    enableAccountBalanceCache();
   }
 
   /**
@@ -74,6 +81,36 @@ public class EntityRepository {
   }
 
   /**
+   * Получение списка сущностей Операции клиента по номеру счета и ограничению по количеству
+   * операций в ответе.
+   */
+  public List<Operation> getOperationListByAccountNumber(String accNumber, String quantity) {
+    log.info("Запрос списка сущностей Операции клиента по номеру счета: {}", accNumber);
+
+    if (quantity.equals("0")) {
+      quantity = String.valueOf(Long.MAX_VALUE);
+    }
+
+    return operationCache.stream()
+        .filter(operation -> operation.getAccountNumber().equals(accNumber))
+        .sorted(Comparator.comparing(Operation::getOperDate).reversed())
+        .limit(Long.parseLong(quantity))
+        .collect(Collectors.toList());
+  }
+
+  /**
+   * Получение списка сущностей Баланс счета Клиента по номеру счета.
+   */
+  public AccountBalance getAccountBalance(String accNumber) {
+    log.info("Запрос сущности Баланс счета Клиента по номеру счета: {}", accNumber);
+
+    return accountBalanceCache.stream()
+        .filter(accountBalance -> accountBalance.getAccountNumber().equals(accNumber))
+        .findAny()
+        .orElse(null);
+  }
+
+  /**
    * Активация кеша сущности Клиент (id, Клиент).
    */
   private static void enableClientCache() {
@@ -90,7 +127,7 @@ public class EntityRepository {
   }
 
   /**
-   * Активация кеша сущности Контакт клиента (id, Контакт).
+   * Активация кеша сущности Контакт клиента.
    */
   private static void enableContactCache() {
     log.info("Запрос списка всех контактов клиентов из базы данных");
@@ -104,13 +141,41 @@ public class EntityRepository {
   }
 
   /**
-   * Активация кеша сущности Аккаунт клиента (id, Аккаунт).
+   * Активация кеша сущности Аккаунт клиента.
    */
   private static void enableAccountCache() {
     log.info("Запрос списка всех аккаунтов клиентов из базы данных");
     try {
       accountCache = FileUtil.getMapper()
           .readValue(FileUtil.getAccountsFile(), new TypeReference<List<Account>>() {
+          });
+    } catch (IOException e) {
+      e.printStackTrace();
+    }
+  }
+
+  /**
+   * Активация кеша сущности Операции клиента.
+   */
+  private static void enableOperationCache() {
+    log.info("Запрос списка всех операций клиентов из базы данных");
+    try {
+      operationCache = FileUtil.getMapper()
+          .readValue(FileUtil.getOperationsFile(), new TypeReference<List<Operation>>() {
+          });
+    } catch (IOException e) {
+      e.printStackTrace();
+    }
+  }
+
+  /**
+   * Активация кеша сущности Баланс на начало месяца клиента.
+   */
+  private static void enableAccountBalanceCache() {
+    log.info("Запрос списка всех балансов клиентов из базы данных");
+    try {
+      accountBalanceCache = FileUtil.getMapper()
+          .readValue(FileUtil.getBalancesFile(), new TypeReference<List<AccountBalance>>() {
           });
     } catch (IOException e) {
       e.printStackTrace();
