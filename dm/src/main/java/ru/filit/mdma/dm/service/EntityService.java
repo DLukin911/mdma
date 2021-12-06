@@ -174,8 +174,11 @@ public class EntityService {
     if (contactDto == null) {
       throw new NotFoundException("По данному запросу информация не найдена.");
     }
-    ContactDto contactDtoResult =
-        MapperUtil.INSTANCE.convert(entityRepository.saveContact(contactDto));
+    Contact contact = entityRepository.saveContact(contactDto);
+    if (contact == null) {
+      throw new NotFoundException("По данному клиенту информация не найдена.");
+    }
+    ContactDto contactDtoResult = MapperUtil.INSTANCE.convert(contact);
 
     return contactDtoResult;
   }
