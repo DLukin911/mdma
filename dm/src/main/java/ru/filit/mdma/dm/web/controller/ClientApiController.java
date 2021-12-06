@@ -57,14 +57,21 @@ public class ClientApiController implements ClientApi {
   }
 
   /**
-   * POST /client/account/balance : Запрос баланса по счету
-   *
-   * @param accountNumberDto (required)
-   * @return Баланс по счету определен (status code 200)
+   * Запрос баланса по счету клиента.
    */
+  @PostMapping("/account/balance")
   @Override
   public ResponseEntity<CurrentBalanceDto> getAccountBalance(AccountNumberDto accountNumberDto) {
-    return null;
+    log.info("Поиск баланса клиента по входящим данным: {}", accountNumberDto);
+
+    CurrentBalanceDto currentBalanceDto = entityService.getAccountBalance(accountNumberDto);
+    if (currentBalanceDto == null) {
+      log.info("Балансы по счету не найдены.");
+      return ResponseEntity.badRequest().body(currentBalanceDto);
+    }
+    log.info("Баланс по счету успешно найден {}", currentBalanceDto);
+
+    return new ResponseEntity<>(currentBalanceDto, HttpStatus.OK);
   }
 
   /**

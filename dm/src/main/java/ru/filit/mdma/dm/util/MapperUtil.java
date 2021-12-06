@@ -102,28 +102,28 @@ public abstract class MapperUtil {
   }
 
   /**
-   * Преобразуем дату рождения в String, получения формата YYYY-MM-DD.
+   * Преобразуем дату из Long в String, получения формата YYYY-MM-DD.
    */
   protected String changeDateToString(Long dateLong) {
     if (dateLong == null) {
       return null;
     }
     Instant instant = new Date(dateLong).toInstant();
-    LocalDateTime ldt = instant.atOffset(ZoneOffset.UTC).toLocalDateTime();
+    LocalDateTime ldt = instant.atOffset(ZoneOffset.ofHours(3)).toLocalDateTime();
     DateTimeFormatter fmt = DateTimeFormatter.ofPattern("yyyy-MM-dd");
 
     return ldt.format(fmt);
   }
 
   /**
-   * Преобразуем дату рождения в String, получения формата YYYY-MM-DD'T'HH:MM:SS.
+   * Преобразуем дату из Long в String, получения формата YYYY-MM-DD'T'HH:MM:SS.
    */
   protected String changeDateToStringWithT(Long dateLong, int dummy) {
     if (dateLong == null) {
       return null;
     }
     Instant instant = new Date(dateLong).toInstant();
-    LocalDateTime ldt = instant.atOffset(ZoneOffset.UTC).toLocalDateTime();
+    LocalDateTime ldt = instant.atOffset(ZoneOffset.ofHours(3)).toLocalDateTime();
     DateTimeFormatter fmt = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss");
 
     return ldt.format(fmt);

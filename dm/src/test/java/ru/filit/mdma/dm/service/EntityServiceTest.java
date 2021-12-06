@@ -2,6 +2,8 @@ package ru.filit.mdma.dm.service;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
+import static ru.filit.mdma.dm.testdata.EntityServiceTestData.accountNumberDto;
+import static ru.filit.mdma.dm.testdata.EntityServiceTestData.accountNumberDtoWrong;
 import static ru.filit.mdma.dm.testdata.EntityServiceTestData.clientDto1;
 import static ru.filit.mdma.dm.testdata.EntityServiceTestData.clientIdDto;
 import static ru.filit.mdma.dm.testdata.EntityServiceTestData.clientSearchDto;
@@ -24,6 +26,7 @@ import ru.filit.mdma.dm.util.exception.NotFoundException;
 import ru.filit.oas.dm.web.dto.AccountDto;
 import ru.filit.oas.dm.web.dto.ClientDto;
 import ru.filit.oas.dm.web.dto.ContactDto;
+import ru.filit.oas.dm.web.dto.CurrentBalanceDto;
 import ru.filit.oas.dm.web.dto.OperationDto;
 
 class EntityServiceTest extends AbstractTest {
@@ -118,5 +121,23 @@ class EntityServiceTest extends AbstractTest {
   void testShouldThrowsExceptionForRequestDataWhenRequestOperationNull() {
     Assertions.assertThrows(NotFoundException.class,
         () -> entityService.getAccountOperations(null));
+  }
+
+  @Test
+  void testShouldGetCurrentBalanceDtoForRequestData() {
+    CurrentBalanceDto currentBalanceDto = entityService.getAccountBalance(accountNumberDto);
+    assertEquals("60500.00", currentBalanceDto.getBalanceAmount());
+  }
+
+  @Test()
+  void testShouldThrowsExceptionForRequestDataWhenRequestAccNumDtoWrong() {
+    Assertions.assertThrows(NotFoundException.class,
+        () -> entityService.getAccountBalance(accountNumberDtoWrong));
+  }
+
+  @Test()
+  void testShouldThrowsExceptionForRequestDataWhenRequestAccNumNull() {
+    Assertions.assertThrows(NotFoundException.class,
+        () -> entityService.getAccountBalance(null));
   }
 }

@@ -1,5 +1,6 @@
 package ru.filit.mdma.dm.testdata;
 
+import ru.filit.oas.dm.web.dto.AccountNumberDto;
 import ru.filit.oas.dm.web.dto.ClientDto;
 import ru.filit.oas.dm.web.dto.ClientIdDto;
 import ru.filit.oas.dm.web.dto.ClientSearchDto;
@@ -23,6 +24,9 @@ public class EntityServiceTestData {
   public static final OperationDto operationDto1 = new OperationDto();
   public static final OperationDto operationDto2 = new OperationDto();
   public static final OperationDto operationDto3 = new OperationDto();
+
+  public static final AccountNumberDto accountNumberDto = new AccountNumberDto();
+  public static final AccountNumberDto accountNumberDtoWrong = new AccountNumberDto();
 
   static {
     clientSearchDto.setId("95471");
@@ -75,5 +79,8 @@ public class EntityServiceTestData {
     operationDto2.setAmount("4926.59");
     operationDto3.setOperDate("2021-09-09T15:40:11");
     operationDto3.setAmount("215.00");
+
+    accountNumberDto.setAccountNumber("40817810490164702182");
+    accountNumberDtoWrong.setAccountNumber("77777777777777777777");
   }
 }

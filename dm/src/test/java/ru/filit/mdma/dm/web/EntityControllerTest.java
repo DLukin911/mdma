@@ -4,6 +4,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 import static ru.filit.mdma.dm.testdata.EntityWebTestData.jsonAccount1;
+import static ru.filit.mdma.dm.testdata.EntityWebTestData.jsonBalanceAmount;
 import static ru.filit.mdma.dm.testdata.EntityWebTestData.jsonClient1;
 import static ru.filit.mdma.dm.testdata.EntityWebTestData.jsonContact1;
 import static ru.filit.mdma.dm.testdata.EntityWebTestData.jsonOperationList;
@@ -94,6 +95,26 @@ class EntityControllerTest extends AbstractControllerTest {
   @Test
   void getOperationNotFound() throws Exception {
     perform(MockMvcRequestBuilders.post(REST_URL + "/account/operation")
+        .contentType(MediaType.APPLICATION_JSON))
+        .andDo(print())
+        .andExpect(status().isBadRequest());
+  }
+
+  @Test
+  void getBalance() throws Exception {
+    perform(MockMvcRequestBuilders.post(REST_URL + "/account/balance").content("{\n"
+        + "\"accountNumber\": \"40817810490164702182\"\n"
+        + "}").contentType(MediaType.APPLICATION_JSON))
+        .andDo(print())
+        .andExpect(status().isOk())
+        .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
+        .andExpect(content().encoding(StandardCharsets.UTF_8))
+        .andExpect(content().string(jsonBalanceAmount));
+  }
+
+  @Test
+  void getBalanceNotFound() throws Exception {
+    perform(MockMvcRequestBuilders.post(REST_URL + "/account/balance")
         .contentType(MediaType.APPLICATION_JSON))
         .andDo(print())
         .andExpect(status().isBadRequest());

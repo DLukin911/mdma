@@ -2,6 +2,7 @@ package ru.filit.mdma.dm.repository;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import java.io.IOException;
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.HashMap;
@@ -77,6 +78,28 @@ public class EntityRepository {
 
     return accountCache.stream()
         .filter(contact -> contact.getClientId().equals(id))
+        .collect(Collectors.toList());
+  }
+
+  /**
+   * Получение списка сущностей Операции клиента по номеру счета за последний месяц.
+   */
+  public List<Operation> getAccountOperationsLastMonth(String accNumber) {
+    log.info("Запрос списка сущностей Операции клиента по номеру счета за последний месяц: {}",
+        accNumber);
+    AccountBalance accountBalance = getAccountBalance(accNumber);
+
+    if (accountBalance == null) {
+      accountBalance = new AccountBalance();
+      accountBalance.setAccountNumber(accNumber);
+      accountBalance.setBalanceDate(Long.MIN_VALUE);
+      accountBalance.setAmount(BigDecimal.valueOf(0.00));
+    }
+
+    AccountBalance finalAccountBalance = accountBalance;
+    return operationCache.stream()
+        .filter(operation -> operation.getAccountNumber().equals(accNumber)
+            && operation.getOperDate() >= finalAccountBalance.getBalanceDate())
         .collect(Collectors.toList());
   }
 

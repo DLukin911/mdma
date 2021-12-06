@@ -1,5 +1,8 @@
 package ru.filit.mdma.dm.service;
 
+import static ru.filit.oas.dm.model.Operation.TypeEnum.EXPENSE;
+import static ru.filit.oas.dm.model.Operation.TypeEnum.RECEIPT;
+
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
@@ -145,8 +148,16 @@ public class EntityService {
     if (accountBalance == null) {
       throw new NotFoundException("По данному счету информация не найдена.");
     }
-    BigDecimal totalBalance = accountBalance.getAmount(); //?
-
+    BigDecimal totalBalance = accountBalance.getAmount();
+    List<Operation> operationList =
+        entityRepository.getAccountOperationsLastMonth(accountNumberDto.getAccountNumber());
+    for (Operation operation : operationList) {
+      if (operation.getType().equals(RECEIPT)) {
+        totalBalance = totalBalance.add(operation.getAmount());
+      } else if (operation.getType().equals(EXPENSE)) {
+        totalBalance = totalBalance.subtract(operation.getAmount());
+      }
+    }
     CurrentBalanceDto сurrentBalanceDto = new CurrentBalanceDto();
     сurrentBalanceDto.setBalanceAmount(String.valueOf(totalBalance));
 

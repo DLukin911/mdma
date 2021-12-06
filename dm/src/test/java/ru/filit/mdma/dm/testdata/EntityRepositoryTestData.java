@@ -104,19 +104,19 @@ public class EntityRepositoryTestData {
 
     operation1.setType(RECEIPT);
     operation1.setAccountNumber("40817810853110005823");
-    operation1.setOperDate(1634646960000L);
+    operation1.setOperDate(1634636173000L);
     operation1.setAmount(BigDecimal.valueOf(5000.00));
     operation1.setDescription("VSP 5311 MOSKVA RUS");
 
     operation2.setType(EXPENSE);
     operation2.setAccountNumber("40817810853110005823");
-    operation2.setOperDate(1634062500000L);
+    operation2.setOperDate(1634051712000L);
     operation2.setAmount(BigDecimal.valueOf(4926.59));
     operation2.setDescription("YM OZON 1 GOROD MOSKVA RUS");
 
     operation3.setType(EXPENSE);
     operation3.setAccountNumber("40817810853110005823");
-    operation3.setOperDate(1631202000000L);
+    operation3.setOperDate(1631191211000L);
     operation3.setAmount(BigDecimal.valueOf(215.00));
     operation3.setDescription("МУП Водоканал. Оплата услуг");
 

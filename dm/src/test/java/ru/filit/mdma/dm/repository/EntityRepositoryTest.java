@@ -72,4 +72,11 @@ class EntityRepositoryTest extends AbstractTest {
         entityRepository.getAccountBalance("40817810452010063617");
     assertEquals(accountBalanceFromFile.getAccountNumber(), "40817810452010063617");
   }
+
+  @Test
+  void testShouldGetOperationLastMonthToYamlDatabase() {
+    List<Operation> accountOperationsListFromFile =
+        entityRepository.getAccountOperationsLastMonth("40817810490164702182");
+    assertTrue(accountOperationsListFromFile.size() == 3);
+  }
 }

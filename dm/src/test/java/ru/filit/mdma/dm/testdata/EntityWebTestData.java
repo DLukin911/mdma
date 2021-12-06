@@ -27,4 +27,6 @@ public class EntityWebTestData {
       + "{\"type\":\"EXPENSE\",\"accountNumber\":\"40817810853110005823\","
       + "\"operDate\":\"2021-09-09T15:40:11\",\"amount\":\"215.00\","
       + "\"description\":\"МУП Водоканал. Оплата услуг\"}]";
+
+  public static final String jsonBalanceAmount = "{\"balanceAmount\":\"60500.00\"}";
 }
