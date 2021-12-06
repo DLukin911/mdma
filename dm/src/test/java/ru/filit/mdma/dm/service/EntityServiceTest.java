@@ -179,7 +179,8 @@ class EntityServiceTest extends AbstractTest {
   }
 
   @Test()
-  void testShouldReturnNullWhenSaveContactAndClientIdNotFound() {
-    assertTrue(entityService.saveContact(noClientContact) == null);
+  void testShouldThrowExceptionWhenSaveContactAndClientIdNotFound() {
+    Assertions.assertThrows(NotFoundException.class,
+        () -> entityService.saveContact(noClientContact));
   }
 }
