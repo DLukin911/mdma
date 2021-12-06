@@ -152,13 +152,20 @@ public class ClientApiController implements ClientApi {
   }
 
   /**
-   * POST /client/contact/save : Сохранение контакта клиента
-   *
-   * @param contactDto (required)
-   * @return Контакт клиента сохранен (status code 200) or Клиент не найден (status code 400)
+   * Сохранение контакта клиента.
    */
+  @PostMapping("/contact/save")
   @Override
   public ResponseEntity<ContactDto> saveContact(ContactDto contactDto) {
-    return null;
+    log.info("Сохранение контакта клиента по входящим данным: {}", contactDto);
+
+    ContactDto contactDtoResult = entityService.saveContact(contactDto);
+    if (contactDtoResult == null) {
+      log.info("Такой клиент не найден.");
+      return ResponseEntity.badRequest().body(contactDto);
+    }
+    log.info("Контакт по счету успешно сохранен {}", contactDtoResult);
+
+    return new ResponseEntity<>(contactDtoResult, HttpStatus.OK);
   }
 }

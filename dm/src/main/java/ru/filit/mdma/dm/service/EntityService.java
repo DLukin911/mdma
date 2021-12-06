@@ -163,4 +163,20 @@ public class EntityService {
 
     return сurrentBalanceDto;
   }
+
+  /**
+   * Сохранение контакта клиента.
+   */
+  public ContactDto saveContact(ContactDto contactDto) {
+    log.info("Сохранение контакта клиента в Entity Repository, параметры запроса: {}",
+        contactDto);
+
+    if (contactDto == null) {
+      throw new NotFoundException("По данному запросу информация не найдена.");
+    }
+    ContactDto contactDtoResult =
+        MapperUtil.INSTANCE.convert(entityRepository.saveContact(contactDto));
+
+    return contactDtoResult;
+  }
 }

@@ -17,6 +17,7 @@ public class EntityServiceTestData {
   public static final ClientDto clientDto3 = new ClientDto();
 
   public static final ClientIdDto clientIdDto = new ClientIdDto();
+  public static final ClientIdDto clientIdDto2 = new ClientIdDto();
   public static final ClientIdDto clientWrongIdDto = new ClientIdDto();
 
   public static final OperationSearchDto operationSearchDto = new OperationSearchDto();
@@ -67,6 +68,7 @@ public class EntityServiceTestData {
     clientDto3.setInn("2315410093219");
 
     clientIdDto.setId("95471");
+    clientIdDto2.setId("80302");
     clientWrongIdDto.setId("777777777777");
 
     operationSearchDto.setAccountNumber("40817810853110005823");

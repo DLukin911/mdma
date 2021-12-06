@@ -2,10 +2,13 @@ package ru.filit.mdma.dm.service;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
+import static ru.filit.mdma.dm.testdata.EntityRepositoryTestData.newContact;
+import static ru.filit.mdma.dm.testdata.EntityRepositoryTestData.noClientContact;
 import static ru.filit.mdma.dm.testdata.EntityServiceTestData.accountNumberDto;
 import static ru.filit.mdma.dm.testdata.EntityServiceTestData.accountNumberDtoWrong;
 import static ru.filit.mdma.dm.testdata.EntityServiceTestData.clientDto1;
 import static ru.filit.mdma.dm.testdata.EntityServiceTestData.clientIdDto;
+import static ru.filit.mdma.dm.testdata.EntityServiceTestData.clientIdDto2;
 import static ru.filit.mdma.dm.testdata.EntityServiceTestData.clientSearchDto;
 import static ru.filit.mdma.dm.testdata.EntityServiceTestData.clientSearchDtoNull;
 import static ru.filit.mdma.dm.testdata.EntityServiceTestData.clientSearchDtoTwoEquals;
@@ -16,13 +19,17 @@ import static ru.filit.mdma.dm.testdata.EntityServiceTestData.operationDto3;
 import static ru.filit.mdma.dm.testdata.EntityServiceTestData.operationSearchDto;
 import static ru.filit.mdma.dm.testdata.EntityServiceTestData.operationSearchDtoWrong;
 
+import com.fasterxml.jackson.core.type.TypeReference;
+import java.io.IOException;
 import java.util.List;
 import org.junit.Assert;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import ru.filit.mdma.dm.AbstractTest;
+import ru.filit.mdma.dm.util.FileUtil;
 import ru.filit.mdma.dm.util.exception.NotFoundException;
+import ru.filit.oas.dm.model.Contact;
 import ru.filit.oas.dm.web.dto.AccountDto;
 import ru.filit.oas.dm.web.dto.ClientDto;
 import ru.filit.oas.dm.web.dto.ContactDto;
@@ -33,6 +40,18 @@ class EntityServiceTest extends AbstractTest {
 
   @Autowired
   private EntityService entityService;
+
+  private List<Contact> contactCache;
+
+  {
+    try {
+      contactCache = FileUtil.getMapper()
+          .readValue(FileUtil.getContactsFile(), new TypeReference<List<Contact>>() {
+          });
+    } catch (IOException e) {
+      e.printStackTrace();
+    }
+  }
 
   @Test
   void testShouldGetClientDtoForRequestData() {
@@ -61,10 +80,11 @@ class EntityServiceTest extends AbstractTest {
 
   @Test
   void testShouldGetContactDtoForRequestData() {
-    List<ContactDto> contactDtoList = entityService.getContact(clientIdDto);
-    assertTrue(contactDtoList.size() == 2);
-    Assert.assertEquals(contactDtoList.get(0).getShortcut(), "4567");
-    Assert.assertEquals(contactDtoList.get(1).getShortcut(), "e@mail.ru");
+    List<ContactDto> contactDtoList = entityService.getContact(clientIdDto2);
+    assertTrue(contactDtoList.size() == 3);
+    Assert.assertEquals(contactDtoList.get(0).getShortcut(), "6329");
+    Assert.assertEquals(contactDtoList.get(1).getShortcut(), "5208");
+    Assert.assertEquals(contactDtoList.get(2).getShortcut(), "d@mail.ru");
   }
 
   @Test()
@@ -139,5 +159,27 @@ class EntityServiceTest extends AbstractTest {
   void testShouldThrowsExceptionForRequestDataWhenRequestAccNumNull() {
     Assertions.assertThrows(NotFoundException.class,
         () -> entityService.getAccountBalance(null));
+  }
+
+  @Test
+  void testShouldSaveContactForRequestData() {
+    ContactDto contactDto = entityService.saveContact(newContact);
+    try {
+      FileUtil.getMapper().writeValue(FileUtil.getContactsFile(), contactCache);
+    } catch (IOException e) {
+      e.printStackTrace();
+    }
+    assertEquals("+79805243600", contactDto.getValue());
+  }
+
+  @Test()
+  void testShouldThrowsExceptionForSaveContactWhenContactDtoNull() {
+    Assertions.assertThrows(NotFoundException.class,
+        () -> entityService.saveContact(null));
+  }
+
+  @Test()
+  void testShouldReturnNullWhenSaveContactAndClientIdNotFound() {
+    assertTrue(entityService.saveContact(noClientContact) == null);
   }
 }

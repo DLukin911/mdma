@@ -17,6 +17,7 @@ import ru.filit.oas.dm.model.Account;
 import ru.filit.oas.dm.model.Client;
 import ru.filit.oas.dm.model.Contact;
 import ru.filit.oas.dm.model.Operation;
+import ru.filit.oas.dm.web.dto.ContactDto;
 
 public class EntityRepositoryTestData {
 
@@ -37,6 +38,10 @@ public class EntityRepositoryTestData {
   public static final Operation operation2 = new Operation();
   public static final Operation operation3 = new Operation();
   public static final List<Operation> operationList = new ArrayList<>();
+
+  public static final ContactDto newContact = new ContactDto();
+  public static final ContactDto updateContact = new ContactDto();
+  public static final ContactDto noClientContact = new ContactDto();
 
   static {
     client1.setId("95471");
@@ -70,15 +75,15 @@ public class EntityRepositoryTestData {
     clientList.add(client2);
     clientList.add(client3);
 
-    contactPhoneClient.setId("38523");
-    contactPhoneClient.setClientId("95471");
+    contactPhoneClient.setId("11744");
+    contactPhoneClient.setClientId("76628");
     contactPhoneClient.setType(PHONE);
-    contactPhoneClient.setValue("+79161234567");
+    contactPhoneClient.setValue("+79052854934");
 
-    contactEmailClient.setId("63781");
-    contactEmailClient.setClientId("95471");
+    contactEmailClient.setId("11744");
+    contactEmailClient.setClientId("76628");
     contactEmailClient.setType(EMAIL);
-    contactEmailClient.setValue("voroshilovke@mail.ru");
+    contactEmailClient.setValue("danisimov@gmail.com");
 
     contactList.add(contactPhoneClient);
     contactList.add(contactEmailClient);
@@ -123,5 +128,19 @@ public class EntityRepositoryTestData {
     operationList.add(operation1);
     operationList.add(operation2);
     operationList.add(operation3);
+
+    newContact.setClientId("95471");
+    newContact.setType("PHONE");
+    newContact.setValue("+79805243600");
+
+    updateContact.setId("63781");
+    updateContact.setClientId("95471");
+    updateContact.setType("EMAIL");
+    updateContact.setValue("pirozkov@mail.ru");
+
+    noClientContact.setId("95471");
+    noClientContact.setClientId("23232323");
+    noClientContact.setType("PHONE");
+    noClientContact.setValue("hi@mail.ru");
   }
 }

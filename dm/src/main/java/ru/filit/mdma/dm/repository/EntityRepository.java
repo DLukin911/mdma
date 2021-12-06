@@ -1,11 +1,16 @@
 package ru.filit.mdma.dm.repository;
 
+import static ru.filit.oas.dm.model.Contact.TypeEnum.EMAIL;
+
 import com.fasterxml.jackson.core.type.TypeReference;
 import java.io.IOException;
 import java.math.BigDecimal;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -17,7 +22,9 @@ import ru.filit.oas.dm.model.Account;
 import ru.filit.oas.dm.model.AccountBalance;
 import ru.filit.oas.dm.model.Client;
 import ru.filit.oas.dm.model.Contact;
+import ru.filit.oas.dm.model.Contact.TypeEnum;
 import ru.filit.oas.dm.model.Operation;
+import ru.filit.oas.dm.web.dto.ContactDto;
 
 /**
  * Класс для работы с базами данных на основе YAML файлов.
@@ -25,6 +32,8 @@ import ru.filit.oas.dm.model.Operation;
 @Slf4j
 @Repository
 public class EntityRepository {
+
+  private static int contactId = 1;
 
   private static Map<String, Client> clientCache = new HashMap<>();
   private static List<Contact> contactCache = new ArrayList<>();
@@ -99,7 +108,9 @@ public class EntityRepository {
     AccountBalance finalAccountBalance = accountBalance;
     return operationCache.stream()
         .filter(operation -> operation.getAccountNumber().equals(accNumber)
-            && operation.getOperDate() >= finalAccountBalance.getBalanceDate())
+            && operation.getOperDate() >= finalAccountBalance.getBalanceDate()
+            && operation.getOperDate() <= LocalDateTime.now().atZone(ZoneId.of("Europe/Moscow"))
+            .toInstant().toEpochMilli())
         .collect(Collectors.toList());
   }
 
@@ -131,6 +142,62 @@ public class EntityRepository {
         .filter(accountBalance -> accountBalance.getAccountNumber().equals(accNumber))
         .findAny()
         .orElse(null);
+  }
+
+  /**
+   * Обновление старого Контакта клиента или создание нового, если не найдено предыдущих значений.
+   */
+  public Contact saveContact(ContactDto contactDto) {
+    log.info("Сохранение нового Контакта Клиента: {}", contactDto);
+
+    List<Contact> contactList = getContactByClientId(contactDto.getClientId());
+
+    if (contactList.isEmpty()) {
+      return null;
+    }
+
+    ContactDto finalContactDto = contactDto;
+    Contact resultContact = contactList.stream()
+        .filter(contact -> contact.getId().equals(finalContactDto.getId())).findAny().orElse(null);
+    if (resultContact == null && contactDto.getId() == null) {
+      resultContact = new Contact();
+      resultContact.setId(String.valueOf(100_000_000 + contactId));
+      contactId++;
+      resultContact.setClientId(contactDto.getClientId());
+      if (contactDto.getType().equals("PHONE")) {
+        resultContact.setType(TypeEnum.PHONE);
+      } else if (contactDto.getType().equals("EMAIL")) {
+        resultContact.setType(EMAIL);
+      }
+      resultContact.setValue(contactDto.getValue());
+      contactCache.add(resultContact);
+      try {
+        FileUtil.getMapper().writeValue(FileUtil.getContactsFile(), contactCache);
+      } catch (IOException e) {
+        e.printStackTrace();
+      }
+      return resultContact;
+    }
+    if (contactDto.getType().equals("PHONE")) {
+      resultContact.setType(TypeEnum.PHONE);
+    } else if (contactDto.getType().equals("EMAIL")) {
+      resultContact.setType(EMAIL);
+    }
+    resultContact.setValue(contactDto.getValue());
+    Iterator<Contact> iter = contactCache.iterator();
+    while (iter.hasNext()) {
+      if (iter.next().getId().equals(resultContact.getId())) {
+        iter.remove();
+      }
+    }
+    contactCache.add(resultContact);
+    try {
+      FileUtil.getMapper().writeValue(FileUtil.getContactsFile(), contactCache);
+    } catch (IOException e) {
+      e.printStackTrace();
+    }
+
+    return resultContact;
   }
 
   /**

@@ -7,10 +7,11 @@ public class EntityWebTestData {
       + "\"passportSeries\":\"6215\",\"passportNumber\":\"352617\",\"inn\":\"773626104512\","
       + "\"address\":\" г.Москва, ул. Ленина, дом 1\"}]";
 
-  public static final String jsonContact1 = "[{\"id\":\"38523\",\"clientId\":\"95471\","
-      + "\"type\":\"PHONE\",\"value\":\"+79161234567\",\"shortcut\":\"4567\"},{\"id\":\"63781\","
-      + "\"clientId\":\"95471\",\"type\":\"EMAIL\",\"value\":\"voroshilovke@mail.ru\","
-      + "\"shortcut\":\"e@mail.ru\"}]";
+  public static final String jsonContact1 = "[{\"id\":\"34028\",\"clientId\":\"80302\","
+      + "\"type\":\"PHONE\",\"value\":\"+79079256329\",\"shortcut\":\"6329\"},{\"id\":\"42906\","
+      + "\"clientId\":\"80302\",\"type\":\"PHONE\",\"value\":\"+79633505208\","
+      + "\"shortcut\":\"5208\"},{\"id\":\"45152\",\"clientId\":\"80302\",\"type\":\"EMAIL\","
+      + "\"value\":\"anisimov.ad@mail.ru\",\"shortcut\":\"d@mail.ru\"}]";
 
   public static final String jsonAccount1 = "[{\"number\":\"40817810452010063617\","
       + "\"clientId\":\"95471\",\"type\":\"PAYMENT\",\"currency\":\"RUR\",\"status\":\"CLOSED\","
@@ -29,4 +30,10 @@ public class EntityWebTestData {
       + "\"description\":\"МУП Водоканал. Оплата услуг\"}]";
 
   public static final String jsonBalanceAmount = "{\"balanceAmount\":\"60500.00\"}";
+
+  public static final String jsonNewContactSave = "{\"id\":\"100000002\",\"clientId\":\"95471\","
+      + "\"type\":\"PHONE\",\"value\":\"+79805243600\",\"shortcut\":\"3600\"}";
+
+  public static final String jsonUpdateContactSave = "{\"id\":\"38523\",\"clientId\":\"95471\","
+      + "\"type\":\"PHONE\",\"value\":\"+79805243600\",\"shortcut\":\"3600\"}";
 }
