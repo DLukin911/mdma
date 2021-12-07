@@ -23,6 +23,7 @@ import ru.filit.oas.crm.web.dto.ClientSearchDto;
 import ru.filit.oas.crm.web.dto.ContactDto;
 import ru.filit.oas.crm.web.dto.LoanPaymentDto;
 import ru.filit.oas.crm.web.dto.OperationDto;
+import ru.filit.oas.crm.web.dto.OperationSearchDto;
 
 /**
  * Реализация API интерфейса Клиента.
@@ -73,13 +74,15 @@ public class ClientApiController implements ClientApi {
   }
 
   /**
-   * POST /client : Получение информации о клиенте
+   * Получение информации о клиенте.
    *
-   * @param clientIdDto clientId (required)
    * @return Информации о клиенте найдена (status code 200) or Клиент не найден (status code 400)
    */
   @Override
   public ResponseEntity<ClientDto> getClient(ClientIdDto clientIdDto) {
+    log.info("Поиск информации о клиенте по входящим данным: {}", clientIdDto);
+
+    ClientDto clientDto = new ClientDto();
     return null;
   }
 
@@ -95,14 +98,36 @@ public class ClientApiController implements ClientApi {
   }
 
   /**
-   * POST /client/account/last-operations : Получение информации о последних операциях
-   *
-   * @param accountNumberDto (required)
-   * @return Информации о последних операциях найдена (status code 200)
+   * Получение информации о последних трех операциях.
    */
+  @PostMapping("/account/last-operations")
   @Override
   public ResponseEntity<List<OperationDto>> getLastOperations(AccountNumberDto accountNumberDto) {
-    return null;
+    log.info("Поиск последних операций по счету: {}", accountNumberDto);
+
+    final String baseUrl = "http://localhost:8081/dm/client/account/operation";
+    URI uri = null;
+    try {
+      uri = new URI(baseUrl);
+    } catch (URISyntaxException e) {
+      e.printStackTrace();
+    }
+    OperationSearchDto operationSearchDto = new OperationSearchDto();
+    operationSearchDto.setAccountNumber(accountNumberDto.getAccountNumber());
+    operationSearchDto.setQuantity("3");
+    HttpEntity requestEntity = new HttpEntity(operationSearchDto);
+    ResponseEntity<List<OperationDto>> responseEntity = null;
+    try {
+      responseEntity = restTemplate.exchange(uri, HttpMethod.POST, requestEntity,
+          new ParameterizedTypeReference<List<OperationDto>>() {
+          }
+      );
+      log.info("Ответ на запрос получен: {}", responseEntity);
+
+      return responseEntity;
+    } catch (Exception e) {
+      throw new NotFoundException("По данному запросу информация не найдена.");
+    }
   }
 
   /**
@@ -117,13 +142,32 @@ public class ClientApiController implements ClientApi {
   }
 
   /**
-   * POST /client/contact/save : Сохранение контакта клиента
-   *
-   * @param contactDto (required)
-   * @return Контакт клиента сохранен (status code 200) or Клиент не найден (status code 400)
+   * Сохранение контакта клиента
    */
+  @PostMapping("/contact/save")
   @Override
   public ResponseEntity<ContactDto> saveContact(ContactDto contactDto) {
-    return null;
+    log.info("Данные контакта для сохранения: {}", contactDto);
+
+    final String baseUrl = "http://localhost:8081/dm/client/contact/save";
+    URI uri = null;
+    try {
+      uri = new URI(baseUrl);
+    } catch (URISyntaxException e) {
+      e.printStackTrace();
+    }
+    HttpEntity requestEntity = new HttpEntity(contactDto);
+    ResponseEntity<ContactDto> responseEntity = null;
+    try {
+      responseEntity = restTemplate.exchange(uri, HttpMethod.POST, requestEntity,
+          new ParameterizedTypeReference<ContactDto>() {
+          }
+      );
+      log.info("Cохранение успешно. Ответ получен: {}", responseEntity);
+
+      return responseEntity;
+    } catch (Exception e) {
+      throw new NotFoundException("По данному запросу информация не найдена.");
+    }
   }
 }
