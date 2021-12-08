@@ -182,4 +182,23 @@ public class EntityService {
 
     return contactDtoResult;
   }
+
+  /**
+   * Получение сущности Клиента по Id.
+   */
+  public ClientDto getClientById(ClientIdDto clientIdDto) {
+    log.info("Получение информации о Клиенте по его ID в Entity Repository, параметры запроса: {}",
+        clientIdDto);
+
+    if (clientIdDto == null) {
+      throw new NotFoundException("По данному запросу информация не найдена.");
+    }
+    Client client = entityRepository.getClientById(clientIdDto.getId());
+    if (client == null) {
+      throw new NotFoundException("По данному клиенту информация не найдена.");
+    }
+    ClientDto clientDto = MapperUtil.INSTANCE.convert(client);
+
+    return clientDto;
+  }
 }

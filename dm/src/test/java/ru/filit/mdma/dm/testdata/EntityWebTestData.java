@@ -31,9 +31,11 @@ public class EntityWebTestData {
 
   public static final String jsonBalanceAmount = "{\"balanceAmount\":\"60500.00\"}";
 
-  public static final String jsonNewContactSave = "{\"id\":\"100000002\",\"clientId\":\"95471\","
-      + "\"type\":\"PHONE\",\"value\":\"+79805243600\",\"shortcut\":\"3600\"}";
-
   public static final String jsonUpdateContactSave = "{\"id\":\"38523\",\"clientId\":\"95471\","
       + "\"type\":\"PHONE\",\"value\":\"+79805243600\",\"shortcut\":\"3600\"}";
+
+  public static final String jsonClientGetById = "{\"id\":\"95471\",\"lastname\":\"Ворошилов\","
+      + "\"firstname\":\"Клим\",\"patronymic\":\"Ефимович\",\"birthDate\":\"1900-04-28\","
+      + "\"passportSeries\":\"6215\",\"passportNumber\":\"352617\",\"inn\":\"773626104512\","
+      + "\"address\":\" г.Москва, ул. Ленина, дом 1\"}";
 }

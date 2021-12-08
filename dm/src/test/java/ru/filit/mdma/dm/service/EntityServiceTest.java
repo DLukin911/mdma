@@ -183,4 +183,21 @@ class EntityServiceTest extends AbstractTest {
     Assertions.assertThrows(NotFoundException.class,
         () -> entityService.saveContact(noClientContact));
   }
+
+  @Test
+  void testShouldGetClientByIdForRequestId() {
+    assertEquals(clientDto1, entityService.getClientById(clientIdDto));
+  }
+
+  @Test()
+  void testShouldThrowsExceptionForGetClientByIdWhenRequestIdWrong() {
+    Assertions.assertThrows(NotFoundException.class,
+        () -> entityService.getClientById(clientWrongIdDto));
+  }
+
+  @Test()
+  void testShouldThrowsExceptionForGetClientByIdWhenClientIdDtoNull() {
+    Assertions.assertThrows(NotFoundException.class,
+        () -> entityService.getClientById(null));
+  }
 }

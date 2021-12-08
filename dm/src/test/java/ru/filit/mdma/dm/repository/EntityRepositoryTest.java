@@ -118,4 +118,19 @@ class EntityRepositoryTest extends AbstractTest {
   void testShouldReturnNullWhenClientIdNotFound() {
     assertEquals(null, entityRepository.saveContact(noClientContact));
   }
+
+  @Test
+  void testShouldGetClientByIdFromYamlDatabase() {
+    assertEquals(client1, entityRepository.getClientById(client1.getId()));
+  }
+
+  @Test
+  void testShouldReturnNullWhenGetClientByIdAndClientIdWrongId() {
+    assertEquals(null, entityRepository.getClientById("7777777"));
+  }
+
+  @Test
+  void testShouldReturnNullWhenGetClientByIdAndClientIdDtoNull() {
+    assertEquals(null, entityRepository.getClientById(null));
+  }
 }

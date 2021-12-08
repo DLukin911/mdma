@@ -168,4 +168,22 @@ public class ClientApiController implements ClientApi {
 
     return new ResponseEntity<>(contactDtoResult, HttpStatus.OK);
   }
+
+  /**
+   * Запрос информации о Клиенте по его ID.
+   */
+  @PostMapping("/info")
+  @Override
+  public ResponseEntity<ClientDto> getClientInfo(ClientIdDto clientIdDto) {
+    log.info("Поиск информации о Клиенте по входящим данным: {}", clientIdDto);
+
+    ClientDto clientDto = entityService.getClientById(clientIdDto);
+    if (clientDto == null) {
+      log.info("Информация по Клиенту не найдена.");
+      return ResponseEntity.badRequest().body(clientDto);
+    }
+    log.info("Информация по Клиенту успешно найдена {}", clientDto);
+
+    return new ResponseEntity<>(clientDto, HttpStatus.OK);
+  }
 }

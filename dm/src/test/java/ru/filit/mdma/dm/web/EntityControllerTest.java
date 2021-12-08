@@ -6,6 +6,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static ru.filit.mdma.dm.testdata.EntityWebTestData.jsonAccount1;
 import static ru.filit.mdma.dm.testdata.EntityWebTestData.jsonBalanceAmount;
 import static ru.filit.mdma.dm.testdata.EntityWebTestData.jsonClient1;
+import static ru.filit.mdma.dm.testdata.EntityWebTestData.jsonClientGetById;
 import static ru.filit.mdma.dm.testdata.EntityWebTestData.jsonContact1;
 import static ru.filit.mdma.dm.testdata.EntityWebTestData.jsonOperationList;
 import static ru.filit.mdma.dm.testdata.EntityWebTestData.jsonUpdateContactSave;
@@ -182,6 +183,25 @@ class EntityControllerTest extends AbstractControllerTest {
   void saveContactNotFoundClient() throws Exception {
     perform(MockMvcRequestBuilders.post(REST_URL + "/contact/save")
         .contentType(MediaType.APPLICATION_JSON))
+        .andDo(print())
+        .andExpect(status().isBadRequest());
+  }
+
+  @Test
+  void getClientById() throws Exception {
+    perform(MockMvcRequestBuilders.post(REST_URL + "/info").content("{\n"
+        + "\"id\": \"95471\"\n"
+        + "}").contentType(MediaType.APPLICATION_JSON))
+        .andDo(print())
+        .andExpect(status().isOk())
+        .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
+        .andExpect(content().encoding(StandardCharsets.UTF_8))
+        .andExpect(content().string(jsonClientGetById));
+  }
+
+  @Test
+  void getClientByIdNotFound() throws Exception {
+    perform(MockMvcRequestBuilders.post(REST_URL + "/info").contentType(MediaType.APPLICATION_JSON))
         .andDo(print())
         .andExpect(status().isBadRequest());
   }

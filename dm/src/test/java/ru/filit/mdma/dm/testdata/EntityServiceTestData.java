@@ -48,7 +48,7 @@ public class EntityServiceTestData {
     clientDto1.setPassportSeries("6215");
     clientDto1.setPassportNumber("352617");
     clientDto1.setInn("773626104512");
-    clientDto1.setAddress("Москва, ул. Ленина, дом 1");
+    clientDto1.setAddress(" г.Москва, ул. Ленина, дом 1");
 
     clientDto2.setId("100240");
     clientDto2.setLastname("Петров");

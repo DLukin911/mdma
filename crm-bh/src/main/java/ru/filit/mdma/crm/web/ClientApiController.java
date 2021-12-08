@@ -15,12 +15,14 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.RestTemplate;
 import ru.filit.mdma.crm.util.exception.NotFoundException;
 import ru.filit.oas.crm.web.controller.ClientApi;
+import ru.filit.oas.crm.web.dto.AccountDto;
 import ru.filit.oas.crm.web.dto.AccountNumberDto;
 import ru.filit.oas.crm.web.dto.ClientDto;
 import ru.filit.oas.crm.web.dto.ClientIdDto;
 import ru.filit.oas.crm.web.dto.ClientLevelDto;
 import ru.filit.oas.crm.web.dto.ClientSearchDto;
 import ru.filit.oas.crm.web.dto.ContactDto;
+import ru.filit.oas.crm.web.dto.CurrentBalanceDto;
 import ru.filit.oas.crm.web.dto.LoanPaymentDto;
 import ru.filit.oas.crm.web.dto.OperationDto;
 import ru.filit.oas.crm.web.dto.OperationSearchDto;
@@ -74,16 +76,68 @@ public class ClientApiController implements ClientApi {
   }
 
   /**
-   * Получение информации о клиенте.
-   *
-   * @return Информации о клиенте найдена (status code 200) or Клиент не найден (status code 400)
+   * Получение информации о клиенте по его Id.
    */
+  @PostMapping
   @Override
   public ResponseEntity<ClientDto> getClient(ClientIdDto clientIdDto) {
     log.info("Поиск информации о клиенте по входящим данным: {}", clientIdDto);
 
-    ClientDto clientDto = new ClientDto();
-    return null;
+    final String clientInfoUrl = "http://localhost:8081/dm/client/info";
+    final String clientContactUrl = "http://localhost:8081/dm/client/contact";
+    final String clientAccountUrl = "http://localhost:8081/dm/client/account";
+    final String accountBalanceUrl = "http://localhost:8081/dm/client/account/balance";
+    URI uriClientInfo = null;
+    URI uriClientContact = null;
+    URI uriClientAccount = null;
+    URI uriClientBalance = null;
+    try {
+      uriClientInfo = new URI(clientInfoUrl);
+      uriClientContact = new URI(clientContactUrl);
+      uriClientAccount = new URI(clientAccountUrl);
+      uriClientBalance = new URI(accountBalanceUrl);
+    } catch (URISyntaxException e) {
+      e.printStackTrace();
+    }
+    HttpEntity requestEntityIdDto = new HttpEntity(clientIdDto);
+    ResponseEntity<ClientDto> responseEntityClientDto = null;
+    List<ContactDto> contactDtoList = null;
+    List<AccountDto> accountDtoList = null;
+    CurrentBalanceDto currentBalanceDto = null;
+    try {
+      responseEntityClientDto = restTemplate.exchange(uriClientInfo, HttpMethod.POST,
+          requestEntityIdDto, new ParameterizedTypeReference<ClientDto>() {
+          }
+      );
+      contactDtoList = restTemplate.exchange(uriClientContact, HttpMethod.POST,
+          requestEntityIdDto,
+          new ParameterizedTypeReference<List<ContactDto>>() {
+          }
+      ).getBody();
+      accountDtoList = restTemplate.exchange(uriClientAccount, HttpMethod.POST,
+          requestEntityIdDto,
+          new ParameterizedTypeReference<List<AccountDto>>() {
+          }
+      ).getBody();
+      for (AccountDto accountDto : accountDtoList) {
+        AccountNumberDto accountNumberDto = new AccountNumberDto();
+        accountNumberDto.setAccountNumber(accountDto.getNumber());
+        currentBalanceDto = restTemplate.exchange(uriClientBalance, HttpMethod.POST,
+            new HttpEntity(accountNumberDto),
+            new ParameterizedTypeReference<CurrentBalanceDto>() {
+            }
+        ).getBody();
+        accountDto.setBalanceAmount(currentBalanceDto.getBalanceAmount());
+      }
+      responseEntityClientDto.getBody().setContacts(contactDtoList);
+      responseEntityClientDto.getBody().setAccounts(accountDtoList);
+
+      log.info("Ответ на запрос получен: {}", responseEntityClientDto);
+
+      return responseEntityClientDto;
+    } catch (Exception e) {
+      throw new NotFoundException("По данному запросу информация не найдена.");
+    }
   }
 
   /**

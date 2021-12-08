@@ -79,6 +79,23 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/CurrentBalanceDto"
+  /client/info:
+    post:
+      summary: Запрос клиента по Id
+      operationId: getClientInfo
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/ClientIdDto"
+        required: true
+      responses:
+        '200':
+          description: Клиент по Id найден
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ClientDto"
   /client/account/operation:
     post:
       summary: Запрос операций по счету
