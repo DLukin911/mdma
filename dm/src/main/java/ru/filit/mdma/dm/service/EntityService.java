@@ -1,5 +1,9 @@
 package ru.filit.mdma.dm.service;
 
+import static ru.filit.oas.dm.model.ClientLevel.Gold;
+import static ru.filit.oas.dm.model.ClientLevel.Low;
+import static ru.filit.oas.dm.model.ClientLevel.Middle;
+import static ru.filit.oas.dm.model.ClientLevel.Silver;
 import static ru.filit.oas.dm.model.Operation.TypeEnum.EXPENSE;
 import static ru.filit.oas.dm.model.Operation.TypeEnum.RECEIPT;
 
@@ -17,6 +21,7 @@ import ru.filit.mdma.dm.util.exception.NotFoundException;
 import ru.filit.oas.dm.model.Account;
 import ru.filit.oas.dm.model.AccountBalance;
 import ru.filit.oas.dm.model.Client;
+import ru.filit.oas.dm.model.ClientLevel;
 import ru.filit.oas.dm.model.Contact;
 import ru.filit.oas.dm.model.Operation;
 import ru.filit.oas.dm.web.dto.AccountDto;
@@ -202,5 +207,22 @@ public class EntityService {
     ClientDto clientDto = MapperUtil.INSTANCE.convert(client);
 
     return clientDto;
+  }
+
+  /**
+   * Подсчет уровня Клиента.
+   */
+  private ClientLevel calculationClientLevel(BigDecimal amount) {
+    Long longAmount = amount.longValue();
+    ClientLevel clientLevel = Low;
+    if (longAmount >= 30_000 && longAmount < 300_000) {
+      clientLevel = Middle;
+    } else if (longAmount >= 300_000 && longAmount < 1_000_000) {
+      clientLevel = Silver;
+    } else if (longAmount >= 1_000_000) {
+      clientLevel = Gold;
+    }
+
+    return clientLevel;
   }
 }

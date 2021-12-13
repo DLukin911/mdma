@@ -18,6 +18,8 @@ import static ru.filit.mdma.dm.testdata.EntityRepositoryTestData.updateContact;
 import com.fasterxml.jackson.core.type.TypeReference;
 import java.io.IOException;
 import java.math.BigDecimal;
+import java.time.LocalDate;
+import java.time.ZoneId;
 import java.util.List;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -110,6 +112,19 @@ class EntityRepositoryTest extends AbstractTest {
     } catch (IOException e) {
       e.printStackTrace();
     }
+  }
+
+  @Test
+  void testShouldGetAccountAndAvgBalanceFromYamlDatabase() {
+    assertEquals("{40817810670114037905=-5769.0, 40817810200159961136=-13883.2}",
+        entityRepository.getClientLevel("80302", LocalDate.now(ZoneId.of("Europe/Moscow")))
+            .toString());
+  }
+
+  @Test
+  void testShouldReturnNullWhenClientIdNotFoundByClientLevel() {
+    assertEquals(null, entityRepository.getClientLevel("777777",
+        LocalDate.now(ZoneId.of("Europe/Moscow"))));
   }
 
   @Test

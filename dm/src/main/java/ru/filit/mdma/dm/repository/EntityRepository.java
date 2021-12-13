@@ -1,10 +1,13 @@
 package ru.filit.mdma.dm.repository;
 
+import static ru.filit.oas.dm.model.Account.StatusEnum.ACTIVE;
 import static ru.filit.oas.dm.model.Contact.TypeEnum.EMAIL;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import java.io.IOException;
 import java.math.BigDecimal;
+import java.time.Instant;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.util.ArrayList;
@@ -18,6 +21,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Repository;
 import ru.filit.mdma.dm.util.FileUtil;
+import ru.filit.mdma.dm.util.exception.NotFoundException;
 import ru.filit.oas.dm.model.Account;
 import ru.filit.oas.dm.model.AccountBalance;
 import ru.filit.oas.dm.model.Client;
@@ -115,31 +119,26 @@ public class EntityRepository {
   }
 
   /**
-   * Получение уровня клиента за последние 30 дней по его активным счетам.
+   * Получение уровня и среднего баланса клиента за последние 30 дней по его активным счетам.
    */
-/*  public ClientLevel getClientLevel(String id, Long currentDate) {
+  public Map<String, BigDecimal> getClientLevel(String id, LocalDate dateOfEndPeriod) {
     log.info("Запрос уровня клиента за последние 30 дней по его активным счетам: {}",
         id);
-    Long day30ToLong = 2592000000L;
+
     List<Account> accountList = getAccountByClientId(id).stream()
-        .filter(account -> account.getStatus().equals(
-            ACTIVE)).collect(Collectors.toList());
-    if (accountList == null) {
+        .filter(account -> account.getStatus().equals(ACTIVE)).collect(Collectors.toList());
+    if (accountList.size() == 0) {
       log.info("Активные аккаунты по данному запросу не найдены в БД");
       return null;
     }
-    ClientLevel clientLevel = Low;
-    List<Long> totalBalanceByEveryDay;
+    Map<String, BigDecimal> resultMap = new HashMap<>();
+
     for (Account account : accountList) {
-      totalBalanceByEveryDay = new ArrayList<>();
-      List<Operation> operationList = operationCache.stream()
-          .filter(operation -> (operation.getOperDate() >= (currentDate - day30ToLong))
-              && (operation.getOperDate() <= currentDate))
-          .
+      resultMap.put(account.getNumber(), calculatingAvgAmount(account, dateOfEndPeriod));
     }
 
-    return null;
-  }*/
+    return resultMap;
+  }
 
   /**
    * Получение списка сущностей Операции клиента по номеру счета и ограничению по количеству
@@ -297,5 +296,70 @@ public class EntityRepository {
     } catch (IOException e) {
       e.printStackTrace();
     }
+  }
+
+  /**
+   * Расчет среднего баланса за последние 30 дней по операциям.
+   */
+  private BigDecimal calculatingAvgAmount(Account account, LocalDate dateOfEndPeriod) {
+    BigDecimal avgAmount = BigDecimal.ZERO;
+
+    LocalDate dateOfStartPeriod = dateOfEndPeriod.minusDays(30);
+    LocalDate dateOpenAccount = convertToLocalDate(account.getOpenDate());
+    if (dateOpenAccount.isAfter(dateOfEndPeriod)) {
+      dateOfStartPeriod = convertToLocalDate(account.getOpenDate());
+    }
+    LocalDate finalDateOfStartPeriod = dateOfStartPeriod;
+    List<Operation> operationList = operationCache.stream()
+        .filter(operation -> operation.getAccountNumber().equals(account.getNumber())
+            && convertToLocalDate(operation.getOperDate()).isAfter(finalDateOfStartPeriod)
+            && convertToLocalDate(operation.getOperDate()).isBefore(dateOfEndPeriod))
+        .collect(Collectors.toList());
+
+    List<BigDecimal> balanceListBy30Day = new ArrayList<>();
+    List<Operation> operationListByDay;
+    for (LocalDate thisDay = dateOfStartPeriod; thisDay.isBefore(dateOfEndPeriod);
+        thisDay = thisDay.plusDays(1)) {
+      BigDecimal balanceByDay = BigDecimal.ZERO;
+      LocalDate finalThisDay = thisDay;
+      operationListByDay = operationList.stream()
+          .filter(operation -> convertToLocalDate(operation.getOperDate()).equals(finalThisDay))
+          .collect(Collectors.toList());
+      for (Operation operation : operationListByDay) {
+        switch (operation.getType().getValue()) {
+          case ("RECEIPT"):
+            balanceByDay = balanceByDay.add(operation.getAmount());
+            break;
+          case ("EXPENSE"):
+            balanceByDay = balanceByDay.subtract(operation.getAmount());
+            break;
+          default:
+            throw new IllegalStateException("Unexpected value: " + operation.getType());
+        }
+      }
+      if (balanceByDay.compareTo(BigDecimal.ZERO) != 0) {
+        balanceListBy30Day.add(balanceByDay);
+      }
+    }
+
+    for (BigDecimal amountByDay : balanceListBy30Day) {
+      avgAmount = avgAmount.add(amountByDay);
+    }
+    if (balanceListBy30Day.size() == 0) {
+      throw new NotFoundException("Нет операций по данным датам");
+    }
+    avgAmount = avgAmount.divide(BigDecimal.valueOf(balanceListBy30Day.size()));
+
+    return avgAmount;
+  }
+
+  /**
+   * Конвертация даты из long в LocalDate.
+   */
+  private LocalDate convertToLocalDate(Long dateLong) {
+
+    return Instant.ofEpochSecond(dateLong)
+        .atZone(ZoneId.of("Europe/Moscow"))
+        .toLocalDate();
   }
 }
