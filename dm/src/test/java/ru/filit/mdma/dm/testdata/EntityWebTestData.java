@@ -13,23 +13,22 @@ public class EntityWebTestData {
       + "\"shortcut\":\"5208\"},{\"id\":\"45152\",\"clientId\":\"80302\",\"type\":\"EMAIL\","
       + "\"value\":\"anisimov.ad@mail.ru\",\"shortcut\":\"d@mail.ru\"}]";
 
-  public static final String jsonAccount1 = "[{\"number\":\"40817810452010063617\","
-      + "\"clientId\":\"95471\",\"type\":\"PAYMENT\",\"currency\":\"RUR\",\"status\":\"CLOSED\","
-      + "\"openDate\":\"2015-05-15\",\"closeDate\":\"2020-02-22\",\"shortcut\":\"3617\"},"
-      + "{\"number\":\"40817810853110005823\",\"clientId\":\"95471\",\"type\":\"OVERDRAFT\","
-      + "\"currency\":\"RUR\",\"status\":\"ACTIVE\",\"openDate\":\"2018-11-16\","
-      + "\"deferment\":\"20\",\"shortcut\":\"5823\"}]";
+  public static final String jsonAccount1 = "[{\"number\":\"40817810220135711049\","
+      + "\"clientId\":\"74914\",\"type\":\"PAYMENT\",\"currency\":\"RUR\",\"status\":\"CLOSED\","
+      + "\"openDate\":\"2021-01-15\",\"closeDate\":\"2021-06-09\",\"shortcut\":\"1049\"},"
+      + "{\"number\":\"40817810110167668404\",\"clientId\":\"74914\",\"type\":\"PAYMENT\","
+      + "\"currency\":\"RUR\",\"status\":\"ACTIVE\",\"openDate\":\"2021-08-11\","
+      + "\"shortcut\":\"8404\"}]";
 
-  public static final String jsonOperationList = "[{\"type\":\"RECEIPT\","
-      + "\"accountNumber\":\"40817810853110005823\",\"operDate\":\"2021-10-19T12:36:13\","
-      + "\"amount\":\"5000.00\",\"description\":\"VSP 5311 MOSKVA RUS\"},{\"type\":\"EXPENSE\","
-      + "\"accountNumber\":\"40817810853110005823\",\"operDate\":\"2021-10-12T18:15:12\","
-      + "\"amount\":\"4926.59\",\"description\":\"YM OZON 1 GOROD MOSKVA RUS\"},"
-      + "{\"type\":\"EXPENSE\",\"accountNumber\":\"40817810853110005823\","
-      + "\"operDate\":\"2021-09-09T15:40:11\",\"amount\":\"215.00\","
-      + "\"description\":\"МУП Водоканал. Оплата услуг\"}]";
+  public static final String jsonOperationList = "[{\"type\":\"EXPENSE\","
+      + "\"accountNumber\":\"40817810670114037905\",\"operDate\":\"2021-12-10T03:00:00\","
+      + "\"amount\":\"5645.20\",\"description\":\"Амбарчик. Оплата\"},{\"type\":\"EXPENSE\","
+      + "\"accountNumber\":\"40817810670114037905\",\"operDate\":\"2021-11-27T04:30:00\","
+      + "\"amount\":\"7992.20\",\"description\":\"Амбарчик. Оплата\"},{\"type\":\"EXPENSE\","
+      + "\"accountNumber\":\"40817810670114037905\",\"operDate\":\"2021-11-14T06:00:00\","
+      + "\"amount\":\"3669.60\",\"description\":\"Мострансгаз. Оплата услуг\"}]";
 
-  public static final String jsonBalanceAmount = "{\"balanceAmount\":\"60500.00\"}";
+  public static final String jsonBalanceAmount = "{\"balanceAmount\":\"-15648.00\"}";
 
   public static final String jsonUpdateContactSave = "{\"id\":\"38523\",\"clientId\":\"95471\","
       + "\"type\":\"PHONE\",\"value\":\"+79805243600\",\"shortcut\":\"3600\"}";

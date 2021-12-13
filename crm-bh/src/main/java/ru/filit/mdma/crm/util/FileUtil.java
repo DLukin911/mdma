@@ -12,7 +12,8 @@ import lombok.experimental.UtilityClass;
 public class FileUtil {
 
   private final ObjectMapper mapper = new ObjectMapper(new YAMLFactory());
-  private final PropertiesReaderUtil propsReader = new PropertiesReaderUtil("storage.properties");
+  private final PropertiesReaderUtil propsReader = new PropertiesReaderUtil(
+      "config/storage.properties");
 
   private final String USERS_FILE = propsReader.get("users.path");
   private final File usersFile = new File(USERS_FILE);

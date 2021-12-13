@@ -2,9 +2,6 @@ package ru.filit.mdma.dm.repository;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
-import static ru.filit.mdma.dm.testdata.EntityRepositoryTestData.accountList;
-import static ru.filit.mdma.dm.testdata.EntityRepositoryTestData.accountOneClient;
-import static ru.filit.mdma.dm.testdata.EntityRepositoryTestData.accountTwoClient;
 import static ru.filit.mdma.dm.testdata.EntityRepositoryTestData.client1;
 import static ru.filit.mdma.dm.testdata.EntityRepositoryTestData.client2;
 import static ru.filit.mdma.dm.testdata.EntityRepositoryTestData.client3;
@@ -20,6 +17,7 @@ import static ru.filit.mdma.dm.testdata.EntityRepositoryTestData.updateContact;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import java.io.IOException;
+import java.math.BigDecimal;
 import java.util.List;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -65,16 +63,16 @@ class EntityRepositoryTest extends AbstractTest {
 
   @Test
   void testShouldGetAccountListByClientIdToYamlDatabase() {
-    List<Account> accountListFromFile = entityRepository.getAccountByClientId(client1.getId());
-    assertTrue(accountList.size() == accountListFromFile.size());
-    assertTrue(accountListFromFile.contains(accountOneClient));
-    assertTrue(accountListFromFile.contains(accountTwoClient));
+    List<Account> accountListFromFile = entityRepository.getAccountByClientId("80302");
+    assertEquals(2, accountListFromFile.size());
+    assertEquals(accountListFromFile.get(0).getNumber(), "40817810670114037905");
+    assertEquals(accountListFromFile.get(1).getNumber(), "40817810200159961136");
   }
 
   @Test
   void testShouldGetOperationListToYamlDatabase() {
     List<Operation> operationListFromFile =
-        entityRepository.getOperationListByAccountNumber(operation1.getAccountNumber(), "3");
+        entityRepository.getOperationListByAccountNumber("40817810670114037905", "3");
     assertTrue(operationList.size() == operationListFromFile.size());
     assertEquals(operationListFromFile.get(0).getOperDate(), operation1.getOperDate());
     assertEquals(operationListFromFile.get(1).getOperDate(), operation2.getOperDate());
@@ -84,8 +82,8 @@ class EntityRepositoryTest extends AbstractTest {
   @Test
   void testShouldGetAccountBalanceToYamlDatabase() {
     AccountBalance accountBalanceFromFile =
-        entityRepository.getAccountBalance("40817810452010063617");
-    assertEquals(accountBalanceFromFile.getAccountNumber(), "40817810452010063617");
+        entityRepository.getAccountBalance("40817810670114037905");
+    assertEquals(BigDecimal.valueOf(-10002.8), accountBalanceFromFile.getAmount());
   }
 
   @Test

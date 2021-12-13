@@ -3,6 +3,8 @@ package ru.filit.mdma.dm.util;
 import static ru.filit.oas.dm.model.Contact.TypeEnum.EMAIL;
 import static ru.filit.oas.dm.model.Contact.TypeEnum.PHONE;
 
+import java.math.BigDecimal;
+import java.text.DecimalFormat;
 import java.time.Instant;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -67,8 +69,11 @@ public abstract class MapperUtil {
   /**
    * Преобразование сущности Операции клиента в транспортный обьект.
    */
-  @Mapping(target = "operDate",
-      expression = "java(changeDateToStringWithT(operation.getOperDate(), 0))")
+  @Mappings({
+      @Mapping(target = "operDate",
+          expression = "java(changeDateToStringWithT(operation.getOperDate(), 0))"),
+      @Mapping(target = "amount", expression = "java(amountWithTwoZero(operation.getAmount()))")
+  })
   public abstract OperationDto convert(Operation operation);
 
   //******** Utility methods *******
@@ -85,7 +90,7 @@ public abstract class MapperUtil {
   }
 
   /**
-   * Преобразуем дату рождения в Long для сохранения в БД.
+   * Преобразуем дату в Long для сохранения в БД.
    */
   protected Long changeDateToLong(String dateString) {
     if (dateString == null) {
@@ -93,21 +98,22 @@ public abstract class MapperUtil {
     }
     DateTimeFormatter dateFormatter
         = DateTimeFormatter.ofPattern("yyyy-MM-dd", Locale.ENGLISH);
-    long millisecondsSinceEpoch = LocalDate.parse(dateString, dateFormatter)
+    long secondsSinceEpoch = LocalDate.parse(dateString, dateFormatter)
         .atStartOfDay(ZoneOffset.UTC)
         .toInstant()
-        .toEpochMilli();
+        .toEpochMilli() / 1000;
 
-    return millisecondsSinceEpoch;
+    return secondsSinceEpoch;
   }
 
   /**
-   * Преобразуем дату из Long в String, получения формата YYYY-MM-DD.
+   * Преобразуем дату рождения из Long в String, получения формата YYYY-MM-DD.
    */
   protected String changeDateToString(Long dateLong) {
     if (dateLong == null) {
       return null;
     }
+    dateLong *= 1000L;
     Instant instant = new Date(dateLong).toInstant();
     LocalDateTime ldt = instant.atOffset(ZoneOffset.ofHours(3)).toLocalDateTime();
     DateTimeFormatter fmt = DateTimeFormatter.ofPattern("yyyy-MM-dd");
@@ -122,6 +128,7 @@ public abstract class MapperUtil {
     if (dateLong == null) {
       return null;
     }
+    dateLong *= 1000;
     Instant instant = new Date(dateLong).toInstant();
     LocalDateTime ldt = instant.atOffset(ZoneOffset.ofHours(3)).toLocalDateTime();
     DateTimeFormatter fmt = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss");
@@ -152,5 +159,12 @@ public abstract class MapperUtil {
     } else {
       return null;
     }
+  }
+
+  /**
+   * Преобразуем amount к двум цифрам после точки.
+   */
+  protected String amountWithTwoZero(BigDecimal amount) {
+    return new DecimalFormat("0.00").format(amount).replace(",", ".");
   }
 }

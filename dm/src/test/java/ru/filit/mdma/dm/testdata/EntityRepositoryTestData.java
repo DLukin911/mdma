@@ -1,19 +1,12 @@
 package ru.filit.mdma.dm.testdata;
 
-import static ru.filit.oas.dm.model.Account.CurrencyEnum.RUR;
-import static ru.filit.oas.dm.model.Account.StatusEnum.ACTIVE;
-import static ru.filit.oas.dm.model.Account.StatusEnum.CLOSED;
-import static ru.filit.oas.dm.model.Account.TypeEnum.OVERDRAFT;
-import static ru.filit.oas.dm.model.Account.TypeEnum.PAYMENT;
 import static ru.filit.oas.dm.model.Contact.TypeEnum.EMAIL;
 import static ru.filit.oas.dm.model.Contact.TypeEnum.PHONE;
 import static ru.filit.oas.dm.model.Operation.TypeEnum.EXPENSE;
-import static ru.filit.oas.dm.model.Operation.TypeEnum.RECEIPT;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
-import ru.filit.oas.dm.model.Account;
 import ru.filit.oas.dm.model.Client;
 import ru.filit.oas.dm.model.Contact;
 import ru.filit.oas.dm.model.Operation;
@@ -30,10 +23,6 @@ public class EntityRepositoryTestData {
   public static final Contact contactEmailClient = new Contact();
   public static final List<Contact> contactList = new ArrayList<>();
 
-  public static final Account accountOneClient = new Account();
-  public static final Account accountTwoClient = new Account();
-  public static final List<Account> accountList = new ArrayList<>();
-
   public static final Operation operation1 = new Operation();
   public static final Operation operation2 = new Operation();
   public static final Operation operation3 = new Operation();
@@ -48,7 +37,7 @@ public class EntityRepositoryTestData {
     client1.setLastname("Ворошилов");
     client1.setFirstname("Клим");
     client1.setPatronymic("Ефимович");
-    client1.setBirthDate(-2198880000000L);
+    client1.setBirthDate(-2198880000L);
     client1.setPassportSeries("6215");
     client1.setPassportNumber("352617");
     client1.setInn("773626104512");
@@ -58,7 +47,7 @@ public class EntityRepositoryTestData {
     client2.setLastname("Петров");
     client2.setFirstname("Илья");
     client2.setPatronymic("Михайлович");
-    client2.setBirthDate(903657600000L);
+    client2.setBirthDate(903657600L);
     client2.setPassportSeries("4574");
     client2.setPassportNumber("120087");
     client2.setInn("7895415794254");
@@ -66,7 +55,7 @@ public class EntityRepositoryTestData {
     client3.setId("234021");
     client3.setLastname("Ворошилов");
     client3.setFirstname("Лумумба");
-    client3.setBirthDate(895657403600L);
+    client3.setBirthDate(895657404L);
     client3.setPassportSeries("3589");
     client3.setPassportNumber("100423");
     client3.setInn("2315410093219");
@@ -88,42 +77,23 @@ public class EntityRepositoryTestData {
     contactList.add(contactPhoneClient);
     contactList.add(contactEmailClient);
 
-    accountOneClient.setNumber("40817810452010063617");
-    accountOneClient.setClientId("95471");
-    accountOneClient.setType(PAYMENT);
-    accountOneClient.setCurrency(RUR);
-    accountOneClient.setStatus(CLOSED);
-    accountOneClient.setOpenDate(1431648000000L);
-    accountOneClient.setCloseDate(1582329600000L);
-
-    accountTwoClient.setNumber("40817810853110005823");
-    accountTwoClient.setClientId("95471");
-    accountTwoClient.setType(OVERDRAFT);
-    accountTwoClient.setCurrency(RUR);
-    accountTwoClient.setStatus(ACTIVE);
-    accountTwoClient.setOpenDate(1542326400000L);
-    accountTwoClient.setDeferment(20);
-
-    accountList.add(accountOneClient);
-    accountList.add(accountTwoClient);
-
-    operation1.setType(RECEIPT);
-    operation1.setAccountNumber("40817810853110005823");
-    operation1.setOperDate(1634636173000L);
-    operation1.setAmount(BigDecimal.valueOf(5000.00));
-    operation1.setDescription("VSP 5311 MOSKVA RUS");
+    operation1.setType(EXPENSE);
+    operation1.setAccountNumber("40817810670114037905");
+    operation1.setOperDate(1639094400L);
+    operation1.setAmount(BigDecimal.valueOf(5645.2));
+    operation1.setDescription("Амбарчик. Оплата");
 
     operation2.setType(EXPENSE);
-    operation2.setAccountNumber("40817810853110005823");
-    operation2.setOperDate(1634051712000L);
-    operation2.setAmount(BigDecimal.valueOf(4926.59));
-    operation2.setDescription("YM OZON 1 GOROD MOSKVA RUS");
+    operation2.setAccountNumber("40817810670114037905");
+    operation2.setOperDate(1637976600L);
+    operation2.setAmount(BigDecimal.valueOf(7992.2));
+    operation2.setDescription("Амбарчик. Оплата");
 
     operation3.setType(EXPENSE);
-    operation3.setAccountNumber("40817810853110005823");
-    operation3.setOperDate(1631191211000L);
-    operation3.setAmount(BigDecimal.valueOf(215.00));
-    operation3.setDescription("МУП Водоканал. Оплата услуг");
+    operation3.setAccountNumber("40817810670114037905");
+    operation3.setOperDate(1636858800L);
+    operation3.setAmount(BigDecimal.valueOf(3669.6));
+    operation3.setDescription("Мострансгаз. Оплата услуг");
 
     operationList.add(operation1);
     operationList.add(operation2);

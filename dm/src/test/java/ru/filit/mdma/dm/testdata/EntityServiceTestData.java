@@ -13,11 +13,9 @@ public class EntityServiceTestData {
   public static final ClientSearchDto clientSearchDtoTwoEquals = new ClientSearchDto();
   public static final ClientSearchDto clientSearchDtoNull = new ClientSearchDto();
   public static final ClientDto clientDto1 = new ClientDto();
-  public static final ClientDto clientDto2 = new ClientDto();
-  public static final ClientDto clientDto3 = new ClientDto();
 
   public static final ClientIdDto clientIdDto = new ClientIdDto();
-  public static final ClientIdDto clientIdDto2 = new ClientIdDto();
+  public static final ClientIdDto clientIdDto1 = new ClientIdDto();
   public static final ClientIdDto clientWrongIdDto = new ClientIdDto();
 
   public static final OperationSearchDto operationSearchDto = new OperationSearchDto();
@@ -50,39 +48,22 @@ public class EntityServiceTestData {
     clientDto1.setInn("773626104512");
     clientDto1.setAddress(" г.Москва, ул. Ленина, дом 1");
 
-    clientDto2.setId("100240");
-    clientDto2.setLastname("Петров");
-    clientDto2.setFirstname("Илья");
-    clientDto2.setPatronymic("Михайлович");
-    clientDto2.setBirthDate("1998-08-21");
-    clientDto2.setPassportSeries("4574");
-    clientDto2.setPassportNumber("120087");
-    clientDto2.setInn("7895415794254");
-
-    clientDto3.setId("234021");
-    clientDto3.setLastname("Ворошилов");
-    clientDto3.setFirstname("Лумумба");
-    clientDto3.setBirthDate("1998-05-20");
-    clientDto3.setPassportSeries("3589");
-    clientDto3.setPassportNumber("100423");
-    clientDto3.setInn("2315410093219");
-
-    clientIdDto.setId("95471");
-    clientIdDto2.setId("80302");
+    clientIdDto.setId("80302");
+    clientIdDto1.setId("95471");
     clientWrongIdDto.setId("777777777777");
 
-    operationSearchDto.setAccountNumber("40817810853110005823");
+    operationSearchDto.setAccountNumber("40817810670114037905");
     operationSearchDto.quantity("3");
     operationSearchDtoWrong.setAccountNumber("7777777777777777");
     operationSearchDtoWrong.quantity("3");
-    operationDto1.setOperDate("2021-10-19T12:36:13");
-    operationDto1.setAmount("5000.00");
-    operationDto2.setOperDate("2021-10-12T18:15:12");
-    operationDto2.setAmount("4926.59");
-    operationDto3.setOperDate("2021-09-09T15:40:11");
-    operationDto3.setAmount("215.00");
+    operationDto1.setOperDate("2021-12-10T03:00:00");
+    operationDto1.setAmount("5645.20");
+    operationDto2.setOperDate("2021-11-27T04:30:00");
+    operationDto2.setAmount("7992.20");
+    operationDto3.setOperDate("2021-11-14T06:00:00");
+    operationDto3.setAmount("3669.60");
 
-    accountNumberDto.setAccountNumber("40817810490164702182");
+    accountNumberDto.setAccountNumber("40817810670114037905");
     accountNumberDtoWrong.setAccountNumber("77777777777777777777");
   }
 }

@@ -8,7 +8,7 @@ import static ru.filit.mdma.dm.testdata.EntityServiceTestData.accountNumberDto;
 import static ru.filit.mdma.dm.testdata.EntityServiceTestData.accountNumberDtoWrong;
 import static ru.filit.mdma.dm.testdata.EntityServiceTestData.clientDto1;
 import static ru.filit.mdma.dm.testdata.EntityServiceTestData.clientIdDto;
-import static ru.filit.mdma.dm.testdata.EntityServiceTestData.clientIdDto2;
+import static ru.filit.mdma.dm.testdata.EntityServiceTestData.clientIdDto1;
 import static ru.filit.mdma.dm.testdata.EntityServiceTestData.clientSearchDto;
 import static ru.filit.mdma.dm.testdata.EntityServiceTestData.clientSearchDtoNull;
 import static ru.filit.mdma.dm.testdata.EntityServiceTestData.clientSearchDtoTwoEquals;
@@ -80,7 +80,7 @@ class EntityServiceTest extends AbstractTest {
 
   @Test
   void testShouldGetContactDtoForRequestData() {
-    List<ContactDto> contactDtoList = entityService.getContact(clientIdDto2);
+    List<ContactDto> contactDtoList = entityService.getContact(clientIdDto);
     assertTrue(contactDtoList.size() == 3);
     Assert.assertEquals(contactDtoList.get(0).getShortcut(), "6329");
     Assert.assertEquals(contactDtoList.get(1).getShortcut(), "5208");
@@ -103,8 +103,8 @@ class EntityServiceTest extends AbstractTest {
   void testShouldGetAccountDtoForRequestData() {
     List<AccountDto> accountDtoList = entityService.getAccount(clientIdDto);
     assertTrue(accountDtoList.size() == 2);
-    Assert.assertEquals(accountDtoList.get(0).getShortcut(), "3617");
-    Assert.assertEquals(accountDtoList.get(1).getShortcut(), "5823");
+    Assert.assertEquals(accountDtoList.get(0).getShortcut(), "7905");
+    Assert.assertEquals(accountDtoList.get(1).getShortcut(), "1136");
   }
 
   @Test()
@@ -146,7 +146,7 @@ class EntityServiceTest extends AbstractTest {
   @Test
   void testShouldGetCurrentBalanceDtoForRequestData() {
     CurrentBalanceDto currentBalanceDto = entityService.getAccountBalance(accountNumberDto);
-    assertEquals("60500.00", currentBalanceDto.getBalanceAmount());
+    assertEquals("-15648.00", currentBalanceDto.getBalanceAmount());
   }
 
   @Test()
@@ -186,7 +186,7 @@ class EntityServiceTest extends AbstractTest {
 
   @Test
   void testShouldGetClientByIdForRequestId() {
-    assertEquals(clientDto1, entityService.getClientById(clientIdDto));
+    assertEquals(clientDto1, entityService.getClientById(clientIdDto1));
   }
 
   @Test()

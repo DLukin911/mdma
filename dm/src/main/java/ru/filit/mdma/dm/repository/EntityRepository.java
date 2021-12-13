@@ -56,7 +56,7 @@ public class EntityRepository {
   public List<Client> getClientList() {
     log.info("Запрос списка всех клиентов из clientCache");
 
-    return clientCache.values().stream().toList();
+    return clientCache.values().stream().collect(Collectors.toList());
   }
 
   /**
@@ -115,6 +115,33 @@ public class EntityRepository {
   }
 
   /**
+   * Получение уровня клиента за последние 30 дней по его активным счетам.
+   */
+/*  public ClientLevel getClientLevel(String id, Long currentDate) {
+    log.info("Запрос уровня клиента за последние 30 дней по его активным счетам: {}",
+        id);
+    Long day30ToLong = 2592000000L;
+    List<Account> accountList = getAccountByClientId(id).stream()
+        .filter(account -> account.getStatus().equals(
+            ACTIVE)).collect(Collectors.toList());
+    if (accountList == null) {
+      log.info("Активные аккаунты по данному запросу не найдены в БД");
+      return null;
+    }
+    ClientLevel clientLevel = Low;
+    List<Long> totalBalanceByEveryDay;
+    for (Account account : accountList) {
+      totalBalanceByEveryDay = new ArrayList<>();
+      List<Operation> operationList = operationCache.stream()
+          .filter(operation -> (operation.getOperDate() >= (currentDate - day30ToLong))
+              && (operation.getOperDate() <= currentDate))
+          .
+    }
+
+    return null;
+  }*/
+
+  /**
    * Получение списка сущностей Операции клиента по номеру счета и ограничению по количеству
    * операций в ответе.
    */
@@ -140,7 +167,7 @@ public class EntityRepository {
 
     return accountBalanceCache.stream()
         .filter(accountBalance -> accountBalance.getAccountNumber().equals(accNumber))
-        .findAny()
+        .max(Comparator.comparingLong(AccountBalance::getBalanceDate))
         .orElse(null);
   }
 

@@ -82,7 +82,7 @@ class EntityControllerTest extends AbstractControllerTest {
   @Test
   void getAccount() throws Exception {
     perform(MockMvcRequestBuilders.post(REST_URL + "/account").content("{\n"
-        + "\"id\": \"95471\"\n"
+        + "\"id\": \"74914\"\n"
         + "}").contentType(MediaType.APPLICATION_JSON))
         .andDo(print())
         .andExpect(status().isOk())
@@ -102,7 +102,7 @@ class EntityControllerTest extends AbstractControllerTest {
   @Test
   void getOperation() throws Exception {
     perform(MockMvcRequestBuilders.post(REST_URL + "/account/operation").content("{\n"
-        + "\"accountNumber\": \"40817810853110005823\",\n"
+        + "\"accountNumber\": \"40817810670114037905\",\n"
         + "\"quantity\": \"3\"\n"
         + "}").contentType(MediaType.APPLICATION_JSON))
         .andDo(print())
@@ -123,7 +123,7 @@ class EntityControllerTest extends AbstractControllerTest {
   @Test
   void getBalance() throws Exception {
     perform(MockMvcRequestBuilders.post(REST_URL + "/account/balance").content("{\n"
-        + "\"accountNumber\": \"40817810490164702182\"\n"
+        + "\"accountNumber\": \"40817810670114037905\"\n"
         + "}").contentType(MediaType.APPLICATION_JSON))
         .andDo(print())
         .andExpect(status().isOk())

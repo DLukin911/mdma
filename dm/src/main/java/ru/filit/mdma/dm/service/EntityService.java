@@ -4,6 +4,7 @@ import static ru.filit.oas.dm.model.Operation.TypeEnum.EXPENSE;
 import static ru.filit.oas.dm.model.Operation.TypeEnum.RECEIPT;
 
 import java.math.BigDecimal;
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -159,7 +160,8 @@ public class EntityService {
       }
     }
     CurrentBalanceDto сurrentBalanceDto = new CurrentBalanceDto();
-    сurrentBalanceDto.setBalanceAmount(String.valueOf(totalBalance));
+    сurrentBalanceDto.setBalanceAmount(new DecimalFormat("0.00")
+        .format(totalBalance).replace(",", "."));
 
     return сurrentBalanceDto;
   }
