@@ -2,7 +2,7 @@
   lastname: "Литвинов"
   firstname: "Михаил"
   patronymic: "Георгиевич"
-  birthDate: -193622400000
+  birthDate: -193622400
   passportSeries: "4503"
   passportNumber: "836409"
   inn: "770395379271"
@@ -11,7 +11,7 @@
   lastname: "Анисимов"
   firstname: "Арсений"
   patronymic: "Давидович"
-  birthDate: 434937600000
+  birthDate: 434937600
   passportSeries: "4507"
   passportNumber: "611323"
   inn: "771169595448"
@@ -20,7 +20,7 @@
   lastname: "Зайцев"
   firstname: "Борис"
   patronymic: "Даниилович"
-  birthDate: 370310400000
+  birthDate: 370310400
   passportSeries: "2812"
   passportNumber: "578948"
   inn: "695049937846"
@@ -29,7 +29,7 @@
   lastname: "Федотов"
   firstname: "Михаил"
   patronymic: "Михайлович"
-  birthDate: 899942400000
+  birthDate: 899942400
   passportSeries: "2814"
   passportNumber: "344131"
   inn: "695057414056"
@@ -38,7 +38,7 @@
   lastname: "Исаев"
   firstname: "Платон"
   patronymic: "Ильич"
-  birthDate: 714700800000
+  birthDate: 714700800
   passportSeries: "2907"
   passportNumber: "832627"
   inn: "402925197508"
@@ -47,7 +47,7 @@
   lastname: "Анисимов"
   firstname: "Даниэль"
   patronymic: "Сергеевич"
-  birthDate: 572313600000
+  birthDate: 572313600
   passportSeries: "2951"
   passportNumber: "409759"
   inn: "402189588276"
@@ -56,7 +56,7 @@
   lastname: "Беляева"
   firstname: "Анна"
   patronymic: "Руслановна"
-  birthDate: 498441600000
+  birthDate: 498441600
   passportSeries: "4517"
   passportNumber: "637230"
   inn: "770221614164"
@@ -65,7 +65,7 @@
   lastname: "Гусев"
   firstname: "Марк"
   patronymic: "Михайлович"
-  birthDate: 572313600000
+  birthDate: 572313600
   passportSeries: "4511"
   passportNumber: "625338"
   inn: "770252183418"
@@ -74,7 +74,7 @@
   lastname: "Новикова"
   firstname: "Ирина"
   patronymic: "Георгиевна"
-  birthDate: 714700800000
+  birthDate: 714700800
   passportSeries: "2002"
   passportNumber: "367037"
   inn: "366626878306"
@@ -83,7 +83,7 @@
   lastname: "Харитонов"
   firstname: "Олег"
   patronymic: "Андреевич"
-  birthDate: 190080000000
+  birthDate: 190080000
   passportSeries: "2038"
   passportNumber: "493040"
   inn: "362514844896"
@@ -92,7 +92,7 @@
   lastname: "Ворошилов"
   firstname: "Клим"
   patronymic: "Ефимович"
-  birthDate: -2198880000000
+  birthDate: -2198880000
   passportSeries: "6215"
   passportNumber: "352617"
   inn: "773626104512"
@@ -101,7 +101,7 @@
   lastname: "Петров"
   firstname: "Илья"
   patronymic: "Михайлович"
-  birthDate: 903657600000
+  birthDate: 903657600
   passportSeries: "4574"
   passportNumber: "120087"
   inn: "7895415794254"
@@ -110,7 +110,7 @@
   lastname: "Ворошилов"
   firstname: "Лумумба"
   patronymic: null
-  birthDate: 895657403600
+  birthDate: 895657404
   passportSeries: "3589"
   passportNumber: "100423"
   inn: "2315410093219"
