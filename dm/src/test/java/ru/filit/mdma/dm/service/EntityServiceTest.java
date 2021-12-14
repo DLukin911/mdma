@@ -21,6 +21,7 @@ import static ru.filit.mdma.dm.testdata.EntityServiceTestData.operationSearchDto
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import java.io.IOException;
+import java.time.LocalDate;
 import java.util.List;
 import org.junit.Assert;
 import org.junit.jupiter.api.Assertions;
@@ -32,6 +33,7 @@ import ru.filit.mdma.dm.util.exception.NotFoundException;
 import ru.filit.oas.dm.model.Contact;
 import ru.filit.oas.dm.web.dto.AccountDto;
 import ru.filit.oas.dm.web.dto.ClientDto;
+import ru.filit.oas.dm.web.dto.ClientLevelDto;
 import ru.filit.oas.dm.web.dto.ContactDto;
 import ru.filit.oas.dm.web.dto.CurrentBalanceDto;
 import ru.filit.oas.dm.web.dto.OperationDto;
@@ -146,7 +148,7 @@ class EntityServiceTest extends AbstractTest {
   @Test
   void testShouldGetCurrentBalanceDtoForRequestData() {
     CurrentBalanceDto currentBalanceDto = entityService.getAccountBalance(accountNumberDto);
-    assertEquals("-15648.00", currentBalanceDto.getBalanceAmount());
+    assertEquals("-5648.00", currentBalanceDto.getBalanceAmount());
   }
 
   @Test()
@@ -199,5 +201,26 @@ class EntityServiceTest extends AbstractTest {
   void testShouldThrowsExceptionForGetClientByIdWhenClientIdDtoNull() {
     Assertions.assertThrows(NotFoundException.class,
         () -> entityService.getClientById(null));
+  }
+
+  @Test
+  void testShouldGetCurrentClientLevelDtoForRequestData() {
+    ClientLevelDto clientLevelDto = entityService.getClientLevel(clientIdDto,
+        LocalDate.of(2021, 12, 13));
+    assertEquals("40817810670114037905", clientLevelDto.getAccuntNumber());
+    assertEquals("LOW", clientLevelDto.getLevel());
+    assertEquals("897.67", clientLevelDto.getAvgBalance());
+  }
+
+  @Test()
+  void testShouldThrowsExceptionForRequestDataWhenRequestClientWrongIdDtoWrong() {
+    Assertions.assertThrows(NotFoundException.class,
+        () -> entityService.getClientLevel(clientWrongIdDto, LocalDate.of(2021, 12, 13)));
+  }
+
+  @Test()
+  void testShouldThrowsExceptionForRequestDataWhenRequestClientIdNull() {
+    Assertions.assertThrows(NotFoundException.class,
+        () -> entityService.getClientLevel(null, LocalDate.of(2021, 12, 13)));
   }
 }

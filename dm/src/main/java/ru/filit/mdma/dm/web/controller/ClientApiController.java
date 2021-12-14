@@ -1,5 +1,7 @@
 package ru.filit.mdma.dm.web.controller;
 
+import java.time.LocalDate;
+import java.time.ZoneId;
 import java.util.List;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
@@ -112,14 +114,22 @@ public class ClientApiController implements ClientApi {
   }
 
   /**
-   * POST /client/level : Получение уровня клиента
-   *
-   * @param clientIdDto (required)
-   * @return Уровень клиента определен (status code 200) or Клиент не найден (status code 400)
+   * Получение уровня клиента.
    */
+  @PostMapping("/level")
   @Override
   public ResponseEntity<ClientLevelDto> getClientLevel(ClientIdDto clientIdDto) {
-    return null;
+    log.info("Получение уровня клиента по входящим данным: {}", clientIdDto);
+
+    ClientLevelDto сlientLevelDto = entityService.getClientLevel(clientIdDto,
+        LocalDate.now(ZoneId.of("Europe/Moscow")));
+    if (сlientLevelDto == null) {
+      log.info("Информация по данному клиенту не найдена.");
+      return ResponseEntity.badRequest().body(сlientLevelDto);
+    }
+    log.info("Уровень клиента успешно найден {}", сlientLevelDto);
+
+    return new ResponseEntity<>(сlientLevelDto, HttpStatus.OK);
   }
 
   /**

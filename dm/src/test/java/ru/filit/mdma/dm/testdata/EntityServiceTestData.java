@@ -56,12 +56,12 @@ public class EntityServiceTestData {
     operationSearchDto.quantity("3");
     operationSearchDtoWrong.setAccountNumber("7777777777777777");
     operationSearchDtoWrong.quantity("3");
-    operationDto1.setOperDate("2021-12-10T03:00:00");
-    operationDto1.setAmount("5645.20");
-    operationDto2.setOperDate("2021-11-27T04:30:00");
-    operationDto2.setAmount("7992.20");
-    operationDto3.setOperDate("2021-11-14T06:00:00");
-    operationDto3.setAmount("3669.60");
+    operationDto1.setOperDate("2021-12-10T03:16:40");
+    operationDto1.setAmount("10000.00");
+    operationDto2.setOperDate("2021-12-10T03:00:00");
+    operationDto2.setAmount("5645.20");
+    operationDto3.setOperDate("2021-11-27T05:03:20");
+    operationDto3.setAmount("10000.00");
 
     accountNumberDto.setAccountNumber("40817810670114037905");
     accountNumberDtoWrong.setAccountNumber("77777777777777777777");

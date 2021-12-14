@@ -312,13 +312,14 @@ public class EntityRepository {
     LocalDate finalDateOfStartPeriod = dateOfStartPeriod;
     List<Operation> operationList = operationCache.stream()
         .filter(operation -> operation.getAccountNumber().equals(account.getNumber())
-            && convertToLocalDate(operation.getOperDate()).isAfter(finalDateOfStartPeriod)
+            && convertToLocalDate(operation.getOperDate()).isAfter(
+            finalDateOfStartPeriod.minusDays(1))
             && convertToLocalDate(operation.getOperDate()).isBefore(dateOfEndPeriod))
         .collect(Collectors.toList());
 
     List<BigDecimal> balanceListBy30Day = new ArrayList<>();
     List<Operation> operationListByDay;
-    for (LocalDate thisDay = dateOfStartPeriod; thisDay.isBefore(dateOfEndPeriod);
+    for (LocalDate thisDay = dateOfStartPeriod; thisDay.isBefore(dateOfEndPeriod.plusDays(1));
         thisDay = thisDay.plusDays(1)) {
       BigDecimal balanceByDay = BigDecimal.ZERO;
       LocalDate finalThisDay = thisDay;
@@ -348,7 +349,7 @@ public class EntityRepository {
     if (balanceListBy30Day.size() == 0) {
       throw new NotFoundException("Нет операций по данным датам");
     }
-    avgAmount = avgAmount.divide(BigDecimal.valueOf(balanceListBy30Day.size()));
+    avgAmount = BigDecimal.valueOf(avgAmount.doubleValue() / balanceListBy30Day.size());
 
     return avgAmount;
   }

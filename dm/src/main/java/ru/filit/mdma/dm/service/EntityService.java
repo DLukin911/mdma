@@ -9,8 +9,11 @@ import static ru.filit.oas.dm.model.Operation.TypeEnum.RECEIPT;
 
 import java.math.BigDecimal;
 import java.text.DecimalFormat;
+import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -28,6 +31,7 @@ import ru.filit.oas.dm.web.dto.AccountDto;
 import ru.filit.oas.dm.web.dto.AccountNumberDto;
 import ru.filit.oas.dm.web.dto.ClientDto;
 import ru.filit.oas.dm.web.dto.ClientIdDto;
+import ru.filit.oas.dm.web.dto.ClientLevelDto;
 import ru.filit.oas.dm.web.dto.ClientSearchDto;
 import ru.filit.oas.dm.web.dto.ContactDto;
 import ru.filit.oas.dm.web.dto.CurrentBalanceDto;
@@ -210,9 +214,42 @@ public class EntityService {
   }
 
   /**
+   * Получение сущности Уровень клиента по Id клиента.
+   */
+  public ClientLevelDto getClientLevel(ClientIdDto clientIdDto, LocalDate dateOfEndPeriod) {
+    log.info("Получение информации о счетах и среднем балансе клиента по его ID"
+        + " в Entity Repository, параметры запроса: {}", clientIdDto);
+
+    if (clientIdDto == null || dateOfEndPeriod == null) {
+      throw new NotFoundException("По данному запросу информация не найдена.");
+    }
+    Client client = entityRepository.getClientById(clientIdDto.getId());
+    if (client == null) {
+      throw new NotFoundException("По данному клиенту информация не найдена.");
+    }
+    Map<String, BigDecimal> accountMap = entityRepository.getClientLevel(client.getId(),
+        dateOfEndPeriod);
+    if (accountMap == null) {
+      throw new NotFoundException("По данному запросу информация не найдена.");
+    }
+
+    String accNumber = Collections.max(accountMap.entrySet(), Map.Entry.comparingByValue())
+        .getKey();
+    BigDecimal avgAmount = Collections.max(accountMap.entrySet(), Map.Entry.comparingByValue())
+        .getValue();
+
+    ClientLevelDto clientLevelDto = new ClientLevelDto();
+    clientLevelDto.setAccuntNumber(accNumber);
+    clientLevelDto.setAvgBalance(amountWithTwoZero(avgAmount));
+    clientLevelDto.setLevel(calculationClientLevel(avgAmount));
+
+    return clientLevelDto;
+  }
+
+  /**
    * Подсчет уровня Клиента.
    */
-  private ClientLevel calculationClientLevel(BigDecimal amount) {
+  private String calculationClientLevel(BigDecimal amount) {
     Long longAmount = amount.longValue();
     ClientLevel clientLevel = Low;
     if (longAmount >= 30_000 && longAmount < 300_000) {
@@ -223,6 +260,13 @@ public class EntityService {
       clientLevel = Gold;
     }
 
-    return clientLevel;
+    return clientLevel.getValue();
+  }
+
+  /**
+   * Преобразуем amount к двум цифрам после точки.
+   */
+  protected String amountWithTwoZero(BigDecimal amount) {
+    return new DecimalFormat("0.00").format(amount).replace(",", ".");
   }
 }

@@ -3,6 +3,7 @@ package ru.filit.mdma.dm.testdata;
 import static ru.filit.oas.dm.model.Contact.TypeEnum.EMAIL;
 import static ru.filit.oas.dm.model.Contact.TypeEnum.PHONE;
 import static ru.filit.oas.dm.model.Operation.TypeEnum.EXPENSE;
+import static ru.filit.oas.dm.model.Operation.TypeEnum.RECEIPT;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
@@ -77,23 +78,23 @@ public class EntityRepositoryTestData {
     contactList.add(contactPhoneClient);
     contactList.add(contactEmailClient);
 
-    operation1.setType(EXPENSE);
+    operation1.setType(RECEIPT);
     operation1.setAccountNumber("40817810670114037905");
-    operation1.setOperDate(1639094400L);
-    operation1.setAmount(BigDecimal.valueOf(5645.2));
-    operation1.setDescription("Амбарчик. Оплата");
+    operation1.setOperDate(1639095400L);
+    operation1.setAmount(BigDecimal.valueOf(10000.0));
+    operation1.setDescription("VSP 5318 MOSKVA RUS");
 
     operation2.setType(EXPENSE);
     operation2.setAccountNumber("40817810670114037905");
-    operation2.setOperDate(1637976600L);
-    operation2.setAmount(BigDecimal.valueOf(7992.2));
+    operation2.setOperDate(1639094400L);
+    operation2.setAmount(BigDecimal.valueOf(5645.2));
     operation2.setDescription("Амбарчик. Оплата");
 
-    operation3.setType(EXPENSE);
+    operation3.setType(RECEIPT);
     operation3.setAccountNumber("40817810670114037905");
-    operation3.setOperDate(1636858800L);
-    operation3.setAmount(BigDecimal.valueOf(3669.6));
-    operation3.setDescription("Мострансгаз. Оплата услуг");
+    operation3.setOperDate(1637978600L);
+    operation3.setAmount(BigDecimal.valueOf(10000.0));
+    operation3.setDescription("VSP 5318 MOSKVA RUS");
 
     operationList.add(operation1);
     operationList.add(operation2);

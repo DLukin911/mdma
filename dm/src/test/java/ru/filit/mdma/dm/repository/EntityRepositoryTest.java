@@ -19,7 +19,6 @@ import com.fasterxml.jackson.core.type.TypeReference;
 import java.io.IOException;
 import java.math.BigDecimal;
 import java.time.LocalDate;
-import java.time.ZoneId;
 import java.util.List;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -116,15 +115,16 @@ class EntityRepositoryTest extends AbstractTest {
 
   @Test
   void testShouldGetAccountAndAvgBalanceFromYamlDatabase() {
-    assertEquals("{40817810670114037905=-5769.0, 40817810200159961136=-13883.2}",
-        entityRepository.getClientLevel("80302", LocalDate.now(ZoneId.of("Europe/Moscow")))
+    assertEquals("{40817810670114037905=897.6666666666666,"
+            + " 40817810200159961136=-13883.199999999999}",
+        entityRepository.getClientLevel("80302", LocalDate.of(2021, 12, 13))
             .toString());
   }
 
   @Test
   void testShouldReturnNullWhenClientIdNotFoundByClientLevel() {
     assertEquals(null, entityRepository.getClientLevel("777777",
-        LocalDate.now(ZoneId.of("Europe/Moscow"))));
+        LocalDate.of(2021, 12, 13)));
   }
 
   @Test

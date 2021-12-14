@@ -20,15 +20,15 @@ public class EntityWebTestData {
       + "\"currency\":\"RUR\",\"status\":\"ACTIVE\",\"openDate\":\"2021-08-11\","
       + "\"shortcut\":\"8404\"}]";
 
-  public static final String jsonOperationList = "[{\"type\":\"EXPENSE\","
+  public static final String jsonOperationList = "[{\"type\":\"RECEIPT\","
+      + "\"accountNumber\":\"40817810670114037905\",\"operDate\":\"2021-12-10T03:16:40\","
+      + "\"amount\":\"10000.00\",\"description\":\"VSP 5318 MOSKVA RUS\"},{\"type\":\"EXPENSE\","
       + "\"accountNumber\":\"40817810670114037905\",\"operDate\":\"2021-12-10T03:00:00\","
-      + "\"amount\":\"5645.20\",\"description\":\"Амбарчик. Оплата\"},{\"type\":\"EXPENSE\","
-      + "\"accountNumber\":\"40817810670114037905\",\"operDate\":\"2021-11-27T04:30:00\","
-      + "\"amount\":\"7992.20\",\"description\":\"Амбарчик. Оплата\"},{\"type\":\"EXPENSE\","
-      + "\"accountNumber\":\"40817810670114037905\",\"operDate\":\"2021-11-14T06:00:00\","
-      + "\"amount\":\"3669.60\",\"description\":\"Мострансгаз. Оплата услуг\"}]";
+      + "\"amount\":\"5645.20\",\"description\":\"Амбарчик. Оплата\"},{\"type\":\"RECEIPT\","
+      + "\"accountNumber\":\"40817810670114037905\",\"operDate\":\"2021-11-27T05:03:20\","
+      + "\"amount\":\"10000.00\",\"description\":\"VSP 5318 MOSKVA RUS\"}]";
 
-  public static final String jsonBalanceAmount = "{\"balanceAmount\":\"-15648.00\"}";
+  public static final String jsonBalanceAmount = "{\"balanceAmount\":\"-5648.00\"}";
 
   public static final String jsonUpdateContactSave = "{\"id\":\"38523\",\"clientId\":\"95471\","
       + "\"type\":\"PHONE\",\"value\":\"+79805243600\",\"shortcut\":\"3600\"}";

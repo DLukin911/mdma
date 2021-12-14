@@ -223,11 +223,21 @@
   operDate: 1637976600
   amount: 7992.2
   description: "Амбарчик. Оплата"
+- type: "RECEIPT"
+  accountNumber: "40817810670114037905"
+  operDate: 1637978600
+  amount: 10000.0
+  description: "VSP 5318 MOSKVA RUS"
 - type: "EXPENSE"
   accountNumber: "40817810670114037905"
   operDate: 1639094400
   amount: 5645.2
   description: "Амбарчик. Оплата"
+- type: "RECEIPT"
+  accountNumber: "40817810670114037905"
+  operDate: 1639095400
+  amount: 10000.0
+  description: "VSP 5318 MOSKVA RUS"
 - type: "RECEIPT"
   accountNumber: "40817810200159961136"
   operDate: 1626458400
