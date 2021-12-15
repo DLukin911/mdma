@@ -1,6 +1,8 @@
 package ru.filit.mdma.dm.repository;
 
+import static ru.filit.mdma.dm.util.MapperUtil.convertToLocalDate;
 import static ru.filit.oas.dm.model.Account.StatusEnum.ACTIVE;
+import static ru.filit.oas.dm.model.Account.TypeEnum.OVERDRAFT;
 import static ru.filit.oas.dm.model.Contact.TypeEnum.EMAIL;
 
 import com.fasterxml.jackson.core.type.TypeReference;
@@ -167,6 +169,19 @@ public class EntityRepository {
     return accountBalanceCache.stream()
         .filter(accountBalance -> accountBalance.getAccountNumber().equals(accNumber))
         .max(Comparator.comparingLong(AccountBalance::getBalanceDate))
+        .orElse(null);
+  }
+
+  /**
+   * Получение информации по счету Overdraft.
+   */
+  public Account getOverdraftAccount(String accNumber) {
+    log.info("Получение информации по счету Overdraft: {}", accNumber);
+
+    return accountCache.stream()
+        .filter(account -> account.getNumber().equals(accNumber)
+            && account.getType().equals(OVERDRAFT))
+        .findAny()
         .orElse(null);
   }
 
@@ -352,15 +367,5 @@ public class EntityRepository {
     avgAmount = BigDecimal.valueOf(avgAmount.doubleValue() / balanceListBy30Day.size());
 
     return avgAmount;
-  }
-
-  /**
-   * Конвертация даты из long в LocalDate.
-   */
-  private LocalDate convertToLocalDate(Long dateLong) {
-
-    return Instant.ofEpochSecond(dateLong)
-        .atZone(ZoneId.of("Europe/Moscow"))
-        .toLocalDate();
   }
 }

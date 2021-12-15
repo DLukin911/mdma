@@ -151,14 +151,19 @@ public class ClientApiController implements ClientApi {
   }
 
   /**
-   * POST /client/account/loan-payment : Получение суммы процентных платежей по счету Овердрафт
-   *
-   * @param accountNumberDto (required)
-   * @return Сумма процентных платежей определена (status code 200)
+   * Получение суммы процентных платежей по счету Овердрафт.
    */
+  @PostMapping("/account/loan-payment")
   @Override
   public ResponseEntity<LoanPaymentDto> getLoanPayment(AccountNumberDto accountNumberDto) {
-    return null;
+    LoanPaymentDto loanPaymentDto = entityService.getLoanPayment(accountNumberDto);
+    if (loanPaymentDto == null) {
+      log.info("Информация по счету Овердрафт не найдена.");
+      return ResponseEntity.badRequest().body(loanPaymentDto);
+    }
+    log.info("Сумма процентных платежей успешно найдена: {}", loanPaymentDto);
+
+    return new ResponseEntity<>(loanPaymentDto, HttpStatus.OK);
   }
 
   /**

@@ -204,14 +204,33 @@ public class ClientApiController implements ClientApi {
   }
 
   /**
-   * POST /client/account/loan-payment : Получение суммы процентных платежей по счету Овердрафт
-   *
-   * @param accountNumberDto (required)
-   * @return Сумма процентных платежей определена (status code 200)
+   * Получение суммы процентных платежей по счету Овердрафт.
    */
+  @PostMapping("/account/loan-payment")
   @Override
   public ResponseEntity<LoanPaymentDto> getLoanPayment(AccountNumberDto accountNumberDto) {
-    return null;
+    log.info("Получение суммы процентных платежей по счету Овердрафт: {}", accountNumberDto);
+
+    final String baseUrl = "http://localhost:8081/dm/client/account/loan-payment";
+    URI uri = null;
+    try {
+      uri = new URI(baseUrl);
+    } catch (URISyntaxException e) {
+      e.printStackTrace();
+    }
+    HttpEntity requestEntity = new HttpEntity(accountNumberDto);
+    ResponseEntity<LoanPaymentDto> responseEntity = null;
+    try {
+      responseEntity = restTemplate.exchange(uri, HttpMethod.POST, requestEntity,
+          new ParameterizedTypeReference<LoanPaymentDto>() {
+          }
+      );
+      log.info("Ответ на запрос получен: {}", responseEntity);
+
+      return responseEntity;
+    } catch (Exception e) {
+      throw new NotFoundException("По данному запросу информация не найдена.");
+    }
   }
 
   /**

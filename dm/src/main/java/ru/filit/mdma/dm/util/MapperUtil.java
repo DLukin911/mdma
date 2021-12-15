@@ -8,6 +8,7 @@ import java.text.DecimalFormat;
 import java.time.Instant;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.ZoneId;
 import java.time.ZoneOffset;
 import java.time.format.DateTimeFormatter;
 import java.util.Date;
@@ -77,6 +78,16 @@ public abstract class MapperUtil {
   public abstract OperationDto convert(Operation operation);
 
   //******** Utility methods *******
+
+  /**
+   * Конвертация даты из long в LocalDate.
+   */
+  public static LocalDate convertToLocalDate(Long dateLong) {
+
+    return Instant.ofEpochSecond(dateLong)
+        .atZone(ZoneId.of("Europe/Moscow"))
+        .toLocalDate();
+  }
 
   /**
    * Разделение паспортных данных на серию и номер.

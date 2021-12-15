@@ -8,6 +8,7 @@ import static ru.filit.mdma.dm.testdata.EntityWebTestData.jsonBalanceAmount;
 import static ru.filit.mdma.dm.testdata.EntityWebTestData.jsonClient1;
 import static ru.filit.mdma.dm.testdata.EntityWebTestData.jsonClientGetById;
 import static ru.filit.mdma.dm.testdata.EntityWebTestData.jsonContact1;
+import static ru.filit.mdma.dm.testdata.EntityWebTestData.jsonLoanPaymentAmount;
 import static ru.filit.mdma.dm.testdata.EntityWebTestData.jsonOperationList;
 import static ru.filit.mdma.dm.testdata.EntityWebTestData.jsonUpdateContactSave;
 
@@ -202,6 +203,26 @@ class EntityControllerTest extends AbstractControllerTest {
   @Test
   void getClientByIdNotFound() throws Exception {
     perform(MockMvcRequestBuilders.post(REST_URL + "/info").contentType(MediaType.APPLICATION_JSON))
+        .andDo(print())
+        .andExpect(status().isBadRequest());
+  }
+
+  @Test
+  void getLoanPaymentAmount() throws Exception {
+    perform(MockMvcRequestBuilders.post(REST_URL + "/account/loan-payment").content("{\n"
+        + "\"accountNumber\": \"40817810740045024659\"\n"
+        + "}").contentType(MediaType.APPLICATION_JSON))
+        .andDo(print())
+        .andExpect(status().isOk())
+        .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
+        .andExpect(content().encoding(StandardCharsets.UTF_8))
+        .andExpect(content().string(jsonLoanPaymentAmount));
+  }
+
+  @Test
+  void getLoanPaymentAmountNotFound() throws Exception {
+    perform(MockMvcRequestBuilders.post(REST_URL + "/account/loan-payment")
+        .contentType(MediaType.APPLICATION_JSON))
         .andDo(print())
         .andExpect(status().isBadRequest());
   }

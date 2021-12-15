@@ -1,5 +1,6 @@
 package ru.filit.mdma.dm.service;
 
+import static ru.filit.mdma.dm.util.MapperUtil.convertToLocalDate;
 import static ru.filit.oas.dm.model.ClientLevel.Gold;
 import static ru.filit.oas.dm.model.ClientLevel.Low;
 import static ru.filit.oas.dm.model.ClientLevel.Middle;
@@ -9,7 +10,9 @@ import static ru.filit.oas.dm.model.Operation.TypeEnum.RECEIPT;
 
 import java.math.BigDecimal;
 import java.text.DecimalFormat;
+import java.time.DayOfWeek;
 import java.time.LocalDate;
+import java.time.ZoneId;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -35,6 +38,7 @@ import ru.filit.oas.dm.web.dto.ClientLevelDto;
 import ru.filit.oas.dm.web.dto.ClientSearchDto;
 import ru.filit.oas.dm.web.dto.ContactDto;
 import ru.filit.oas.dm.web.dto.CurrentBalanceDto;
+import ru.filit.oas.dm.web.dto.LoanPaymentDto;
 import ru.filit.oas.dm.web.dto.OperationDto;
 import ru.filit.oas.dm.web.dto.OperationSearchDto;
 
@@ -247,6 +251,71 @@ public class EntityService {
   }
 
   /**
+   * Получение суммы процентных платежей по счету Овердрафт.
+   */
+  public LoanPaymentDto getLoanPayment(AccountNumberDto accountNumberDto) {
+    log.info("Получение суммы процентных платежей по счету Овердрафт,"
+        + " параметры запроса: {}", accountNumberDto);
+
+    if (accountNumberDto == null) {
+      throw new NotFoundException("По данному запросу информация не найдена.");
+    }
+    Account account = entityRepository.getOverdraftAccount(accountNumberDto.getAccountNumber());
+    if (account == null) {
+      throw new NotFoundException("Данный аккаунт не найден или не является Овердрафт аккаунтом.");
+    }
+    LocalDate dateOfStartPeriod = convertToLocalDate(account.getOpenDate());
+    LocalDate dateOfEndPeriod;
+    if (account.getCloseDate() == null) {
+      dateOfEndPeriod = LocalDate.now(ZoneId.of("Europe/Moscow"));
+    } else {
+      dateOfEndPeriod = convertToLocalDate(account.getCloseDate());
+    }
+    List<Operation> operationList =
+        entityRepository.getOperationListByAccountNumber(account.getNumber(), "0");
+    double totalLoanPayment = 0.00;
+    double lastDayBalance = 0.00;
+    int deferment = account.getDeferment();
+    int counter = 0;
+    List<Operation> operationListByDay;
+    for (LocalDate thisDay = dateOfStartPeriod; thisDay.isBefore(dateOfEndPeriod.plusDays(1));
+        thisDay = thisDay.plusDays(1)) {
+      BigDecimal balanceByDay = BigDecimal.ZERO;
+      LocalDate finalThisDay = thisDay;
+      operationListByDay = operationList.stream()
+          .filter(operation -> convertToLocalDate(operation.getOperDate()).equals(finalThisDay))
+          .collect(Collectors.toList());
+      for (Operation operation : operationListByDay) {
+        switch (operation.getType().getValue()) {
+          case ("RECEIPT"):
+            balanceByDay = balanceByDay.add(operation.getAmount());
+            break;
+          case ("EXPENSE"):
+            balanceByDay = balanceByDay.subtract(operation.getAmount());
+            break;
+          default:
+            throw new IllegalStateException("Unexpected value: " + operation.getType());
+        }
+      }
+      lastDayBalance += balanceByDay.doubleValue();
+      if (lastDayBalance < 0 && !thisDay.getDayOfWeek().equals(DayOfWeek.SATURDAY)
+          && !thisDay.getDayOfWeek().equals(DayOfWeek.SUNDAY)) {
+        counter++;
+        if (counter > deferment) {
+          totalLoanPayment += Math.abs(lastDayBalance) * 0.07;
+        }
+      } else if (lastDayBalance >= 0) {
+        counter = 0;
+      }
+    }
+
+    LoanPaymentDto loanPaymentDto = new LoanPaymentDto();
+    loanPaymentDto.amount(amountWithTwoZero(BigDecimal.valueOf(totalLoanPayment)));
+
+    return loanPaymentDto;
+  }
+
+  /**
    * Подсчет уровня Клиента.
    */
   private String calculationClientLevel(BigDecimal amount) {
@@ -266,7 +335,7 @@ public class EntityService {
   /**
    * Преобразуем amount к двум цифрам после точки.
    */
-  protected String amountWithTwoZero(BigDecimal amount) {
+  private String amountWithTwoZero(BigDecimal amount) {
     return new DecimalFormat("0.00").format(amount).replace(",", ".");
   }
 }

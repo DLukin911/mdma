@@ -713,6 +713,11 @@
   operDate: 1639094400
   amount: 14383.2
   description: "Спортмастер. Оплата"
+- type: "EXPENSE"
+  accountNumber: "40817810740045024659"
+  operDate: 1626229800
+  amount: 7000.4
+  description: "Мосэнергосбыт. Оплата услуг"
 - type: "RECEIPT"
   accountNumber: "40817810740045024659"
   operDate: 1626936000
@@ -802,6 +807,11 @@
   accountNumber: "40817810740045024659"
   operDate: 1639094400
   amount: 15000.0
+  description: "VSP 1470 MOSKVA RUS"
+- type: "RECEIPT"
+  accountNumber: "40817810740045024659"
+  operDate: 1639526400
+  amount: 150000.0
   description: "VSP 1470 MOSKVA RUS"
 - type: "RECEIPT"
   accountNumber: "40817810210146959762"

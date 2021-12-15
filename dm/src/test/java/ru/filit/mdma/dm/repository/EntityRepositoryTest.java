@@ -13,6 +13,7 @@ import static ru.filit.mdma.dm.testdata.EntityRepositoryTestData.operation1;
 import static ru.filit.mdma.dm.testdata.EntityRepositoryTestData.operation2;
 import static ru.filit.mdma.dm.testdata.EntityRepositoryTestData.operation3;
 import static ru.filit.mdma.dm.testdata.EntityRepositoryTestData.operationList;
+import static ru.filit.mdma.dm.testdata.EntityRepositoryTestData.overdraftAccount;
 import static ru.filit.mdma.dm.testdata.EntityRepositoryTestData.updateContact;
 
 import com.fasterxml.jackson.core.type.TypeReference;
@@ -145,5 +146,16 @@ class EntityRepositoryTest extends AbstractTest {
   @Test
   void testShouldReturnNullWhenGetClientByIdAndClientIdDtoNull() {
     assertEquals(null, entityRepository.getClientById(null));
+  }
+
+  @Test
+  void testShouldGetAccountOverdraftFromYamlDatabase() {
+    assertEquals(overdraftAccount,
+        entityRepository.getOverdraftAccount(overdraftAccount.getNumber()));
+  }
+
+  @Test
+  void testShouldReturnNullWhenAccountOverdraftNotFound() {
+    assertEquals(null, entityRepository.getOverdraftAccount("444444444444"));
   }
 }

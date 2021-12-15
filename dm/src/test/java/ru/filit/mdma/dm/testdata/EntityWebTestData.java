@@ -37,4 +37,6 @@ public class EntityWebTestData {
       + "\"firstname\":\"Клим\",\"patronymic\":\"Ефимович\",\"birthDate\":\"1900-04-28\","
       + "\"passportSeries\":\"6215\",\"passportNumber\":\"352617\",\"inn\":\"773626104512\","
       + "\"address\":\" г.Москва, ул. Ленина, дом 1\"}";
+
+  public static final String jsonLoanPaymentAmount = "{\"amount\":\"39079.45\"}";
 }

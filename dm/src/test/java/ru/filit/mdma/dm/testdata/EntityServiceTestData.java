@@ -25,6 +25,7 @@ public class EntityServiceTestData {
   public static final OperationDto operationDto3 = new OperationDto();
 
   public static final AccountNumberDto accountNumberDto = new AccountNumberDto();
+  public static final AccountNumberDto accountNumberDtoOverdraft = new AccountNumberDto();
   public static final AccountNumberDto accountNumberDtoWrong = new AccountNumberDto();
 
   static {
@@ -64,6 +65,7 @@ public class EntityServiceTestData {
     operationDto3.setAmount("10000.00");
 
     accountNumberDto.setAccountNumber("40817810670114037905");
+    accountNumberDtoOverdraft.setAccountNumber("40817810740045024659");
     accountNumberDtoWrong.setAccountNumber("77777777777777777777");
   }
 }

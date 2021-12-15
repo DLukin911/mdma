@@ -1,5 +1,8 @@
 package ru.filit.mdma.dm.testdata;
 
+import static ru.filit.oas.dm.model.Account.CurrencyEnum.RUR;
+import static ru.filit.oas.dm.model.Account.StatusEnum.ACTIVE;
+import static ru.filit.oas.dm.model.Account.TypeEnum.OVERDRAFT;
 import static ru.filit.oas.dm.model.Contact.TypeEnum.EMAIL;
 import static ru.filit.oas.dm.model.Contact.TypeEnum.PHONE;
 import static ru.filit.oas.dm.model.Operation.TypeEnum.EXPENSE;
@@ -8,6 +11,7 @@ import static ru.filit.oas.dm.model.Operation.TypeEnum.RECEIPT;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
+import ru.filit.oas.dm.model.Account;
 import ru.filit.oas.dm.model.Client;
 import ru.filit.oas.dm.model.Contact;
 import ru.filit.oas.dm.model.Operation;
@@ -32,6 +36,8 @@ public class EntityRepositoryTestData {
   public static final ContactDto newContact = new ContactDto();
   public static final ContactDto updateContact = new ContactDto();
   public static final ContactDto noClientContact = new ContactDto();
+
+  public static final Account overdraftAccount = new Account();
 
   static {
     client1.setId("95471");
@@ -113,5 +119,14 @@ public class EntityRepositoryTestData {
     noClientContact.setClientId("23232323");
     noClientContact.setType("PHONE");
     noClientContact.setValue("hi@mail.ru");
+
+    overdraftAccount.setNumber("40817810740045024659");
+    overdraftAccount.setClientId("68025");
+    overdraftAccount.setType(OVERDRAFT);
+    overdraftAccount.setCurrency(RUR);
+    overdraftAccount.setStatus(ACTIVE);
+    overdraftAccount.setOpenDate(1626220800L);
+    overdraftAccount.setDeferment(20);
+
   }
 }

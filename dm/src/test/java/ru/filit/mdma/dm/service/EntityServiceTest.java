@@ -5,6 +5,7 @@ import static org.junit.Assert.assertTrue;
 import static ru.filit.mdma.dm.testdata.EntityRepositoryTestData.newContact;
 import static ru.filit.mdma.dm.testdata.EntityRepositoryTestData.noClientContact;
 import static ru.filit.mdma.dm.testdata.EntityServiceTestData.accountNumberDto;
+import static ru.filit.mdma.dm.testdata.EntityServiceTestData.accountNumberDtoOverdraft;
 import static ru.filit.mdma.dm.testdata.EntityServiceTestData.accountNumberDtoWrong;
 import static ru.filit.mdma.dm.testdata.EntityServiceTestData.clientDto1;
 import static ru.filit.mdma.dm.testdata.EntityServiceTestData.clientIdDto;
@@ -36,6 +37,7 @@ import ru.filit.oas.dm.web.dto.ClientDto;
 import ru.filit.oas.dm.web.dto.ClientLevelDto;
 import ru.filit.oas.dm.web.dto.ContactDto;
 import ru.filit.oas.dm.web.dto.CurrentBalanceDto;
+import ru.filit.oas.dm.web.dto.LoanPaymentDto;
 import ru.filit.oas.dm.web.dto.OperationDto;
 
 class EntityServiceTest extends AbstractTest {
@@ -222,5 +224,23 @@ class EntityServiceTest extends AbstractTest {
   void testShouldThrowsExceptionForRequestDataWhenRequestClientIdNull() {
     Assertions.assertThrows(NotFoundException.class,
         () -> entityService.getClientLevel(null, LocalDate.of(2021, 12, 13)));
+  }
+
+  @Test
+  void testShouldGetLoanPaymentAmountForRequestAccountNumber() {
+    LoanPaymentDto loanPaymentDto = entityService.getLoanPayment(accountNumberDtoOverdraft);
+    assertEquals("39079.45", loanPaymentDto.getAmount());
+  }
+
+  @Test()
+  void testShouldThrowsExceptionForRequestDataWhenRequestAccountNumberDtoWrong() {
+    Assertions.assertThrows(NotFoundException.class,
+        () -> entityService.getLoanPayment(accountNumberDtoWrong));
+  }
+
+  @Test()
+  void testShouldThrowsExceptionForRequestDataWhenRequestAccountNumberDtoNull() {
+    Assertions.assertThrows(NotFoundException.class,
+        () -> entityService.getLoanPayment(null));
   }
 }
