@@ -1,4 +1,4 @@
-package ru.filit.mdma.crm.web;
+package ru.filit.mdma.crm.web.controller;
 
 import java.net.URI;
 import java.net.URISyntaxException;
@@ -7,8 +7,11 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -60,7 +63,11 @@ public class ClientApiController implements ClientApi {
     } catch (URISyntaxException e) {
       e.printStackTrace();
     }
-    HttpEntity requestEntity = new HttpEntity(clientSearchDto);
+    HttpHeaders requestHeaders = new HttpHeaders();
+    Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+    requestHeaders.add("CRM-User-Role", authentication.getAuthorities().toString());
+    requestHeaders.add("CRM-User-Name", authentication.getName());
+    HttpEntity requestEntity = new HttpEntity(clientSearchDto, requestHeaders);
     ResponseEntity<List<ClientDto>> responseEntity = null;
     try {
       responseEntity = restTemplate.exchange(uri, HttpMethod.POST, requestEntity,
@@ -99,7 +106,11 @@ public class ClientApiController implements ClientApi {
     } catch (URISyntaxException e) {
       e.printStackTrace();
     }
-    HttpEntity requestEntityIdDto = new HttpEntity(clientIdDto);
+    HttpHeaders requestHeaders = new HttpHeaders();
+    Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+    requestHeaders.add("CRM-User-Role", authentication.getAuthorities().toString());
+    requestHeaders.add("CRM-User-Name", authentication.getName());
+    HttpEntity requestEntityIdDto = new HttpEntity(clientIdDto, requestHeaders);
     ResponseEntity<ClientDto> responseEntityClientDto = null;
     List<ContactDto> contactDtoList = null;
     List<AccountDto> accountDtoList = null;
@@ -155,7 +166,11 @@ public class ClientApiController implements ClientApi {
     } catch (URISyntaxException e) {
       e.printStackTrace();
     }
-    HttpEntity requestEntity = new HttpEntity(clientIdDto);
+    HttpHeaders requestHeaders = new HttpHeaders();
+    Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+    requestHeaders.add("CRM-User-Role", authentication.getAuthorities().toString());
+    requestHeaders.add("CRM-User-Name", authentication.getName());
+    HttpEntity requestEntity = new HttpEntity(clientIdDto, requestHeaders);
     ResponseEntity<ClientLevelDto> responseEntity = null;
     try {
       responseEntity = restTemplate.exchange(uri, HttpMethod.POST, requestEntity,
@@ -188,7 +203,11 @@ public class ClientApiController implements ClientApi {
     OperationSearchDto operationSearchDto = new OperationSearchDto();
     operationSearchDto.setAccountNumber(accountNumberDto.getAccountNumber());
     operationSearchDto.setQuantity("3");
-    HttpEntity requestEntity = new HttpEntity(operationSearchDto);
+    HttpHeaders requestHeaders = new HttpHeaders();
+    Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+    requestHeaders.add("CRM-User-Role", authentication.getAuthorities().toString());
+    requestHeaders.add("CRM-User-Name", authentication.getName());
+    HttpEntity requestEntity = new HttpEntity(operationSearchDto, requestHeaders);
     ResponseEntity<List<OperationDto>> responseEntity = null;
     try {
       responseEntity = restTemplate.exchange(uri, HttpMethod.POST, requestEntity,
@@ -218,7 +237,11 @@ public class ClientApiController implements ClientApi {
     } catch (URISyntaxException e) {
       e.printStackTrace();
     }
-    HttpEntity requestEntity = new HttpEntity(accountNumberDto);
+    HttpHeaders requestHeaders = new HttpHeaders();
+    Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+    requestHeaders.add("CRM-User-Role", authentication.getAuthorities().toString());
+    requestHeaders.add("CRM-User-Name", authentication.getName());
+    HttpEntity requestEntity = new HttpEntity(accountNumberDto, requestHeaders);
     ResponseEntity<LoanPaymentDto> responseEntity = null;
     try {
       responseEntity = restTemplate.exchange(uri, HttpMethod.POST, requestEntity,
@@ -248,7 +271,11 @@ public class ClientApiController implements ClientApi {
     } catch (URISyntaxException e) {
       e.printStackTrace();
     }
-    HttpEntity requestEntity = new HttpEntity(contactDto);
+    HttpHeaders requestHeaders = new HttpHeaders();
+    Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+    requestHeaders.add("CRM-User-Role", authentication.getAuthorities().toString());
+    requestHeaders.add("CRM-User-Name", authentication.getName());
+    HttpEntity requestEntity = new HttpEntity(contactDto, requestHeaders);
     ResponseEntity<ContactDto> responseEntity = null;
     try {
       responseEntity = restTemplate.exchange(uri, HttpMethod.POST, requestEntity,
