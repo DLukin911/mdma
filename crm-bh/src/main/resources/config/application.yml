@@ -19,3 +19,11 @@ logging:
     name: "crm-bh/logs/application-debug.log"
 server:
   port: 8080
+  servlet:
+    context-path: /api
+
+system:
+  element:
+    dm:
+      host: localhost
+      port: 8081
