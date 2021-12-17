@@ -1,0 +1,830 @@
+- type: "RECEIPT"
+  accountNumber: "40817810640135214330"
+  operDate: 1614072960
+  amount: 6000.0
+  description: "VSP 5180 MOSKVA RUS"
+- type: "EXPENSE"
+  accountNumber: "40817810640135214330"
+  operDate: 1614798720
+  amount: 369.0
+  description: "МУП Водоканал. Оплата услуг"
+- type: "EXPENSE"
+  accountNumber: "40817810640135214330"
+  operDate: 1615524480
+  amount: 473.8
+  description: "Перевод"
+- type: "EXPENSE"
+  accountNumber: "40817810640135214330"
+  operDate: 1616250240
+  amount: 1090.2
+  description: "МУП Водоканал. Оплата услуг"
+- type: "EXPENSE"
+  accountNumber: "40817810640135214330"
+  operDate: 1616987280
+  amount: 699.6
+  description: "Мосэнергосбыт. Оплата услуг"
+- type: "EXPENSE"
+  accountNumber: "40817810640135214330"
+  operDate: 1617701760
+  amount: 806.0
+  description: "YM OZON 1 GOROD MOSKVA RUS"
+- type: "EXPENSE"
+  accountNumber: "40817810640135214330"
+  operDate: 1618427520
+  amount: 104.8
+  description: "Мосэнергосбыт. Оплата услуг"
+- type: "RECEIPT"
+  accountNumber: "40817810640135214330"
+  operDate: 1619153280
+  amount: 7000.0
+  description: "VSP 5318 MOSKVA RUS"
+- type: "EXPENSE"
+  accountNumber: "40817810640135214330"
+  operDate: 1619879040
+  amount: 1161.8
+  description: "МУП Водоканал. Оплата услуг"
+- type: "EXPENSE"
+  accountNumber: "40817810640135214330"
+  operDate: 1620616080
+  amount: 1662.8
+  description: "Амбарчик. Оплата"
+- type: "EXPENSE"
+  accountNumber: "40817810640135214330"
+  operDate: 1621330560
+  amount: 1568.6
+  description: "Перевод"
+- type: "RECEIPT"
+  accountNumber: "40817810640135214330"
+  operDate: 1622056320
+  amount: 100.0
+  description: "VSP 1470 MOSKVA RUS"
+- type: "EXPENSE"
+  accountNumber: "40817810640135214330"
+  operDate: 1622782080
+  amount: 2580.6
+  description: "Мосэнергосбыт. Оплата услуг"
+- type: "EXPENSE"
+  accountNumber: "40817810640135214330"
+  operDate: 1623507840
+  amount: 1148.2
+  description: "МУП Водоканал. Оплата услуг"
+- type: "EXPENSE"
+  accountNumber: "40817810640135214330"
+  operDate: 1624259040
+  amount: 1414.2
+  description: "Мострансгаз. Оплата услуг"
+- type: "RECEIPT"
+  accountNumber: "40817810270135207620"
+  operDate: 1617224400
+  amount: 40000.0
+  description: "VSP 5318 MOSKVA RUS"
+- type: "EXPENSE"
+  accountNumber: "40817810270135207620"
+  operDate: 1618682400
+  amount: 5527.6
+  description: "YM OZON 5 GOROD MOSKVA RUS"
+- type: "EXPENSE"
+  accountNumber: "40817810270135207620"
+  operDate: 1620140400
+  amount: 9020.8
+  description: "YM OZON 5 GOROD MOSKVA RUS"
+- type: "EXPENSE"
+  accountNumber: "40817810270135207620"
+  operDate: 1621598400
+  amount: 832.8
+  description: "Мосэнергосбыт. Оплата услуг"
+- type: "EXPENSE"
+  accountNumber: "40817810270135207620"
+  operDate: 1623056400
+  amount: 8037.6
+  description: "Мосэнергосбыт. Оплата услуг"
+- type: "EXPENSE"
+  accountNumber: "40817810270135207620"
+  operDate: 1624514400
+  amount: 14280.0
+  description: "Мосэнергосбыт. Оплата услуг"
+- type: "RECEIPT"
+  accountNumber: "40817810270135207620"
+  operDate: 1625972400
+  amount: 12000.0
+  description: "VSP 1470 MOSKVA RUS"
+- type: "EXPENSE"
+  accountNumber: "40817810270135207620"
+  operDate: 1627441740
+  amount: 13728.0
+  description: "Спортмастер. Оплата"
+- type: "RECEIPT"
+  accountNumber: "40817810270135207620"
+  operDate: 1628888400
+  amount: 50000.0
+  description: "VSP 5312 MOSKVA RUS"
+- type: "EXPENSE"
+  accountNumber: "40817810270135207620"
+  operDate: 1630346400
+  amount: 7711.6
+  description: "Спортмастер. Оплата"
+- type: "EXPENSE"
+  accountNumber: "40817810270135207620"
+  operDate: 1631804400
+  amount: 11646.0
+  description: "Перевод"
+- type: "EXPENSE"
+  accountNumber: "40817810270135207620"
+  operDate: 1633262400
+  amount: 4335.8
+  description: "Мосэнергосбыт. Оплата услуг"
+- type: "RECEIPT"
+  accountNumber: "40817810270135207620"
+  operDate: 1634720400
+  amount: 100.0
+  description: "Перевод"
+- type: "EXPENSE"
+  accountNumber: "40817810270135207620"
+  operDate: 1636178400
+  amount: 4210.6
+  description: "Спортмастер. Оплата"
+- type: "EXPENSE"
+  accountNumber: "40817810270135207620"
+  operDate: 1637636400
+  amount: 1800.8
+  description: "МУП Водоканал. Оплата услуг"
+- type: "EXPENSE"
+  accountNumber: "40817810270135207620"
+  operDate: 1639109160
+  amount: 1669.6
+  description: "Амбарчик. Оплата"
+- type: "RECEIPT"
+  accountNumber: "40817810710167584522"
+  operDate: 1619579520
+  amount: 80000.0
+  description: "VSP 5311 MOSKVA RUS"
+- type: "EXPENSE"
+  accountNumber: "40817810710167584522"
+  operDate: 1620973440
+  amount: 25220.0
+  description: "Мосэнергосбыт. Оплата услуг"
+- type: "EXPENSE"
+  accountNumber: "40817810710167584522"
+  operDate: 1622367360
+  amount: 6353.6
+  description: "МУП Водоканал. Оплата услуг"
+- type: "EXPENSE"
+  accountNumber: "40817810710167584522"
+  operDate: 1623761280
+  amount: 5977.6
+  description: "Супермаркет. Оплата"
+- type: "EXPENSE"
+  accountNumber: "40817810710167584522"
+  operDate: 1625155200
+  amount: 2359.6
+  description: "МУП Водоканал. Оплата услуг"
+- type: "EXPENSE"
+  accountNumber: "40817810710167584522"
+  operDate: 1626549120
+  amount: 4257.8
+  description: "Спортмастер. Оплата"
+- type: "EXPENSE"
+  accountNumber: "40817810710167584522"
+  operDate: 1627943040
+  amount: 12725.8
+  description: "МУП Водоканал. Оплата услуг"
+- type: "RECEIPT"
+  accountNumber: "40817810710167584522"
+  operDate: 1629336960
+  amount: 75000.0
+  description: "VSP 1470 MOSKVA RUS"
+- type: "EXPENSE"
+  accountNumber: "40817810710167584522"
+  operDate: 1630730880
+  amount: 5504.0
+  description: "Мострансгаз. Оплата услуг"
+- type: "EXPENSE"
+  accountNumber: "40817810710167584522"
+  operDate: 1632124800
+  amount: 13920.8
+  description: "МУП Водоканал. Оплата услуг"
+- type: "EXPENSE"
+  accountNumber: "40817810710167584522"
+  operDate: 1633518720
+  amount: 9252.0
+  description: "МУП Водоканал. Оплата услуг"
+- type: "RECEIPT"
+  accountNumber: "40817810710167584522"
+  operDate: 1634912640
+  amount: 10000.0
+  description: "VSP 1470 MOSKVA RUS"
+- type: "EXPENSE"
+  accountNumber: "40817810710167584522"
+  operDate: 1636306560
+  amount: 16068.8
+  description: "Мострансгаз. Оплата услуг"
+- type: "EXPENSE"
+  accountNumber: "40817810710167584522"
+  operDate: 1637700480
+  amount: 18455.6
+  description: "Мосэнергосбыт. Оплата услуг"
+- type: "EXPENSE"
+  accountNumber: "40817810710167584522"
+  operDate: 1639101960
+  amount: 7466.2
+  description: "Спортмастер. Оплата"
+- type: "RECEIPT"
+  accountNumber: "40817810460167464720"
+  operDate: 1624213270
+  amount: 5000.0
+  description: "VSP 5312 MOSKVA RUS"
+- type: "EXPENSE"
+  accountNumber: "40817810460167464720"
+  operDate: 1625143340
+  amount: 1493.6
+  description: "Спортмастер. Оплата"
+- type: "EXPENSE"
+  accountNumber: "40817810460167464720"
+  operDate: 1626073410
+  amount: 5892.6
+  description: "YM OZON 5 GOROD MOSKVA RUS"
+- type: "EXPENSE"
+  accountNumber: "40817810460167464720"
+  operDate: 1627003480
+  amount: 2171.0
+  description: "Супермаркет. Оплата"
+- type: "EXPENSE"
+  accountNumber: "40817810460167464720"
+  operDate: 1627933550
+  amount: 10116.4
+  description: "Мосэнергосбыт. Оплата услуг"
+- type: "EXPENSE"
+  accountNumber: "40817810460167464720"
+  operDate: 1628863620
+  amount: 5529.2
+  description: "Амбарчик. Оплата"
+- type: "EXPENSE"
+  accountNumber: "40817810460167464720"
+  operDate: 1629793690
+  amount: 3246.4
+  description: "Мострансгаз. Оплата услуг"
+- type: "RECEIPT"
+  accountNumber: "40817810460167464720"
+  operDate: 1630723760
+  amount: 24000.0
+  description: "VSP 5318 MOSKVA RUS"
+- type: "EXPENSE"
+  accountNumber: "40817810460167464720"
+  operDate: 1631653830
+  amount: 5346.0
+  description: "Амбарчик. Оплата"
+- type: "EXPENSE"
+  accountNumber: "40817810460167464720"
+  operDate: 1632583900
+  amount: 5728.0
+  description: "Спортмастер. Оплата"
+- type: "EXPENSE"
+  accountNumber: "40817810460167464720"
+  operDate: 1633513970
+  amount: 4110.0
+  description: "Спортмастер. Оплата"
+- type: "RECEIPT"
+  accountNumber: "40817810460167464720"
+  operDate: 1634444040
+  amount: 2000.0
+  description: "VSP 5180 MOSKVA RUS"
+- type: "EXPENSE"
+  accountNumber: "40817810460167464720"
+  operDate: 1635374110
+  amount: 1252.6
+  description: "YM OZON 5 GOROD MOSKVA RUS"
+- type: "EXPENSE"
+  accountNumber: "40817810460167464720"
+  operDate: 1636304180
+  amount: 3191.6
+  description: "Мострансгаз. Оплата услуг"
+- type: "EXPENSE"
+  accountNumber: "40817810460167464720"
+  operDate: 1637234250
+  amount: 572.8
+  description: "МУП Водоканал. Оплата услуг"
+- type: "RECEIPT"
+  accountNumber: "40817810460167464720"
+  operDate: 1638164320
+  amount: 20000.0
+  description: "VSP 5180 MOSKVA RUS"
+- type: "EXPENSE"
+  accountNumber: "40817810460167464720"
+  operDate: 1639094390
+  amount: 1700.0
+  description: "YM OZON 1 GOROD MOSKVA RUS"
+- type: "RECEIPT"
+  accountNumber: "40817810400110013872"
+  operDate: 1622401920
+  amount: 250000.0
+  description: "VSP 5318 MOSKVA RUS"
+- type: "EXPENSE"
+  accountNumber: "40817810400110013872"
+  operDate: 1623594240
+  amount: 79020.0
+  description: "Перевод"
+- type: "EXPENSE"
+  accountNumber: "40817810400110013872"
+  operDate: 1624786560
+  amount: 24350.2
+  description: "Мосэнергосбыт. Оплата услуг"
+- type: "EXPENSE"
+  accountNumber: "40817810400110013872"
+  operDate: 1625978880
+  amount: 37507.2
+  description: "Спортмастер. Оплата"
+- type: "EXPENSE"
+  accountNumber: "40817810400110013872"
+  operDate: 1627193160
+  amount: 64190.6
+  description: "Супермаркет. Оплата"
+- type: "EXPENSE"
+  accountNumber: "40817810400110013872"
+  operDate: 1628363520
+  amount: 27570.4
+  description: "Мострансгаз. Оплата услуг"
+- type: "EXPENSE"
+  accountNumber: "40817810400110013872"
+  operDate: 1629555840
+  amount: 15000.0
+  description: "МУП Водоканал. Оплата услуг"
+- type: "RECEIPT"
+  accountNumber: "40817810400110013872"
+  operDate: 1630748160
+  amount: 300000.0
+  description: "VSP 5311 MOSKVA RUS"
+- type: "EXPENSE"
+  accountNumber: "40817810400110013872"
+  operDate: 1631940480
+  amount: 44508.8
+  description: "Мосэнергосбыт. Оплата услуг"
+- type: "EXPENSE"
+  accountNumber: "40817810400110013872"
+  operDate: 1633136820
+  amount: 20876.4
+  description: "Мострансгаз. Оплата услуг"
+- type: "EXPENSE"
+  accountNumber: "40817810400110013872"
+  operDate: 1634325120
+  amount: 23061.0
+  description: "Мосэнергосбыт. Оплата услуг"
+- type: "EXPENSE"
+  accountNumber: "40817810400110013872"
+  operDate: 1635517440
+  amount: 9190.2
+  description: "Спортмастер. Оплата"
+- type: "RECEIPT"
+  accountNumber: "40817810400110013872"
+  operDate: 1636709760
+  amount: 1000.0
+  description: "VSP 5180 MOSKVA RUS"
+- type: "EXPENSE"
+  accountNumber: "40817810400110013872"
+  operDate: 1637902080
+  amount: 5000.0
+  description: "Супермаркет. Оплата"
+- type: "EXPENSE"
+  accountNumber: "40817810400110013872"
+  operDate: 1639127740
+  amount: 18810.2
+  description: "Мосэнергосбыт. Оплата услуг"
+- type: "RECEIPT"
+  accountNumber: "40817810330110112985"
+  operDate: 1614499200
+  amount: 25000.0
+  description: "VSP 5318 MOSKVA RUS"
+- type: "EXPENSE"
+  accountNumber: "40817810330110112985"
+  operDate: 1616256000
+  amount: 5021.6
+  description: "Мострансгаз. Оплата услуг"
+- type: "EXPENSE"
+  accountNumber: "40817810330110112985"
+  operDate: 1618023720
+  amount: 2609.0
+  description: "МУП Водоканал. Оплата услуг"
+- type: "EXPENSE"
+  accountNumber: "40817810330110112985"
+  operDate: 1619769600
+  amount: 1212.6
+  description: "Спортмастер. Оплата"
+- type: "EXPENSE"
+  accountNumber: "40817810330110112985"
+  operDate: 1621526400
+  amount: 1091.0
+  description: "Мосэнергосбыт. Оплата услуг"
+- type: "EXPENSE"
+  accountNumber: "40817810330110112985"
+  operDate: 1623287340
+  amount: 5249.4
+  description: "Спортмастер. Оплата"
+- type: "EXPENSE"
+  accountNumber: "40817810330110112985"
+  operDate: 1625040000
+  amount: 2490.8
+  description: "YM OZON 5 GOROD MOSKVA RUS"
+- type: "RECEIPT"
+  accountNumber: "40817810330110112985"
+  operDate: 1626796800
+  amount: 21400.0
+  description: "VSP 1470 MOSKVA RUS"
+- type: "EXPENSE"
+  accountNumber: "40817810330110112985"
+  operDate: 1628582880
+  amount: 2829.8
+  description: "Супермаркет. Оплата"
+- type: "EXPENSE"
+  accountNumber: "40817810330110112985"
+  operDate: 1630310400
+  amount: 6278.4
+  description: "Спортмастер. Оплата"
+- type: "EXPENSE"
+  accountNumber: "40817810330110112985"
+  operDate: 1632067200
+  amount: 5717.2
+  description: "YM OZON 5 GOROD MOSKVA RUS"
+- type: "RECEIPT"
+  accountNumber: "40817810330110112985"
+  operDate: 1633831800
+  amount: 100.0
+  description: "VSP 5180 MOSKVA RUS"
+- type: "EXPENSE"
+  accountNumber: "40817810330110112985"
+  operDate: 1635580800
+  amount: 1420.4
+  description: "Мосэнергосбыт. Оплата услуг"
+- type: "EXPENSE"
+  accountNumber: "40817810330110112985"
+  operDate: 1637337600
+  amount: 1468.2
+  description: "YM OZON 5 GOROD MOSKVA RUS"
+- type: "EXPENSE"
+  accountNumber: "40817810330110112985"
+  operDate: 1639112640
+  amount: 4064.0
+  description: "YM OZON 5 GOROD MOSKVA RUS"
+- type: "RECEIPT"
+  accountNumber: "40817810110149787014"
+  operDate: 1618925400
+  amount: 240000.0
+  description: "VSP 5312 MOSKVA RUS"
+- type: "EXPENSE"
+  accountNumber: "40817810110149787014"
+  operDate: 1620270000
+  amount: 6664.2
+  description: "Перевод"
+- type: "EXPENSE"
+  accountNumber: "40817810110149787014"
+  operDate: 1621614600
+  amount: 7118.0
+  description: "Мострансгаз. Оплата услуг"
+- type: "EXPENSE"
+  accountNumber: "40817810110149787014"
+  operDate: 1622959200
+  amount: 38262.8
+  description: "Амбарчик. Оплата"
+- type: "EXPENSE"
+  accountNumber: "40817810110149787014"
+  operDate: 1624303800
+  amount: 4444.4
+  description: "Мосэнергосбыт. Оплата услуг"
+- type: "EXPENSE"
+  accountNumber: "40817810110149787014"
+  operDate: 1625648400
+  amount: 28818.8
+  description: "Перевод"
+- type: "EXPENSE"
+  accountNumber: "40817810110149787014"
+  operDate: 1626993000
+  amount: 24952.8
+  description: "Перевод"
+- type: "RECEIPT"
+  accountNumber: "40817810110149787014"
+  operDate: 1628337600
+  amount: 238000.0
+  description: "VSP 5312 MOSKVA RUS"
+- type: "EXPENSE"
+  accountNumber: "40817810110149787014"
+  operDate: 1629682200
+  amount: 7004.0
+  description: "Спортмастер. Оплата"
+- type: "EXPENSE"
+  accountNumber: "40817810110149787014"
+  operDate: 1631026800
+  amount: 45090.4
+  description: "Супермаркет. Оплата"
+- type: "EXPENSE"
+  accountNumber: "40817810110149787014"
+  operDate: 1632371400
+  amount: 76086.8
+  description: "Супермаркет. Оплата"
+- type: "RECEIPT"
+  accountNumber: "40817810110149787014"
+  operDate: 1633716000
+  amount: 100.0
+  description: "VSP 5318 MOSKVA RUS"
+- type: "EXPENSE"
+  accountNumber: "40817810110149787014"
+  operDate: 1635060600
+  amount: 44845.8
+  description: "Спортмастер. Оплата"
+- type: "RECEIPT"
+  accountNumber: "40817810110149787014"
+  operDate: 1636405200
+  amount: 200000.0
+  description: "Перевод"
+- type: "EXPENSE"
+  accountNumber: "40817810110149787014"
+  operDate: 1637749800
+  amount: 72365.2
+  description: "Мострансгаз. Оплата услуг"
+- type: "EXPENSE"
+  accountNumber: "40817810110149787014"
+  operDate: 1639130760
+  amount: 3437.6
+  description: "YM OZON 1 GOROD MOSKVA RUS"
+- type: "RECEIPT"
+  accountNumber: "40817810370149415250"
+  operDate: 1628240760
+  amount: 20000.0
+  description: "VSP 5180 MOSKVA RUS"
+- type: "EXPENSE"
+  accountNumber: "40817810370149415250"
+  operDate: 1629000060
+  amount: 3769.6
+  description: "Мострансгаз. Оплата услуг"
+- type: "EXPENSE"
+  accountNumber: "40817810370149415250"
+  operDate: 1629802980
+  amount: 12791.6
+  description: "Амбарчик. Оплата"
+- type: "EXPENSE"
+  accountNumber: "40817810370149415250"
+  operDate: 1630559100
+  amount: 12057.8
+  description: "Амбарчик. Оплата"
+- type: "EXPENSE"
+  accountNumber: "40817810370149415250"
+  operDate: 1631354880
+  amount: 1501.6
+  description: "YM OZON 1 GOROD MOSKVA RUS"
+- type: "EXPENSE"
+  accountNumber: "40817810370149415250"
+  operDate: 1632125460
+  amount: 14388.0
+  description: "YM OZON 5 GOROD MOSKVA RUS"
+- type: "EXPENSE"
+  accountNumber: "40817810370149415250"
+  operDate: 1632906480
+  amount: 13459.8
+  description: "YM OZON 1 GOROD MOSKVA RUS"
+- type: "RECEIPT"
+  accountNumber: "40817810370149415250"
+  operDate: 1633680240
+  amount: 67000.0
+  description: "VSP 5180 MOSKVA RUS"
+- type: "EXPENSE"
+  accountNumber: "40817810370149415250"
+  operDate: 1634465400
+  amount: 3353.0
+  description: "Супермаркет. Оплата"
+- type: "EXPENSE"
+  accountNumber: "40817810370149415250"
+  operDate: 1635221100
+  amount: 2882.0
+  description: "Мосэнергосбыт. Оплата услуг"
+- type: "EXPENSE"
+  accountNumber: "40817810370149415250"
+  operDate: 1636006200
+  amount: 3320.8
+  description: "YM OZON 5 GOROD MOSKVA RUS"
+- type: "RECEIPT"
+  accountNumber: "40817810370149415250"
+  operDate: 1636768920
+  amount: 1000.0
+  description: "Перевод"
+- type: "EXPENSE"
+  accountNumber: "40817810370149415250"
+  operDate: 1637569211
+  amount: 11475.2
+  description: "Мосэнергосбыт. Оплата услуг"
+- type: "EXPENSE"
+  accountNumber: "40817810370149415250"
+  operDate: 1638351625
+  amount: 2081.2
+  description: "Мосэнергосбыт. Оплата услуг"
+- type: "EXPENSE"
+  accountNumber: "40817810370149415250"
+  operDate: 1639134725
+  amount: 7463.2
+  description: "YM OZON 5 GOROD MOSKVA RUS"
+- type: "RECEIPT"
+  accountNumber: "40817810240136429733"
+  operDate: 1633317942
+  amount: 8000.0
+  description: "VSP 5180 MOSKVA RUS"
+- type: "EXPENSE"
+  accountNumber: "40817810240136429733"
+  operDate: 1633762284
+  amount: 84.8
+  description: "Перевод"
+- type: "EXPENSE"
+  accountNumber: "40817810240136429733"
+  operDate: 1634206626
+  amount: 2980.8
+  description: "YM OZON 5 GOROD MOSKVA RUS"
+- type: "EXPENSE"
+  accountNumber: "40817810240136429733"
+  operDate: 1634650968
+  amount: 622.0
+  description: "YM OZON 5 GOROD MOSKVA RUS"
+- type: "EXPENSE"
+  accountNumber: "40817810240136429733"
+  operDate: 1635095310
+  amount: 2615.2
+  description: "YM OZON 1 GOROD MOSKVA RUS"
+- type: "EXPENSE"
+  accountNumber: "40817810240136429733"
+  operDate: 1635539652
+  amount: 1108.4
+  description: "YM OZON 5 GOROD MOSKVA RUS"
+- type: "RECEIPT"
+  accountNumber: "40817810240136429733"
+  operDate: 1635983994
+  amount: 9000.0
+  description: "VSP 5312 MOSKVA RUS"
+- type: "EXPENSE"
+  accountNumber: "40817810240136429733"
+  operDate: 1636428336
+  amount: 1440.0
+  description: "YM OZON 1 GOROD MOSKVA RUS"
+- type: "EXPENSE"
+  accountNumber: "40817810240136429733"
+  operDate: 1636872678
+  amount: 1281.6
+  description: "YM OZON 1 GOROD MOSKVA RUS"
+- type: "EXPENSE"
+  accountNumber: "40817810240136429733"
+  operDate: 1637317020
+  amount: 2648.8
+  description: "Мострансгаз. Оплата услуг"
+- type: "EXPENSE"
+  accountNumber: "40817810240136429733"
+  operDate: 1637761362
+  amount: 110.4
+  description: "YM OZON 5 GOROD MOSKVA RUS"
+- type: "EXPENSE"
+  accountNumber: "40817810240136429733"
+  operDate: 1638205704
+  amount: 1064.4
+  description: "YM OZON 5 GOROD MOSKVA RUS"
+- type: "EXPENSE"
+  accountNumber: "40817810240136429733"
+  operDate: 1638650046
+  amount: 1284.4
+  description: "МУП Водоканал. Оплата услуг"
+- type: "RECEIPT"
+  accountNumber: "40817810240136429733"
+  operDate: 1639094388
+  amount: 1000.0
+  description: "VSP 5312 MOSKVA RUS"
+- type: "RECEIPT"
+  accountNumber: "40817810890159602046"
+  operDate: 1626578742
+  amount: 119000.0
+  description: "VSP 1470 MOSKVA RUS"
+- type: "EXPENSE"
+  accountNumber: "40817810890159602046"
+  operDate: 1627541484
+  amount: 15872.0
+  description: "Мострансгаз. Оплата услуг"
+- type: "EXPENSE"
+  accountNumber: "40817810890159602046"
+  operDate: 1628504226
+  amount: 2332.8
+  description: "Амбарчик. Оплата"
+- type: "EXPENSE"
+  accountNumber: "40817810890159602046"
+  operDate: 1629466968
+  amount: 42469.6
+  description: "Супермаркет. Оплата"
+- type: "EXPENSE"
+  accountNumber: "40817810890159602046"
+  operDate: 1630429710
+  amount: 9170.0
+  description: "Спортмастер. Оплата"
+- type: "EXPENSE"
+  accountNumber: "40817810890159602046"
+  operDate: 1631392452
+  amount: 15156.8
+  description: "Супермаркет. Оплата"
+- type: "EXPENSE"
+  accountNumber: "40817810890159602046"
+  operDate: 1632355194
+  amount: 30314.4
+  description: "Мострансгаз. Оплата услуг"
+- type: "RECEIPT"
+  accountNumber: "40817810890159602046"
+  operDate: 1633317936
+  amount: 120000.0
+  description: "VSP 5312 MOSKVA RUS"
+- type: "EXPENSE"
+  accountNumber: "40817810890159602046"
+  operDate: 1634280678
+  amount: 9476.8
+  description: "МУП Водоканал. Оплата услуг"
+- type: "EXPENSE"
+  accountNumber: "40817810890159602046"
+  operDate: 1635243420
+  amount: 23122.6
+  description: "МУП Водоканал. Оплата услуг"
+- type: "EXPENSE"
+  accountNumber: "40817810890159602046"
+  operDate: 1636206162
+  amount: 5232.4
+  description: "Мосэнергосбыт. Оплата услуг"
+- type: "RECEIPT"
+  accountNumber: "40817810890159602046"
+  operDate: 1637168904
+  amount: 100000.0
+  description: "VSP 1470 MOSKVA RUS"
+- type: "EXPENSE"
+  accountNumber: "40817810890159602046"
+  operDate: 1638131646
+  amount: 40366.8
+  description: "Мосэнергосбыт. Оплата услуг"
+- type: "EXPENSE"
+  accountNumber: "40817810890159602046"
+  operDate: 1639094388
+  amount: 28030.8
+  description: "Мострансгаз. Оплата услуг"
+- type: "RECEIPT"
+  accountNumber: "40817810990136343420"
+  operDate: 1613495314
+  amount: 78000.0
+  description: "VSP 1470 MOSKVA RUS"
+- type: "EXPENSE"
+  accountNumber: "40817810990136343420"
+  operDate: 1615112228
+  amount: 13747.4
+  description: "YM OZON 5 GOROD MOSKVA RUS"
+- type: "EXPENSE"
+  accountNumber: "40817810990136343420"
+  operDate: 1616729142
+  amount: 11008.0
+  description: "YM OZON 5 GOROD MOSKVA RUS"
+- type: "EXPENSE"
+  accountNumber: "40817810990136343420"
+  operDate: 1618346056
+  amount: 2624.8
+  description: "МУП Водоканал. Оплата услуг"
+- type: "EXPENSE"
+  accountNumber: "40817810990136343420"
+  operDate: 1619962970
+  amount: 14784.0
+  description: "Мострансгаз. Оплата услуг"
+- type: "EXPENSE"
+  accountNumber: "40817810990136343420"
+  operDate: 1621579884
+  amount: 8191.8
+  description: "Мострансгаз. Оплата услуг"
+- type: "EXPENSE"
+  accountNumber: "40817810990136343420"
+  operDate: 1623196798
+  amount: 1119.6
+  description: "Супермаркет. Оплата"
+- type: "RECEIPT"
+  accountNumber: "40817810990136343420"
+  operDate: 1624813712
+  amount: 50000.0
+  description: "VSP 5318 MOSKVA RUS"
+- type: "EXPENSE"
+  accountNumber: "40817810990136343420"
+  operDate: 1626430626
+  amount: 12575.4
+  description: "Мосэнергосбыт. Оплата услуг"
+- type: "EXPENSE"
+  accountNumber: "40817810990136343420"
+  operDate: 1628047540
+  amount: 7772.0
+  description: "Амбарчик. Оплата"
+- type: "EXPENSE"
+  accountNumber: "40817810990136343420"
+  operDate: 1629664454
+  amount: 28631.2
+  description: "Спортмастер. Оплата"
+- type: "EXPENSE"
+  accountNumber: "40817810990136343420"
+  operDate: 1631281368
+  amount: 6896.0
+  description: "Спортмастер. Оплата"
+- type: "EXPENSE"
+  accountNumber: "40817810990136343420"
+  operDate: 1632898282
+  amount: 8081.6
+  description: "Мосэнергосбыт. Оплата услуг"
+- type: "EXPENSE"
+  accountNumber: "40817810990136343420"
+  operDate: 1634515196
+  amount: 10969.4
+  description: "Мострансгаз. Оплата услуг"
