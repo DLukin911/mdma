@@ -21,11 +21,11 @@ public class EntityWebTestData {
       + "\"shortcut\":\"8404\"}]";
 
   public static final String jsonOperationList = "[{\"type\":\"RECEIPT\","
-      + "\"accountNumber\":\"40817810670114037905\",\"operDate\":\"2021-12-10T03:16:40\","
+      + "\"accountNumber\":\"40817810670114037905\",\"operDate\":\"2021-12-10T00:16:40\","
       + "\"amount\":\"10000.00\",\"description\":\"VSP 5318 MOSKVA RUS\"},{\"type\":\"EXPENSE\","
-      + "\"accountNumber\":\"40817810670114037905\",\"operDate\":\"2021-12-10T03:00:00\","
+      + "\"accountNumber\":\"40817810670114037905\",\"operDate\":\"2021-12-10T00:00:00\","
       + "\"amount\":\"5645.20\",\"description\":\"Амбарчик. Оплата\"},{\"type\":\"RECEIPT\","
-      + "\"accountNumber\":\"40817810670114037905\",\"operDate\":\"2021-11-27T05:03:20\","
+      + "\"accountNumber\":\"40817810670114037905\",\"operDate\":\"2021-11-27T02:03:20\","
       + "\"amount\":\"10000.00\",\"description\":\"VSP 5318 MOSKVA RUS\"}]";
 
   public static final String jsonBalanceAmount = "{\"balanceAmount\":\"-5648.00\"}";
@@ -38,5 +38,5 @@ public class EntityWebTestData {
       + "\"passportSeries\":\"6215\",\"passportNumber\":\"352617\",\"inn\":\"773626104512\","
       + "\"address\":\" г.Москва, ул. Ленина, дом 1\"}";
 
-  public static final String jsonLoanPaymentAmount = "{\"amount\":\"39079.45\"}";
+  public static final String jsonLoanPaymentAmount = "{\"amount\":\"405.73\"}";
 }

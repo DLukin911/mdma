@@ -18,4 +18,4 @@ logging:
   file:
     name: "dms/logs/application-debug.log"
 server:
-  port: 8081
+  port: 8082

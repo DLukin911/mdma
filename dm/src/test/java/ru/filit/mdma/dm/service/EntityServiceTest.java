@@ -209,9 +209,9 @@ class EntityServiceTest extends AbstractTest {
   void testShouldGetCurrentClientLevelDtoForRequestData() {
     ClientLevelDto clientLevelDto = entityService.getClientLevel(clientIdDto,
         LocalDate.of(2021, 12, 13));
-    assertEquals("40817810670114037905", clientLevelDto.getAccuntNumber());
-    assertEquals("LOW", clientLevelDto.getLevel());
-    assertEquals("897.67", clientLevelDto.getAvgBalance());
+    assertEquals("40817810200159961136", clientLevelDto.getAccuntNumber());
+    assertEquals("SILVER", clientLevelDto.getLevel());
+    assertEquals("351285.84", clientLevelDto.getAvgBalance());
   }
 
   @Test()
@@ -229,7 +229,7 @@ class EntityServiceTest extends AbstractTest {
   @Test
   void testShouldGetLoanPaymentAmountForRequestAccountNumber() {
     LoanPaymentDto loanPaymentDto = entityService.getLoanPayment(accountNumberDtoOverdraft);
-    assertEquals("39079.45", loanPaymentDto.getAmount());
+    assertEquals("405.73", loanPaymentDto.getAmount());
   }
 
   @Test()

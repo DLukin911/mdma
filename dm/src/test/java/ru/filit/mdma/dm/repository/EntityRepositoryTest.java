@@ -116,8 +116,8 @@ class EntityRepositoryTest extends AbstractTest {
 
   @Test
   void testShouldGetAccountAndAvgBalanceFromYamlDatabase() {
-    assertEquals("{40817810670114037905=897.6666666666666,"
-            + " 40817810200159961136=-13883.199999999999}",
+    assertEquals("{40817810670114037905=-381.97333333333336,"
+            + " 40817810200159961136=351285.83999999997}",
         entityRepository.getClientLevel("80302", LocalDate.of(2021, 12, 13))
             .toString());
   }

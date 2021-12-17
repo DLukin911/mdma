@@ -8,10 +8,9 @@ import static ru.filit.oas.dm.model.Contact.TypeEnum.EMAIL;
 import com.fasterxml.jackson.core.type.TypeReference;
 import java.io.IOException;
 import java.math.BigDecimal;
-import java.time.Instant;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.time.ZoneId;
+import java.time.ZoneOffset;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.HashMap;
@@ -115,7 +114,7 @@ public class EntityRepository {
     return operationCache.stream()
         .filter(operation -> operation.getAccountNumber().equals(accNumber)
             && operation.getOperDate() >= finalAccountBalance.getBalanceDate()
-            && operation.getOperDate() <= LocalDateTime.now().atZone(ZoneId.of("Europe/Moscow"))
+            && operation.getOperDate() <= LocalDateTime.now().atZone(ZoneOffset.UTC)
             .toInstant().toEpochMilli())
         .collect(Collectors.toList());
   }
@@ -318,23 +317,21 @@ public class EntityRepository {
    */
   private BigDecimal calculatingAvgAmount(Account account, LocalDate dateOfEndPeriod) {
     BigDecimal avgAmount = BigDecimal.ZERO;
+    BigDecimal currentAccountBalance = BigDecimal.ZERO;
 
     LocalDate dateOfStartPeriod = dateOfEndPeriod.minusDays(30);
     LocalDate dateOpenAccount = convertToLocalDate(account.getOpenDate());
     if (dateOpenAccount.isAfter(dateOfEndPeriod)) {
       dateOfStartPeriod = convertToLocalDate(account.getOpenDate());
     }
-    LocalDate finalDateOfStartPeriod = dateOfStartPeriod;
-    List<Operation> operationList = operationCache.stream()
-        .filter(operation -> operation.getAccountNumber().equals(account.getNumber())
-            && convertToLocalDate(operation.getOperDate()).isAfter(
-            finalDateOfStartPeriod.minusDays(1))
-            && convertToLocalDate(operation.getOperDate()).isBefore(dateOfEndPeriod))
-        .collect(Collectors.toList());
 
+    List<Operation> operationList =
+        getOperationListByAccountNumber(account.getNumber(), "0");
+
+    LocalDate openAccountDate = convertToLocalDate(account.getOpenDate());
     List<BigDecimal> balanceListBy30Day = new ArrayList<>();
     List<Operation> operationListByDay;
-    for (LocalDate thisDay = dateOfStartPeriod; thisDay.isBefore(dateOfEndPeriod.plusDays(1));
+    for (LocalDate thisDay = openAccountDate; thisDay.isBefore(dateOfEndPeriod);
         thisDay = thisDay.plusDays(1)) {
       BigDecimal balanceByDay = BigDecimal.ZERO;
       LocalDate finalThisDay = thisDay;
@@ -353,8 +350,11 @@ public class EntityRepository {
             throw new IllegalStateException("Unexpected value: " + operation.getType());
         }
       }
-      if (balanceByDay.compareTo(BigDecimal.ZERO) != 0) {
-        balanceListBy30Day.add(balanceByDay);
+      if (thisDay.isAfter(dateOfStartPeriod.minusDays(1))) {
+        currentAccountBalance = currentAccountBalance.add(balanceByDay);
+        balanceListBy30Day.add(currentAccountBalance);
+      } else if (balanceByDay.compareTo(BigDecimal.ZERO) != 0) {
+        currentAccountBalance = currentAccountBalance.add(balanceByDay);
       }
     }
 

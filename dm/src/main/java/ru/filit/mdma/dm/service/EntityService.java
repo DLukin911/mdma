@@ -12,7 +12,7 @@ import java.math.BigDecimal;
 import java.text.DecimalFormat;
 import java.time.DayOfWeek;
 import java.time.LocalDate;
-import java.time.ZoneId;
+import java.time.ZoneOffset;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -267,7 +267,7 @@ public class EntityService {
     LocalDate dateOfStartPeriod = convertToLocalDate(account.getOpenDate());
     LocalDate dateOfEndPeriod;
     if (account.getCloseDate() == null) {
-      dateOfEndPeriod = LocalDate.now(ZoneId.of("Europe/Moscow"));
+      dateOfEndPeriod = LocalDate.now(ZoneOffset.UTC);
     } else {
       dateOfEndPeriod = convertToLocalDate(account.getCloseDate());
     }
@@ -278,7 +278,7 @@ public class EntityService {
     int deferment = account.getDeferment();
     int counter = 0;
     List<Operation> operationListByDay;
-    for (LocalDate thisDay = dateOfStartPeriod; thisDay.isBefore(dateOfEndPeriod.plusDays(1));
+    for (LocalDate thisDay = dateOfStartPeriod; thisDay.isBefore(dateOfEndPeriod);
         thisDay = thisDay.plusDays(1)) {
       BigDecimal balanceByDay = BigDecimal.ZERO;
       LocalDate finalThisDay = thisDay;
@@ -301,14 +301,13 @@ public class EntityService {
       if (lastDayBalance < 0 && !thisDay.getDayOfWeek().equals(DayOfWeek.SATURDAY)
           && !thisDay.getDayOfWeek().equals(DayOfWeek.SUNDAY)) {
         counter++;
-        if (counter > deferment) {
-          totalLoanPayment += Math.abs(lastDayBalance) * 0.07;
+        if (counter >= deferment) {
+          totalLoanPayment += Math.abs(lastDayBalance) * 0.0007;
         }
       } else if (lastDayBalance >= 0) {
         counter = 0;
       }
     }
-
     LoanPaymentDto loanPaymentDto = new LoanPaymentDto();
     loanPaymentDto.amount(amountWithTwoZero(BigDecimal.valueOf(totalLoanPayment)));
 

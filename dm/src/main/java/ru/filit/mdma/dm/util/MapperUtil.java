@@ -8,7 +8,6 @@ import java.text.DecimalFormat;
 import java.time.Instant;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.time.ZoneId;
 import java.time.ZoneOffset;
 import java.time.format.DateTimeFormatter;
 import java.util.Date;
@@ -85,7 +84,7 @@ public abstract class MapperUtil {
   public static LocalDate convertToLocalDate(Long dateLong) {
 
     return Instant.ofEpochSecond(dateLong)
-        .atZone(ZoneId.of("Europe/Moscow"))
+        .atZone(ZoneOffset.UTC)
         .toLocalDate();
   }
 
@@ -126,7 +125,7 @@ public abstract class MapperUtil {
     }
     dateLong *= 1000L;
     Instant instant = new Date(dateLong).toInstant();
-    LocalDateTime ldt = instant.atOffset(ZoneOffset.ofHours(3)).toLocalDateTime();
+    LocalDateTime ldt = instant.atOffset(ZoneOffset.UTC).toLocalDateTime();
     DateTimeFormatter fmt = DateTimeFormatter.ofPattern("yyyy-MM-dd");
 
     return ldt.format(fmt);
@@ -141,7 +140,7 @@ public abstract class MapperUtil {
     }
     dateLong *= 1000;
     Instant instant = new Date(dateLong).toInstant();
-    LocalDateTime ldt = instant.atOffset(ZoneOffset.ofHours(3)).toLocalDateTime();
+    LocalDateTime ldt = instant.atOffset(ZoneOffset.UTC).toLocalDateTime();
     DateTimeFormatter fmt = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss");
 
     return ldt.format(fmt);
