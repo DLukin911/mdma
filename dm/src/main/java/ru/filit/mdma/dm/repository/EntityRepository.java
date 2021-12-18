@@ -23,6 +23,7 @@ import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Repository;
 import ru.filit.mdma.dm.util.FileUtil;
 import ru.filit.mdma.dm.util.exception.NotFoundException;
+import ru.filit.oas.dm.model.Access;
 import ru.filit.oas.dm.model.Account;
 import ru.filit.oas.dm.model.AccountBalance;
 import ru.filit.oas.dm.model.Client;
@@ -45,6 +46,8 @@ public class EntityRepository {
   private static List<Account> accountCache = new ArrayList<>();
   private static List<Operation> operationCache = new ArrayList<>();
   private static List<AccountBalance> accountBalanceCache = new ArrayList<>();
+  private static List<Access> access2Cache = new ArrayList<>();
+  private static List<Access> access3Cache = new ArrayList<>();
 
   static {
     enableClientCache();
@@ -52,6 +55,7 @@ public class EntityRepository {
     enableAccountCache();
     enableOperationCache();
     enableAccountBalanceCache();
+    enableAccessCache();
   }
 
   /**
@@ -169,6 +173,20 @@ public class EntityRepository {
         .filter(accountBalance -> accountBalance.getAccountNumber().equals(accNumber))
         .max(Comparator.comparingLong(AccountBalance::getBalanceDate))
         .orElse(null);
+  }
+
+  /**
+   * Получение списка Access из файла по заданному номеру.
+   */
+  public List<Access> getAccess(String version) {
+    log.info("Получение списка Access из файла по заданному номеру: {}", version);
+    if (version.equals("2")) {
+      return access2Cache;
+    } else if (version.equals("3")) {
+      return access3Cache;
+    } else {
+      return null;
+    }
   }
 
   /**
@@ -306,6 +324,23 @@ public class EntityRepository {
     try {
       accountBalanceCache = FileUtil.getMapper()
           .readValue(FileUtil.getBalancesFile(), new TypeReference<List<AccountBalance>>() {
+          });
+    } catch (IOException e) {
+      e.printStackTrace();
+    }
+  }
+
+  /**
+   * Активация кеша сущности Access на начало месяца клиента.
+   */
+  private static void enableAccessCache() {
+    log.info("Запрос списка Access из базы данных");
+    try {
+      access2Cache = FileUtil.getMapper()
+          .readValue(FileUtil.getAccess2File(), new TypeReference<List<Access>>() {
+          });
+      access3Cache = FileUtil.getMapper()
+          .readValue(FileUtil.getAccess3File(), new TypeReference<List<Access>>() {
           });
     } catch (IOException e) {
       e.printStackTrace();

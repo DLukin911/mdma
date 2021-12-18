@@ -3,6 +3,7 @@ package ru.filit.mdma.dm.web;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+import static ru.filit.mdma.dm.testdata.EntityWebTestData.jsonAccessList;
 import static ru.filit.mdma.dm.testdata.EntityWebTestData.jsonAccount1;
 import static ru.filit.mdma.dm.testdata.EntityWebTestData.jsonBalanceAmount;
 import static ru.filit.mdma.dm.testdata.EntityWebTestData.jsonClient1;
@@ -222,6 +223,27 @@ class EntityControllerTest extends AbstractControllerTest {
   @Test
   void getLoanPaymentAmountNotFound() throws Exception {
     perform(MockMvcRequestBuilders.post(REST_URL + "/account/loan-payment")
+        .contentType(MediaType.APPLICATION_JSON))
+        .andDo(print())
+        .andExpect(status().isBadRequest());
+  }
+
+  @Test
+  void getAccess() throws Exception {
+    perform(MockMvcRequestBuilders.post("/dm/access").content("{\n"
+        + "\"role\": \"MANAGER\",\n"
+        + "\"version\": \"2\"\n"
+        + "}").contentType(MediaType.APPLICATION_JSON))
+        .andDo(print())
+        .andExpect(status().isOk())
+        .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
+        .andExpect(content().encoding(StandardCharsets.UTF_8))
+        .andExpect(content().string(jsonAccessList));
+  }
+
+  @Test
+  void getAccessNotFound() throws Exception {
+    perform(MockMvcRequestBuilders.post("/dm/access")
         .contentType(MediaType.APPLICATION_JSON))
         .andDo(print())
         .andExpect(status().isBadRequest());

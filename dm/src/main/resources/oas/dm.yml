@@ -96,6 +96,8 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/ClientDto"
+        '400':
+          description: Клиент по Id найден
   /client/account/operation:
     post:
       summary: Запрос операций по счету

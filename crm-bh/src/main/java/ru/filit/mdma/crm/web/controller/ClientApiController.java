@@ -39,7 +39,7 @@ import ru.filit.oas.crm.web.dto.OperationSearchDto;
     consumes = "application/json; charset=UTF-8")
 public class ClientApiController implements ClientApi {
 
-  public static final String REST_URL = "/api/client";
+  public static final String REST_URL = "/client";
 
   private final RestTemplate restTemplate;
 

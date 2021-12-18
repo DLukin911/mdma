@@ -16,8 +16,8 @@ logging:
     root: WARN
     ru.filit.mdma.dm: DEBUG
   file:
-    name: "logs/application-debug.log"
+    name: "dm/logs/application-debug.log"
 server:
-  port: 8081
+  port: 8082
   servlet:
     context-path: /dm

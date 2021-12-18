@@ -16,7 +16,7 @@ logging:
     root: INFO
     ru.filit.mdma.crm-bh: DEBUG
   file:
-    name: "logs/application-debug.log"
+    name: "crm-bh/logs/application-debug.log"
 server:
   port: 8080
   servlet:

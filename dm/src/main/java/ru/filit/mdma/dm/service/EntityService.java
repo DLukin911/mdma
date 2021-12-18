@@ -30,6 +30,8 @@ import ru.filit.oas.dm.model.Client;
 import ru.filit.oas.dm.model.ClientLevel;
 import ru.filit.oas.dm.model.Contact;
 import ru.filit.oas.dm.model.Operation;
+import ru.filit.oas.dm.web.dto.AccessDto;
+import ru.filit.oas.dm.web.dto.AccessRequestDto;
 import ru.filit.oas.dm.web.dto.AccountDto;
 import ru.filit.oas.dm.web.dto.AccountNumberDto;
 import ru.filit.oas.dm.web.dto.ClientDto;
@@ -215,6 +217,30 @@ public class EntityService {
     ClientDto clientDto = MapperUtil.INSTANCE.convert(client);
 
     return clientDto;
+  }
+
+  /**
+   * Запрос прав доступа для Роли по номеру файла.
+   */
+  public List<AccessDto> getAccess(AccessRequestDto accessRequestDto) {
+    log.info("Запрос прав доступа по заданой Роли пользователя: {}", accessRequestDto);
+
+    if (accessRequestDto == null) {
+      throw new NotFoundException("По данному запросу информация не найдена.");
+    }
+
+    List<AccessDto> accessDtoList = entityRepository.getAccess(accessRequestDto.getVersion())
+        .stream()
+        .filter(access -> access.getRole().equals(accessRequestDto.getRole())).map(access -> {
+          AccessDto accessDto = new AccessDto();
+          accessDto.setEntity(access.getEntity());
+          accessDto.setProperty(access.getProperty());
+          return accessDto;
+        }).collect(Collectors.toList());
+    if (accessDtoList.isEmpty()) {
+      throw new NotFoundException("По данному запросу информация не найдена.");
+    }
+    return accessDtoList;
   }
 
   /**

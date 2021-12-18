@@ -2,6 +2,11 @@ package ru.filit.mdma.dm.repository;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
+import static ru.filit.mdma.dm.testdata.EntityRepositoryTestData.access1;
+import static ru.filit.mdma.dm.testdata.EntityRepositoryTestData.access2;
+import static ru.filit.mdma.dm.testdata.EntityRepositoryTestData.access3;
+import static ru.filit.mdma.dm.testdata.EntityRepositoryTestData.access4;
+import static ru.filit.mdma.dm.testdata.EntityRepositoryTestData.accessList;
 import static ru.filit.mdma.dm.testdata.EntityRepositoryTestData.client1;
 import static ru.filit.mdma.dm.testdata.EntityRepositoryTestData.client2;
 import static ru.filit.mdma.dm.testdata.EntityRepositoryTestData.client3;
@@ -25,6 +30,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import ru.filit.mdma.dm.AbstractTest;
 import ru.filit.mdma.dm.util.FileUtil;
+import ru.filit.oas.dm.model.Access;
 import ru.filit.oas.dm.model.Account;
 import ru.filit.oas.dm.model.AccountBalance;
 import ru.filit.oas.dm.model.Client;
@@ -157,5 +163,20 @@ class EntityRepositoryTest extends AbstractTest {
   @Test
   void testShouldReturnNullWhenAccountOverdraftNotFound() {
     assertEquals(null, entityRepository.getOverdraftAccount("444444444444"));
+  }
+
+  @Test
+  void testShouldReturnNullWhenVersionAccessWrong() {
+    assertEquals(null, entityRepository.getAccess("444"));
+  }
+
+  @Test
+  void testShouldGetAccessListFromYamlDatabase() {
+    List<Access> accessListFromDb = entityRepository.getAccess("2");
+    assertEquals(accessList.size(), accessListFromDb.size());
+    assertTrue(entityRepository.getAccess("2").contains(access1));
+    assertTrue(entityRepository.getAccess("2").contains(access2));
+    assertTrue(entityRepository.getAccess("2").contains(access3));
+    assertTrue(entityRepository.getAccess("2").contains(access4));
   }
 }

@@ -11,6 +11,7 @@ import static ru.filit.oas.dm.model.Operation.TypeEnum.RECEIPT;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
+import ru.filit.oas.dm.model.Access;
 import ru.filit.oas.dm.model.Account;
 import ru.filit.oas.dm.model.Client;
 import ru.filit.oas.dm.model.Contact;
@@ -38,6 +39,12 @@ public class EntityRepositoryTestData {
   public static final ContactDto noClientContact = new ContactDto();
 
   public static final Account overdraftAccount = new Account();
+
+  public static final Access access1 = new Access();
+  public static final Access access2 = new Access();
+  public static final Access access3 = new Access();
+  public static final Access access4 = new Access();
+  public static final List<Access> accessList = new ArrayList<>();
 
   static {
     client1.setId("95471");
@@ -128,5 +135,22 @@ public class EntityRepositoryTestData {
     overdraftAccount.setOpenDate(1626220800L);
     overdraftAccount.setDeferment(20);
 
+    access1.setRole("MANAGER");
+    access1.setEntity("client");
+    access1.setProperty("id");
+    access2.setRole("MANAGER");
+    access2.setEntity("client");
+    access2.setProperty("lastname");
+    access3.setRole("SUPERVISOR");
+    access3.setEntity("client");
+    access3.setProperty("id");
+    access4.setRole("SUPERVISOR");
+    access4.setEntity("client");
+    access4.setProperty("lastname");
+
+    accessList.add(access1);
+    accessList.add(access2);
+    accessList.add(access3);
+    accessList.add(access4);
   }
 }

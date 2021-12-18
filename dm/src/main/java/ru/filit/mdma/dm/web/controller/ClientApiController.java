@@ -32,7 +32,7 @@ import ru.filit.oas.dm.web.dto.OperationSearchDto;
     consumes = "application/json; charset=UTF-8")
 public class ClientApiController implements ClientApi {
 
-  public static final String REST_URL = "/dm/client";
+  public static final String REST_URL = "/client";
 
   private final EntityService entityService;
 
@@ -156,6 +156,9 @@ public class ClientApiController implements ClientApi {
   @PostMapping("/account/loan-payment")
   @Override
   public ResponseEntity<LoanPaymentDto> getLoanPayment(AccountNumberDto accountNumberDto) {
+    log.info("Поиск суммы процентных платежей по счету Овердрафт"
+        + " по входящим данным: {}", accountNumberDto);
+
     LoanPaymentDto loanPaymentDto = entityService.getLoanPayment(accountNumberDto);
     if (loanPaymentDto == null) {
       log.info("Информация по счету Овердрафт не найдена.");

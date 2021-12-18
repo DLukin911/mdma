@@ -4,6 +4,10 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 import static ru.filit.mdma.dm.testdata.EntityRepositoryTestData.newContact;
 import static ru.filit.mdma.dm.testdata.EntityRepositoryTestData.noClientContact;
+import static ru.filit.mdma.dm.testdata.EntityServiceTestData.accessDto1;
+import static ru.filit.mdma.dm.testdata.EntityServiceTestData.accessDto2;
+import static ru.filit.mdma.dm.testdata.EntityServiceTestData.accessRequestDto;
+import static ru.filit.mdma.dm.testdata.EntityServiceTestData.accessRequestDtoWrong;
 import static ru.filit.mdma.dm.testdata.EntityServiceTestData.accountNumberDto;
 import static ru.filit.mdma.dm.testdata.EntityServiceTestData.accountNumberDtoOverdraft;
 import static ru.filit.mdma.dm.testdata.EntityServiceTestData.accountNumberDtoWrong;
@@ -32,6 +36,7 @@ import ru.filit.mdma.dm.AbstractTest;
 import ru.filit.mdma.dm.util.FileUtil;
 import ru.filit.mdma.dm.util.exception.NotFoundException;
 import ru.filit.oas.dm.model.Contact;
+import ru.filit.oas.dm.web.dto.AccessDto;
 import ru.filit.oas.dm.web.dto.AccountDto;
 import ru.filit.oas.dm.web.dto.ClientDto;
 import ru.filit.oas.dm.web.dto.ClientLevelDto;
@@ -242,5 +247,23 @@ class EntityServiceTest extends AbstractTest {
   void testShouldThrowsExceptionForRequestDataWhenRequestAccountNumberDtoNull() {
     Assertions.assertThrows(NotFoundException.class,
         () -> entityService.getLoanPayment(null));
+  }
+
+  @Test
+  void testShouldGetAccessListForRequestData() {
+    List<AccessDto> accessDtoList = entityService.getAccess(accessRequestDto);
+    assertTrue(accessDtoList.contains(accessDto1));
+    assertTrue(accessDtoList.contains(accessDto2));
+  }
+
+  @Test()
+  void testShouldThrowsExceptionForRequestDataWhenRequestAccessRequestDtoWrong() {
+    Assertions.assertThrows(NotFoundException.class,
+        () -> entityService.getAccess(accessRequestDtoWrong));
+  }
+  @Test()
+  void testShouldThrowsExceptionForRequestDataWhenRequestAccessRequestDtoNull() {
+    Assertions.assertThrows(NotFoundException.class,
+        () -> entityService.getAccess(null));
   }
 }

@@ -1,4 +1,3 @@
----
 - id: "91495"
   clientId: "53280"
   type: "PHONE"
@@ -11,6 +10,10 @@
   clientId: "59114"
   type: "PHONE"
   value: "+79633505208"
+- id: "31217"
+  clientId: "11027"
+  type: "PHONE"
+  value: "+79271501840"
 - id: "67179"
   clientId: "11027"
   type: "PHONE"

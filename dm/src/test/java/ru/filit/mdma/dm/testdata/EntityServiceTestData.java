@@ -1,5 +1,7 @@
 package ru.filit.mdma.dm.testdata;
 
+import ru.filit.oas.dm.web.dto.AccessDto;
+import ru.filit.oas.dm.web.dto.AccessRequestDto;
 import ru.filit.oas.dm.web.dto.AccountNumberDto;
 import ru.filit.oas.dm.web.dto.ClientDto;
 import ru.filit.oas.dm.web.dto.ClientIdDto;
@@ -27,6 +29,11 @@ public class EntityServiceTestData {
   public static final AccountNumberDto accountNumberDto = new AccountNumberDto();
   public static final AccountNumberDto accountNumberDtoOverdraft = new AccountNumberDto();
   public static final AccountNumberDto accountNumberDtoWrong = new AccountNumberDto();
+
+  public static final AccessRequestDto accessRequestDtoWrong = new AccessRequestDto();
+  public static final AccessRequestDto accessRequestDto = new AccessRequestDto();
+  public static final AccessDto accessDto1 = new AccessDto();
+  public static final AccessDto accessDto2 = new AccessDto();
 
   static {
     clientSearchDto.setId("95471");
@@ -67,5 +74,16 @@ public class EntityServiceTestData {
     accountNumberDto.setAccountNumber("40817810670114037905");
     accountNumberDtoOverdraft.setAccountNumber("40817810740045024659");
     accountNumberDtoWrong.setAccountNumber("77777777777777777777");
+
+    accessRequestDtoWrong.setRole("USER");
+    accessRequestDtoWrong.setVersion("2");
+    accessRequestDto.setRole("MANAGER");
+    accessRequestDto.setVersion("2");
+
+    accessDto1.setEntity("client");
+    accessDto1.setProperty("id");
+    accessDto2.setEntity("client");
+    accessDto2.setProperty("lastname");
+
   }
 }

@@ -39,4 +39,7 @@ public class EntityWebTestData {
       + "\"address\":\" г.Москва, ул. Ленина, дом 1\"}";
 
   public static final String jsonLoanPaymentAmount = "{\"amount\":\"405.73\"}";
+
+  public static final String jsonAccessList = "[{\"entity\":\"client\",\"property\":\"id\"},"
+      + "{\"entity\":\"client\",\"property\":\"lastname\"}]";
 }

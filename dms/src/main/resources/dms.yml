@@ -135,6 +135,28 @@ paths:
                 $ref: "#/components/schemas/ContactDto"
         '400':
           description: Клиент не найден
+  /client/info:
+    post:
+      summary: Запрос клиента по Id
+      operationId: getClientInfo
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/ClientIdDto"
+        required: true
+      parameters:
+        - $ref: "#/components/parameters/CRM-User-Role"
+        - $ref: "#/components/parameters/CRM-User-Name"
+      responses:
+        '200':
+          description: Клиент по Id найден
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ClientDto"
+        '400':
+          description: Клиент не найден
   /client/level:
     post:
       summary: Получение уровня клиента
