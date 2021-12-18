@@ -13,7 +13,7 @@ public class FileUtil {
 
   private final ObjectMapper mapper = new ObjectMapper(new YAMLFactory());
   private final PropertiesReaderUtil propsReader = new PropertiesReaderUtil(
-      "config/storage.properties");
+      "storage.properties");
 
   private final String USERS_FILE = propsReader.get("users.path");
   private final File usersFile = new File(USERS_FILE);

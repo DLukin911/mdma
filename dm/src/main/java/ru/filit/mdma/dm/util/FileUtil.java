@@ -13,19 +13,23 @@ public class FileUtil {
 
   private final ObjectMapper mapper = new ObjectMapper(new YAMLFactory());
   private final PropertiesReaderUtil propsReader = new PropertiesReaderUtil(
-      "config/storage.properties");
+      "storage.properties");
 
   private final String CLIENTS_FILE = propsReader.get("clients.path");
   private final String CONTACTS_FILE = propsReader.get("contacts.path");
   private final String ACCOUNTS_FILE = propsReader.get("accounts.path");
   private final String OPERATIONS_FILE = propsReader.get("operations.path");
   private final String BALANCES_FILE = propsReader.get("balances.path");
+  private final String ACCESS2_FILE = propsReader.get("access2.path");
+  private final String ACCESS3_FILE = propsReader.get("access3.path");
 
   private final File clientsFile = new File(CLIENTS_FILE);
   private final File contactsFile = new File(CONTACTS_FILE);
   private final File accountsFile = new File(ACCOUNTS_FILE);
   private final File operationsFile = new File(OPERATIONS_FILE);
   private final File balancesFile = new File(BALANCES_FILE);
+  private final File access2File = new File(ACCESS2_FILE);
+  private final File access3File = new File(ACCESS3_FILE);
 
   public File getClientsFile() {
     return clientsFile;
@@ -45,6 +49,14 @@ public class FileUtil {
 
   public File getBalancesFile() {
     return balancesFile;
+  }
+
+  public File getAccess2File() {
+    return access2File;
+  }
+
+  public File getAccess3File() {
+    return access3File;
   }
 
   public ObjectMapper getMapper() {

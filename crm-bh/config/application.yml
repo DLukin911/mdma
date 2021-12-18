@@ -2,7 +2,7 @@ spring:
   profiles:
     active: dev
   application:
-    name: datamanager
+    name: crm-bh
   jackson:
     default-property-inclusion: non_null
   mvc:
@@ -13,11 +13,17 @@ logging:
     console: "%d{HH:mm:ss.SSS} %highlight(%-5level) %cyan(%class{50}.%M:%L) - %msg%n"
     file: "%d{yyyy-MM-dd HH:mm:ss} [%thread] %-5level %logger{36} - %msg%n"
   level:
-    root: WARN
-    ru.filit.mdma.dm: DEBUG
+    root: INFO
+    ru.filit.mdma.crm-bh: DEBUG
   file:
-    name: "dm/logs/application-debug.log"
+    name: "logs/application-debug.log"
 server:
-  port: 8081
+  port: 8080
   servlet:
-    context-path: /dm
+    context-path: /api
+
+system:
+  element:
+    dm:
+      host: localhost
+      port: 8081
