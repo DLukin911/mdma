@@ -134,7 +134,7 @@ public class ClientApiController implements ClientApi {
         AccountNumberDto accountNumberDto = new AccountNumberDto();
         accountNumberDto.setAccountNumber(accountDto.getNumber());
         currentBalanceDto = restTemplate.exchange(uriClientBalance, HttpMethod.POST,
-            new HttpEntity(accountNumberDto),
+            new HttpEntity(accountNumberDto, requestHeaders),
             new ParameterizedTypeReference<CurrentBalanceDto>() {
             }
         ).getBody();

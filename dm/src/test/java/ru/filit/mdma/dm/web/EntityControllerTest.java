@@ -230,7 +230,7 @@ class EntityControllerTest extends AbstractControllerTest {
 
   @Test
   void getAccess() throws Exception {
-    perform(MockMvcRequestBuilders.post("/dm/access").content("{\n"
+    perform(MockMvcRequestBuilders.post("/access").content("{\n"
         + "\"role\": \"MANAGER\",\n"
         + "\"version\": \"2\"\n"
         + "}").contentType(MediaType.APPLICATION_JSON))
@@ -243,7 +243,7 @@ class EntityControllerTest extends AbstractControllerTest {
 
   @Test
   void getAccessNotFound() throws Exception {
-    perform(MockMvcRequestBuilders.post("/dm/access")
+    perform(MockMvcRequestBuilders.post("/access")
         .contentType(MediaType.APPLICATION_JSON))
         .andDo(print())
         .andExpect(status().isBadRequest());

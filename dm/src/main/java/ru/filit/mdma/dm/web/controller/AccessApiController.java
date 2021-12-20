@@ -21,7 +21,7 @@ import ru.filit.oas.dm.web.dto.AccessRequestDto;
     consumes = "application/json; charset=UTF-8")
 public class AccessApiController implements AccessApi {
 
-  public static final String REST_URL = "/dm/access";
+  public static final String REST_URL = "/access";
 
   private final EntityService entityService;
 
