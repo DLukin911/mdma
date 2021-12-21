@@ -52,7 +52,8 @@ public class DataMask {
     List<String> allowedAccessList =
         accessRepository.getAccessList(createAccessRequestDto(crMUserRole), entityName);
     mapFromJson = mapFromJson.entrySet().stream().map(e -> {
-      if (!allowedAccessList.contains(e.getKey()) && !e.getKey().equals("deferment")) {
+      if (!allowedAccessList.contains(e.getKey()) && !e.getKey().equals("deferment")
+          && !e.getKey().equals("accuntNumber")) {
         e.setValue("****");
       }
       return e;
@@ -80,10 +81,10 @@ public class DataMask {
     AccessRequestDto accessRequestDto = new AccessRequestDto();
     accessRequestDto.setVersion(ACCESS_VERSION);
     switch (crMUserRole) {
-      case SUPERVISOR_ROLE:
+      case "[SUPERVISOR]":
         accessRequestDto.setRole(SUPERVISOR_ROLE);
         break;
-      case AUDITOR_ROLE:
+      case "[AUDITOR]":
         accessRequestDto.setRole(AUDITOR_ROLE);
         break;
       default:

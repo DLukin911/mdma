@@ -1,4 +1,4 @@
-package ru.filit.mdma.dms.controller;
+package ru.filit.mdma.dms.web.controller;
 
 import java.net.URI;
 import java.net.URISyntaxException;
@@ -146,7 +146,7 @@ public class ClientApiController implements ClientApi {
           }
       ).getBody();
       List<OperationDto> finalOperationDtoList = new ArrayList<>();
-      for (OperationDto operationDto : finalOperationDtoList) {
+      for (OperationDto operationDto : operationDtoList) {
         finalOperationDtoList.add((OperationDto) DataMask.mask(operationDto, crMUserRole,
             "operation", accessRepository).getBody());
       }

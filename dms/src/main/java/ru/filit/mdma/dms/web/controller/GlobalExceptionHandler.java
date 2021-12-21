@@ -1,4 +1,4 @@
-package ru.filit.mdma.dms.controller;
+package ru.filit.mdma.dms.web.controller;
 
 import static org.springframework.boot.web.error.ErrorAttributeOptions.Include.MESSAGE;
 
