@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.RestTemplate;
 import ru.filit.mdma.dms.repository.AccessRepository;
+import ru.filit.mdma.dms.service.TokenCacheService;
 import ru.filit.mdma.dms.util.DataMask;
 import ru.filit.mdma.dms.util.exception.NotFoundException;
 import ru.filit.oas.dms.web.controller.ClientApi;
@@ -45,11 +46,14 @@ public class ClientApiController implements ClientApi {
 
   private final RestTemplate restTemplate;
   private final AccessRepository accessRepository;
+  private final TokenCacheService tokenCacheService;
 
   @Autowired
-  public ClientApiController(AccessRepository accessRepository, RestTemplate restTemplate) {
+  public ClientApiController(AccessRepository accessRepository, RestTemplate restTemplate,
+      TokenCacheService tokenCacheService) {
     this.accessRepository = accessRepository;
     this.restTemplate = restTemplate;
+    this.tokenCacheService = tokenCacheService;
   }
 
   /**
@@ -80,7 +84,7 @@ public class ClientApiController implements ClientApi {
       List<AccountDto> finalAccountDtoList = new ArrayList<>();
       for (AccountDto accountDto : accountDtoList) {
         finalAccountDtoList.add((AccountDto) DataMask.mask(accountDto, crMUserRole,
-            "account", accessRepository).getBody());
+            "account", accessRepository, tokenCacheService).getBody());
       }
 
       return new ResponseEntity<>(finalAccountDtoList, HttpStatus.OK);
@@ -115,7 +119,7 @@ public class ClientApiController implements ClientApi {
       );
 
       return DataMask.mask(responseEntity.getBody(), crMUserRole, "dummy",
-          accessRepository);
+          accessRepository, tokenCacheService);
     } catch (Exception e) {
       throw new NotFoundException("По данному запросу информация не найдена.");
     }
@@ -148,7 +152,7 @@ public class ClientApiController implements ClientApi {
       List<OperationDto> finalOperationDtoList = new ArrayList<>();
       for (OperationDto operationDto : operationDtoList) {
         finalOperationDtoList.add((OperationDto) DataMask.mask(operationDto, crMUserRole,
-            "operation", accessRepository).getBody());
+            "operation", accessRepository, tokenCacheService).getBody());
       }
 
       return new ResponseEntity<>(finalOperationDtoList, HttpStatus.OK);
@@ -184,7 +188,7 @@ public class ClientApiController implements ClientApi {
       List<ClientDto> finalClientDtoList = new ArrayList<>();
       for (ClientDto clientDto : clientDtoList) {
         finalClientDtoList.add((ClientDto) DataMask.mask(clientDto, crMUserRole,
-            "client", accessRepository).getBody());
+            "client", accessRepository, tokenCacheService).getBody());
       }
 
       return new ResponseEntity<>(finalClientDtoList, HttpStatus.OK);
@@ -219,7 +223,7 @@ public class ClientApiController implements ClientApi {
       );
 
       return DataMask.mask(responseEntity.getBody(), crMUserRole, "clientLevel",
-          accessRepository);
+          accessRepository, tokenCacheService);
     } catch (Exception e) {
       throw new NotFoundException("По данному запросу информация не найдена.");
     }
@@ -253,7 +257,7 @@ public class ClientApiController implements ClientApi {
       List<ContactDto> finalContactDtoList = new ArrayList<>();
       for (ContactDto contactDto : contactDtoList) {
         finalContactDtoList.add((ContactDto) DataMask.mask(contactDto, crMUserRole,
-            "contact", accessRepository).getBody());
+            "contact", accessRepository, tokenCacheService).getBody());
       }
 
       return new ResponseEntity<>(finalContactDtoList, HttpStatus.OK);
@@ -289,7 +293,7 @@ public class ClientApiController implements ClientApi {
       );
 
       return DataMask.mask(responseEntity.getBody(), crMUserRole, "loanPayment",
-          accessRepository);
+          accessRepository, tokenCacheService);
     } catch (Exception e) {
       throw new NotFoundException("По данному запросу информация не найдена.");
     }
@@ -321,7 +325,7 @@ public class ClientApiController implements ClientApi {
       );
 
       return DataMask.mask(responseEntity.getBody(), crMUserRole, "contact",
-          accessRepository);
+          accessRepository, tokenCacheService);
     } catch (Exception e) {
       throw new NotFoundException("По данному запросу информация не найдена.");
     }
@@ -353,7 +357,7 @@ public class ClientApiController implements ClientApi {
       );
 
       return DataMask.mask(responseEntity.getBody(), crMUserRole, "client",
-          accessRepository);
+          accessRepository, tokenCacheService);
     } catch (Exception e) {
       throw new NotFoundException("По данному запросу информация не найдена.");
     }

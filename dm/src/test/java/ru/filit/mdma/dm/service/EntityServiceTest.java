@@ -214,7 +214,7 @@ class EntityServiceTest extends AbstractTest {
   void testShouldGetCurrentClientLevelDtoForRequestData() {
     ClientLevelDto clientLevelDto = entityService.getClientLevel(clientIdDto,
         LocalDate.of(2021, 12, 13));
-    assertEquals("40817810200159961136", clientLevelDto.getAccuntNumber());
+    assertEquals("40817810200159961136", clientLevelDto.getAccountNumber());
     assertEquals("SILVER", clientLevelDto.getLevel());
     assertEquals("351285.84", clientLevelDto.getAvgBalance());
   }

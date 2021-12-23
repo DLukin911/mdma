@@ -40,8 +40,8 @@
     <jackson-dataformat-yaml.version>2.13.0</jackson-dataformat-yaml.version>
     <jackson-datatype-jsr310.version>2.13.0</jackson-datatype-jsr310.version>
     <junit.version>4.10</junit.version>
-
   </properties>
+
   <dependencies>
     <!-- Spring Boot -->
     <dependency>

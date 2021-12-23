@@ -5,6 +5,7 @@
 /target
 logs
 *.log
+ignite/
 
 target/
 !**/src/main/**/target/

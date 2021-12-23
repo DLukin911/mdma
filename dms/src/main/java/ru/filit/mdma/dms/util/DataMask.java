@@ -14,6 +14,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import ru.filit.mdma.dms.model.AccessRequestDto;
 import ru.filit.mdma.dms.repository.AccessRepository;
+import ru.filit.mdma.dms.service.TokenCacheService;
 
 /**
  * Класс для работы с маскировкой данных поступающих из приложения DM.
@@ -22,10 +23,10 @@ import ru.filit.mdma.dms.repository.AccessRepository;
 @UtilityClass
 public class DataMask {
 
+  private final String ACCESS_VERSION = "3";
   private final String MANAGER_ROLE = "MANAGER";
   private final String SUPERVISOR_ROLE = "SUPERVISOR";
   private final String AUDITOR_ROLE = "AUDITOR";
-  private final String ACCESS_VERSION = "2";
   private final ObjectWriter objectWriter
       = new ObjectMapper().writer().withDefaultPrettyPrinter();
 
@@ -33,7 +34,7 @@ public class DataMask {
    * Метод маскирования данных поступающих из приложения DM.
    */
   public <T> ResponseEntity mask(T body, String crMUserRole, String entityName,
-      AccessRepository accessRepository) {
+      AccessRepository accessRepository, TokenCacheService tokenCacheService) {
     log.info("Маскирование данных: {}", body);
 
     String jsonString = null;
@@ -52,9 +53,9 @@ public class DataMask {
     List<String> allowedAccessList =
         accessRepository.getAccessList(createAccessRequestDto(crMUserRole), entityName);
     mapFromJson = mapFromJson.entrySet().stream().map(e -> {
-      if (!allowedAccessList.contains(e.getKey()) && !e.getKey().equals("deferment")
-          && !e.getKey().equals("accuntNumber")) {
-        e.setValue("****");
+      if (!allowedAccessList.contains(e.getKey()) && !e.getKey().equals("deferment")) {
+        String s = tokenCacheService.saveTokenByValue(e.getValue().toString());
+        e.setValue(s);
       }
       return e;
     }).collect(HashMap::new, (m, v) -> m.put(v.getKey(), v.getValue()), HashMap::putAll);

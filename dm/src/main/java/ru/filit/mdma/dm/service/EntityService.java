@@ -269,7 +269,7 @@ public class EntityService {
         .getValue();
 
     ClientLevelDto clientLevelDto = new ClientLevelDto();
-    clientLevelDto.setAccuntNumber(accNumber);
+    clientLevelDto.setAccountNumber(accNumber);
     clientLevelDto.setAvgBalance(amountWithTwoZero(avgAmount));
     clientLevelDto.setLevel(calculationClientLevel(avgAmount));
 
