@@ -8,6 +8,7 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.regex.Pattern;
 import lombok.experimental.UtilityClass;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
@@ -76,6 +77,52 @@ public class DataMask {
     }
 
     return new ResponseEntity<T>(body, HttpStatus.OK);
+  }
+
+  /**
+   * Метод демаскирования данных поступающих из приложения CRM-BH.
+   */
+  public <T> T demask(T body, TokenCacheService tokenCacheService) {
+    log.info("Демаскирование данных, если применимо: {}", body);
+
+    String jsonString = null;
+    Map<String, Object> mapFromJson = null;
+    ObjectMapper mapper = new ObjectMapper();
+    try {
+      jsonString = objectWriter.writeValueAsString(body);
+      TypeReference ref = new TypeReference<Map<String, Object>>() {
+      };
+      mapFromJson = (Map<String, Object>) mapper.readValue(jsonString, ref);
+    } catch (JsonProcessingException e) {
+      log.error("cannot create Map from json " + e.getMessage());
+      e.printStackTrace();
+    }
+
+    Pattern pattern = Pattern.compile("#(.*?)#");
+    mapFromJson = mapFromJson.entrySet().stream().map(e -> {
+      if (e.getValue() != null && pattern.matcher(e.getValue().toString()).matches()) {
+        String s = tokenCacheService.getValueByToken(e.getValue().toString());
+        e.setValue(s);
+      }
+      return e;
+    }).collect(HashMap::new, (m, v) -> m.put(v.getKey(), v.getValue()), HashMap::putAll);
+
+    String jsonResult = "";
+    try {
+      jsonResult = mapper.writeValueAsString(mapFromJson);
+    } catch (IOException e) {
+      log.error("cannot create json from Map" + e.getMessage());
+      return null;
+    }
+    Class bodyClass = body.getClass();
+    body = null;
+    try {
+      body = (T) mapper.readValue(jsonResult, bodyClass);
+    } catch (JsonProcessingException e) {
+      e.printStackTrace();
+    }
+
+    return body;
   }
 
   private AccessRequestDto createAccessRequestDto(String crMUserRole) {

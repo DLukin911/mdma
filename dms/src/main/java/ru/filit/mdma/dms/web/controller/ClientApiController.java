@@ -64,6 +64,7 @@ public class ClientApiController implements ClientApi {
   public ResponseEntity<List<AccountDto>> getAccount(ClientIdDto clientIdDto, String crMUserRole,
       String crMUserName) {
     log.info("Поиск Счетов клиента по входящим данным: {}", clientIdDto.getId());
+    clientIdDto = DataMask.demask(clientIdDto, tokenCacheService);
 
     final String clientAccountUrl = "http://localhost:8082/dm/client/account";
 
@@ -101,6 +102,8 @@ public class ClientApiController implements ClientApi {
   public ResponseEntity<CurrentBalanceDto> getAccountBalance(AccountNumberDto accountNumberDto,
       String crMUserRole, String crMUserName) {
     log.info("Поиск баланса клиента по входящим данным: {}", accountNumberDto);
+    accountNumberDto = DataMask.demask(accountNumberDto, tokenCacheService);
+
     final String accountBalanceUrl = "http://localhost:8082/dm/client/account/balance";
 
     URI uri = null;
@@ -133,6 +136,8 @@ public class ClientApiController implements ClientApi {
   public ResponseEntity<List<OperationDto>> getAccountOperations(
       OperationSearchDto operationSearchDto, String crMUserRole, String crMUserName) {
     log.info("Поиск Операций счета клиента по входящим данным: {}", operationSearchDto);
+    operationSearchDto = DataMask.demask(operationSearchDto, tokenCacheService);
+
     final String accountOperationUrl = "http://localhost:8082/dm/client/account/operation";
 
     URI uri = null;
@@ -169,6 +174,8 @@ public class ClientApiController implements ClientApi {
   public ResponseEntity<List<ClientDto>> getClient(ClientSearchDto clientSearchDto,
       String crMUserRole, String crMUserName) {
     log.info("Поиск клиентов по входящим данным: {}", clientSearchDto);
+    clientSearchDto = DataMask.demask(clientSearchDto, tokenCacheService);
+
     final String clientListUrl = "http://localhost:8082/dm/client/";
 
     URI uri = null;
@@ -205,6 +212,8 @@ public class ClientApiController implements ClientApi {
   public ResponseEntity<ClientLevelDto> getClientLevel(ClientIdDto clientIdDto, String crMUserRole,
       String crMUserName) {
     log.info("Получение уровня клиента по входящим данным: {}", clientIdDto);
+    clientIdDto = DataMask.demask(clientIdDto, tokenCacheService);
+
     final String clientLevelUrl = "http://localhost:8082/dm/client/level";
 
     URI uri = null;
@@ -237,6 +246,7 @@ public class ClientApiController implements ClientApi {
   public ResponseEntity<List<ContactDto>> getContact(ClientIdDto clientIdDto, String crMUserRole,
       String crMUserName) {
     log.info("Поиск Контактов клиента по входящим данным: {}", clientIdDto.getId());
+    clientIdDto = DataMask.demask(clientIdDto, tokenCacheService);
 
     final String accountContactUrl = "http://localhost:8082/dm/client/contact";
 
@@ -275,6 +285,8 @@ public class ClientApiController implements ClientApi {
       String crMUserRole, String crMUserName) {
     log.info("Поиск суммы процентных платежей по счету Овердрафт"
         + " по входящим данным: {}", accountNumberDto);
+    accountNumberDto = DataMask.demask(accountNumberDto, tokenCacheService);
+
     final String clientLoanPaymentUrl = "http://localhost:8082/dm/client/account/loan-payment";
 
     URI uri = null;
@@ -307,6 +319,8 @@ public class ClientApiController implements ClientApi {
   public ResponseEntity<ContactDto> saveContact(ContactDto contactDto, String crMUserRole,
       String crMUserName) {
     log.info("Сохранение контакта клиента по входящим данным: {}", contactDto);
+    contactDto = DataMask.demask(contactDto, tokenCacheService);
+
     final String clientSaveContactUrl = "http://localhost:8082/dm/client/contact/save";
 
     URI uri = null;
@@ -338,6 +352,7 @@ public class ClientApiController implements ClientApi {
   @Override
   public ResponseEntity<ClientDto> getClientInfo(ClientIdDto clientIdDto, String crMUserRole,
       String crMUserName) {
+    clientIdDto = DataMask.demask(clientIdDto, tokenCacheService);
 
     final String clientInfoUrl = "http://localhost:8082/dm/client/info";
 
