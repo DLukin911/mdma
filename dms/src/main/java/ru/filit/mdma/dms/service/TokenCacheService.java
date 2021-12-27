@@ -37,7 +37,7 @@ public class TokenCacheService {
    * Получение значения маскируемого поля на основе токена.
    */
   public String getValueByToken(String token) {
-    log.info("Получение значения маскируемого поля под GUID: {}", token);
+    log.info("Получение значения маскируемого поля: {}", token);
 
     return getTokenCache().get(token);
   }

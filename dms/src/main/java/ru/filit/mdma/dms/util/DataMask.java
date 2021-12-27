@@ -1,5 +1,7 @@
 package ru.filit.mdma.dms.util;
 
+import static ru.filit.mdma.dms.util.dto.CreateAccessDto.*;
+
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -13,7 +15,6 @@ import lombok.experimental.UtilityClass;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import ru.filit.mdma.dms.model.AccessRequestDto;
 import ru.filit.mdma.dms.repository.AccessRepository;
 import ru.filit.mdma.dms.service.TokenCacheService;
 
@@ -24,10 +25,10 @@ import ru.filit.mdma.dms.service.TokenCacheService;
 @UtilityClass
 public class DataMask {
 
-  private final String ACCESS_VERSION = "3";
-  private final String MANAGER_ROLE = "MANAGER";
-  private final String SUPERVISOR_ROLE = "SUPERVISOR";
-  private final String AUDITOR_ROLE = "AUDITOR";
+  public final String ACCESS_VERSION = "3";
+  public final String MANAGER_ROLE = "MANAGER";
+  public final String SUPERVISOR_ROLE = "SUPERVISOR";
+  public final String AUDITOR_ROLE = "AUDITOR";
   private final ObjectWriter objectWriter
       = new ObjectMapper().writer().withDefaultPrettyPrinter();
 
@@ -38,21 +39,12 @@ public class DataMask {
       AccessRepository accessRepository, TokenCacheService tokenCacheService) {
     log.info("Маскирование данных: {}", body);
 
-    String jsonString = null;
-    Map<String, Object> mapFromJson = null;
     ObjectMapper mapper = new ObjectMapper();
-    try {
-      jsonString = objectWriter.writeValueAsString(body);
-      TypeReference ref = new TypeReference<Map<String, Object>>() {
-      };
-      mapFromJson = (Map<String, Object>) mapper.readValue(jsonString, ref);
-    } catch (JsonProcessingException e) {
-      log.error("cannot create Map from json " + e.getMessage());
-      e.printStackTrace();
-    }
+    Map<String, Object> mapFromJson = createJsonFromObject(mapper, body);
 
     List<String> allowedAccessList =
-        accessRepository.getAccessList(createAccessRequestDto(crMUserRole), entityName);
+        accessRepository.getAccessList(createAccessRequestDto(crMUserRole, ACCESS_VERSION),
+            entityName);
     mapFromJson = mapFromJson.entrySet().stream().map(e -> {
       if (!allowedAccessList.contains(e.getKey()) && !e.getKey().equals("deferment")) {
         String s = tokenCacheService.saveTokenByValue(e.getValue().toString());
@@ -61,22 +53,7 @@ public class DataMask {
       return e;
     }).collect(HashMap::new, (m, v) -> m.put(v.getKey(), v.getValue()), HashMap::putAll);
 
-    String jsonResult = "";
-    try {
-      jsonResult = mapper.writeValueAsString(mapFromJson);
-    } catch (IOException e) {
-      log.error("cannot create json from Map" + e.getMessage());
-      return null;
-    }
-    Class bodyClass = body.getClass();
-    body = null;
-    try {
-      body = (T) mapper.readValue(jsonResult, bodyClass);
-    } catch (JsonProcessingException e) {
-      e.printStackTrace();
-    }
-
-    return new ResponseEntity<T>(body, HttpStatus.OK);
+    return new ResponseEntity<T>(createObjectFromJson(mapFromJson, mapper, body), HttpStatus.OK);
   }
 
   /**
@@ -85,18 +62,8 @@ public class DataMask {
   public <T> T demask(T body, TokenCacheService tokenCacheService) {
     log.info("Демаскирование данных, если применимо: {}", body);
 
-    String jsonString = null;
-    Map<String, Object> mapFromJson = null;
     ObjectMapper mapper = new ObjectMapper();
-    try {
-      jsonString = objectWriter.writeValueAsString(body);
-      TypeReference ref = new TypeReference<Map<String, Object>>() {
-      };
-      mapFromJson = (Map<String, Object>) mapper.readValue(jsonString, ref);
-    } catch (JsonProcessingException e) {
-      log.error("cannot create Map from json " + e.getMessage());
-      e.printStackTrace();
-    }
+    Map<String, Object> mapFromJson = createJsonFromObject(mapper, body);
 
     Pattern pattern = Pattern.compile("#(.*?)#");
     mapFromJson = mapFromJson.entrySet().stream().map(e -> {
@@ -107,6 +74,10 @@ public class DataMask {
       return e;
     }).collect(HashMap::new, (m, v) -> m.put(v.getKey(), v.getValue()), HashMap::putAll);
 
+    return createObjectFromJson(mapFromJson, mapper, body);
+  }
+
+  private <T> T createObjectFromJson(Map<String, Object> mapFromJson, ObjectMapper mapper, T body) {
     String jsonResult = "";
     try {
       jsonResult = mapper.writeValueAsString(mapFromJson);
@@ -125,19 +96,19 @@ public class DataMask {
     return body;
   }
 
-  private AccessRequestDto createAccessRequestDto(String crMUserRole) {
-    AccessRequestDto accessRequestDto = new AccessRequestDto();
-    accessRequestDto.setVersion(ACCESS_VERSION);
-    switch (crMUserRole) {
-      case "[SUPERVISOR]":
-        accessRequestDto.setRole(SUPERVISOR_ROLE);
-        break;
-      case "[AUDITOR]":
-        accessRequestDto.setRole(AUDITOR_ROLE);
-        break;
-      default:
-        accessRequestDto.setRole(MANAGER_ROLE);
+  private Map<String, Object> createJsonFromObject(ObjectMapper mapper, Object body) {
+    String jsonString = null;
+    Map<String, Object> mapFromJson = null;
+    try {
+      jsonString = objectWriter.writeValueAsString(body);
+      TypeReference ref = new TypeReference<Map<String, Object>>() {
+      };
+      mapFromJson = (Map<String, Object>) mapper.readValue(jsonString, ref);
+    } catch (JsonProcessingException e) {
+      log.error("cannot create Map from json " + e.getMessage());
+      e.printStackTrace();
     }
-    return accessRequestDto;
+
+    return mapFromJson;
   }
 }
