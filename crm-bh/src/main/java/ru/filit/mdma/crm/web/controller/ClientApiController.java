@@ -56,30 +56,18 @@ public class ClientApiController implements ClientApi {
   public ResponseEntity<List<ClientDto>> findClient(ClientSearchDto clientSearchDto) {
     log.info("Поиск клиентов по входящим данным: {}", clientSearchDto);
 
-    final String baseUrl = "http://localhost:8081/dm/client/";
-    URI uri = null;
-    try {
-      uri = new URI(baseUrl);
-    } catch (URISyntaxException e) {
-      e.printStackTrace();
-    }
+    final String requestUrl = "http://localhost:8081/dm/client/";
     HttpHeaders requestHeaders = new HttpHeaders();
     Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
     requestHeaders.add("CRM-User-Role", authentication.getAuthorities().toString());
     requestHeaders.add("CRM-User-Name", authentication.getName());
     HttpEntity requestEntity = new HttpEntity(clientSearchDto, requestHeaders);
-    ResponseEntity<List<ClientDto>> responseEntity = null;
-    try {
-      responseEntity = restTemplate.exchange(uri, HttpMethod.POST, requestEntity,
-          new ParameterizedTypeReference<List<ClientDto>>() {
-          }
-      );
-      log.info("Ответ на запрос получен: {}", responseEntity);
+    ResponseEntity<List<ClientDto>> responseEntity = createResponseEntity(requestEntity, requestUrl,
+        new ParameterizedTypeReference<List<ClientDto>>() {
+        });
+    log.info("Ответ на запрос получен: {}", responseEntity);
 
-      return responseEntity;
-    } catch (Exception e) {
-      throw new NotFoundException("По данному запросу информация не найдена.");
-    }
+    return responseEntity;
   }
 
   /**
@@ -94,61 +82,40 @@ public class ClientApiController implements ClientApi {
     final String clientContactUrl = "http://localhost:8081/dm/client/contact";
     final String clientAccountUrl = "http://localhost:8081/dm/client/account";
     final String accountBalanceUrl = "http://localhost:8081/dm/client/account/balance";
-    URI uriClientInfo = null;
-    URI uriClientContact = null;
-    URI uriClientAccount = null;
-    URI uriClientBalance = null;
-    try {
-      uriClientInfo = new URI(clientInfoUrl);
-      uriClientContact = new URI(clientContactUrl);
-      uriClientAccount = new URI(clientAccountUrl);
-      uriClientBalance = new URI(accountBalanceUrl);
-    } catch (URISyntaxException e) {
-      e.printStackTrace();
-    }
+
     HttpHeaders requestHeaders = new HttpHeaders();
     Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
     requestHeaders.add("CRM-User-Role", authentication.getAuthorities().toString());
     requestHeaders.add("CRM-User-Name", authentication.getName());
-    HttpEntity requestEntityIdDto = new HttpEntity(clientIdDto, requestHeaders);
-    ResponseEntity<ClientDto> responseEntityClientDto = null;
-    List<ContactDto> contactDtoList = null;
-    List<AccountDto> accountDtoList = null;
-    CurrentBalanceDto currentBalanceDto = null;
-    try {
-      responseEntityClientDto = restTemplate.exchange(uriClientInfo, HttpMethod.POST,
-          requestEntityIdDto, new ParameterizedTypeReference<ClientDto>() {
-          }
-      );
-      contactDtoList = restTemplate.exchange(uriClientContact, HttpMethod.POST,
-          requestEntityIdDto,
-          new ParameterizedTypeReference<List<ContactDto>>() {
-          }
-      ).getBody();
-      accountDtoList = restTemplate.exchange(uriClientAccount, HttpMethod.POST,
-          requestEntityIdDto,
-          new ParameterizedTypeReference<List<AccountDto>>() {
-          }
-      ).getBody();
-      for (AccountDto accountDto : accountDtoList) {
-        AccountNumberDto accountNumberDto = new AccountNumberDto();
-        accountNumberDto.setAccountNumber(accountDto.getNumber());
-        currentBalanceDto = restTemplate.exchange(uriClientBalance, HttpMethod.POST,
-            new HttpEntity(accountNumberDto, requestHeaders),
-            new ParameterizedTypeReference<CurrentBalanceDto>() {
-            }
-        ).getBody();
-        accountDto.setBalanceAmount(currentBalanceDto.getBalanceAmount());
-      }
-      responseEntityClientDto.getBody().setContacts(contactDtoList);
-      responseEntityClientDto.getBody().setAccounts(accountDtoList);
+    HttpEntity requestEntity = new HttpEntity(clientIdDto, requestHeaders);
+    
+    ResponseEntity<ClientDto> clientResponseDto = createResponseEntity(requestEntity, clientInfoUrl,
+        new ParameterizedTypeReference<ClientDto>() {
+        });
+    ResponseEntity<List<ContactDto>> contactDtoResponseList = createResponseEntity(requestEntity,
+        clientContactUrl,
+        new ParameterizedTypeReference<List<ContactDto>>() {
+        });
+    ResponseEntity<List<AccountDto>> accountDtoResponseList = createResponseEntity(requestEntity,
+        clientAccountUrl,
+        new ParameterizedTypeReference<List<AccountDto>>() {
+        });
 
-      log.info("Ответ на запрос получен: {}", responseEntityClientDto);
-
-      return responseEntityClientDto;
-    } catch (Exception e) {
-      throw new NotFoundException("По данному запросу информация не найдена.");
+    List<AccountDto> accountDtoList = accountDtoResponseList.getBody();
+    for (AccountDto accountDto : accountDtoList) {
+      AccountNumberDto accountNumberDto = new AccountNumberDto();
+      accountNumberDto.setAccountNumber(accountDto.getNumber());
+      ResponseEntity<CurrentBalanceDto> currentBalanceResponseDto = createResponseEntity(
+          new HttpEntity(accountNumberDto, requestHeaders), accountBalanceUrl,
+          new ParameterizedTypeReference<CurrentBalanceDto>() {
+          });
+      accountDto.setBalanceAmount(currentBalanceResponseDto.getBody().getBalanceAmount());
     }
+    clientResponseDto.getBody().setAccounts(accountDtoList);
+    clientResponseDto.getBody().setContacts(contactDtoResponseList.getBody());
+    log.info("Ответ на запрос получен: {}", clientResponseDto);
+
+    return clientResponseDto;
   }
 
   /**
@@ -159,30 +126,18 @@ public class ClientApiController implements ClientApi {
   public ResponseEntity<ClientLevelDto> getClientLevel(ClientIdDto clientIdDto) {
     log.info("Плучение уровня клиента за последние 30 дней: {}", clientIdDto);
 
-    final String baseUrl = "http://localhost:8081/dm/client/level";
-    URI uri = null;
-    try {
-      uri = new URI(baseUrl);
-    } catch (URISyntaxException e) {
-      e.printStackTrace();
-    }
+    final String requestUrl = "http://localhost:8081/dm/client/level";
     HttpHeaders requestHeaders = new HttpHeaders();
     Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
     requestHeaders.add("CRM-User-Role", authentication.getAuthorities().toString());
     requestHeaders.add("CRM-User-Name", authentication.getName());
     HttpEntity requestEntity = new HttpEntity(clientIdDto, requestHeaders);
-    ResponseEntity<ClientLevelDto> responseEntity = null;
-    try {
-      responseEntity = restTemplate.exchange(uri, HttpMethod.POST, requestEntity,
-          new ParameterizedTypeReference<ClientLevelDto>() {
-          }
-      );
-      log.info("Ответ на запрос получен: {}", responseEntity);
+    ResponseEntity<ClientLevelDto> responseEntity = createResponseEntity(requestEntity, requestUrl,
+        new ParameterizedTypeReference<ClientLevelDto>() {
+        });
+    log.info("Ответ на запрос получен: {}", responseEntity);
 
-      return responseEntity;
-    } catch (Exception e) {
-      throw new NotFoundException("По данному запросу информация не найдена.");
-    }
+    return responseEntity;
   }
 
   /**
@@ -193,13 +148,7 @@ public class ClientApiController implements ClientApi {
   public ResponseEntity<List<OperationDto>> getLastOperations(AccountNumberDto accountNumberDto) {
     log.info("Поиск последних операций по счету: {}", accountNumberDto);
 
-    final String baseUrl = "http://localhost:8081/dm/client/account/operation";
-    URI uri = null;
-    try {
-      uri = new URI(baseUrl);
-    } catch (URISyntaxException e) {
-      e.printStackTrace();
-    }
+    final String requestUrl = "http://localhost:8081/dm/client/account/operation";
     OperationSearchDto operationSearchDto = new OperationSearchDto();
     operationSearchDto.setAccountNumber(accountNumberDto.getAccountNumber());
     operationSearchDto.setQuantity("3");
@@ -208,18 +157,13 @@ public class ClientApiController implements ClientApi {
     requestHeaders.add("CRM-User-Role", authentication.getAuthorities().toString());
     requestHeaders.add("CRM-User-Name", authentication.getName());
     HttpEntity requestEntity = new HttpEntity(operationSearchDto, requestHeaders);
-    ResponseEntity<List<OperationDto>> responseEntity = null;
-    try {
-      responseEntity = restTemplate.exchange(uri, HttpMethod.POST, requestEntity,
-          new ParameterizedTypeReference<List<OperationDto>>() {
-          }
-      );
-      log.info("Ответ на запрос получен: {}", responseEntity);
+    ResponseEntity<List<OperationDto>> responseEntity = createResponseEntity(requestEntity,
+        requestUrl,
+        new ParameterizedTypeReference<List<OperationDto>>() {
+        });
+    log.info("Ответ на запрос получен: {}", responseEntity);
 
-      return responseEntity;
-    } catch (Exception e) {
-      throw new NotFoundException("По данному запросу информация не найдена.");
-    }
+    return responseEntity;
   }
 
   /**
@@ -230,30 +174,18 @@ public class ClientApiController implements ClientApi {
   public ResponseEntity<LoanPaymentDto> getLoanPayment(AccountNumberDto accountNumberDto) {
     log.info("Получение суммы процентных платежей по счету Овердрафт: {}", accountNumberDto);
 
-    final String baseUrl = "http://localhost:8081/dm/client/account/loan-payment";
-    URI uri = null;
-    try {
-      uri = new URI(baseUrl);
-    } catch (URISyntaxException e) {
-      e.printStackTrace();
-    }
+    final String requestUrl = "http://localhost:8081/dm/client/account/loan-payment";
     HttpHeaders requestHeaders = new HttpHeaders();
     Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
     requestHeaders.add("CRM-User-Role", authentication.getAuthorities().toString());
     requestHeaders.add("CRM-User-Name", authentication.getName());
     HttpEntity requestEntity = new HttpEntity(accountNumberDto, requestHeaders);
-    ResponseEntity<LoanPaymentDto> responseEntity = null;
-    try {
-      responseEntity = restTemplate.exchange(uri, HttpMethod.POST, requestEntity,
-          new ParameterizedTypeReference<LoanPaymentDto>() {
-          }
-      );
-      log.info("Ответ на запрос получен: {}", responseEntity);
+    ResponseEntity<LoanPaymentDto> responseEntity = createResponseEntity(requestEntity, requestUrl,
+        new ParameterizedTypeReference<LoanPaymentDto>() {
+        });
+    log.info("Ответ на запрос получен: {}", responseEntity);
 
-      return responseEntity;
-    } catch (Exception e) {
-      throw new NotFoundException("По данному запросу информация не найдена.");
-    }
+    return responseEntity;
   }
 
   /**
@@ -264,27 +196,34 @@ public class ClientApiController implements ClientApi {
   public ResponseEntity<ContactDto> saveContact(ContactDto contactDto) {
     log.info("Данные контакта для сохранения: {}", contactDto);
 
-    final String baseUrl = "http://localhost:8081/dm/client/contact/save";
-    URI uri = null;
-    try {
-      uri = new URI(baseUrl);
-    } catch (URISyntaxException e) {
-      e.printStackTrace();
-    }
+    final String requestUrl = "http://localhost:8081/dm/client/contact/save";
     HttpHeaders requestHeaders = new HttpHeaders();
     Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
     requestHeaders.add("CRM-User-Role", authentication.getAuthorities().toString());
     requestHeaders.add("CRM-User-Name", authentication.getName());
     HttpEntity requestEntity = new HttpEntity(contactDto, requestHeaders);
-    ResponseEntity<ContactDto> responseEntity = null;
-    try {
-      responseEntity = restTemplate.exchange(uri, HttpMethod.POST, requestEntity,
-          new ParameterizedTypeReference<ContactDto>() {
-          }
-      );
-      log.info("Cохранение успешно. Ответ получен: {}", responseEntity);
+    ResponseEntity<ContactDto> responseEntity = createResponseEntity(requestEntity, requestUrl,
+        new ParameterizedTypeReference<ContactDto>() {
+        });
+    log.info("Cохранение успешно. Ответ получен: {}", responseEntity);
 
-      return responseEntity;
+    return responseEntity;
+  }
+
+  private <T> ResponseEntity createResponseEntity(HttpEntity requestEntity, String requestUrl,
+      ParameterizedTypeReference<T> responseType) {
+    URI uri = null;
+    try {
+      uri = new URI(requestUrl);
+    } catch (URISyntaxException e) {
+      e.printStackTrace();
+    }
+
+    ResponseEntity<T> response = null;
+    try {
+      response = restTemplate.exchange(uri, HttpMethod.POST, requestEntity, responseType);
+
+      return response;
     } catch (Exception e) {
       throw new NotFoundException("По данному запросу информация не найдена.");
     }
