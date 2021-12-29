@@ -64,34 +64,21 @@ public class ClientApiController implements ClientApi {
   public ResponseEntity<List<AccountDto>> getAccount(ClientIdDto clientIdDto, String crMUserRole,
       String crMUserName) {
     log.info("Поиск Счетов клиента по входящим данным: {}", clientIdDto.getId());
+
+    final String requestUrl = "http://localhost:8082/dm/client/account";
     clientIdDto = DataMask.demask(clientIdDto, tokenCacheService);
-
-    final String clientAccountUrl = "http://localhost:8082/dm/client/account";
-
-    URI uri = null;
-    try {
-      uri = new URI(clientAccountUrl);
-    } catch (URISyntaxException e) {
-      e.printStackTrace();
-    }
     HttpEntity requestEntity = new HttpEntity(clientIdDto);
-    List<AccountDto> accountDtoList = null;
-    try {
-      accountDtoList = restTemplate.exchange(uri, HttpMethod.POST,
-          requestEntity,
-          new ParameterizedTypeReference<List<AccountDto>>() {
-          }
-      ).getBody();
-      List<AccountDto> finalAccountDtoList = new ArrayList<>();
-      for (AccountDto accountDto : accountDtoList) {
-        finalAccountDtoList.add((AccountDto) DataMask.mask(accountDto, crMUserRole,
-            "account", accessRepository, tokenCacheService).getBody());
-      }
+    List<AccountDto> accountDtoList = createResponseList(requestUrl, requestEntity,
+        new ParameterizedTypeReference<List<AccountDto>>() {
+        });
 
-      return new ResponseEntity<>(finalAccountDtoList, HttpStatus.OK);
-    } catch (Exception e) {
-      throw new NotFoundException("По данному запросу информация не найдена.");
+    List<AccountDto> finalAccountDtoList = new ArrayList<>();
+    for (AccountDto accountDto : accountDtoList) {
+      finalAccountDtoList.add((AccountDto) DataMask.mask(accountDto, crMUserRole,
+          "account", accessRepository, tokenCacheService).getBody());
     }
+
+    return new ResponseEntity<>(finalAccountDtoList, HttpStatus.OK);
   }
 
   /**
@@ -102,30 +89,16 @@ public class ClientApiController implements ClientApi {
   public ResponseEntity<CurrentBalanceDto> getAccountBalance(AccountNumberDto accountNumberDto,
       String crMUserRole, String crMUserName) {
     log.info("Поиск баланса клиента по входящим данным: {}", accountNumberDto);
+
+    final String requestUrl = "http://localhost:8082/dm/client/account/balance";
     accountNumberDto = DataMask.demask(accountNumberDto, tokenCacheService);
-
-    final String accountBalanceUrl = "http://localhost:8082/dm/client/account/balance";
-
-    URI uri = null;
-    try {
-      uri = new URI(accountBalanceUrl);
-    } catch (URISyntaxException e) {
-      e.printStackTrace();
-    }
     HttpEntity requestEntity = new HttpEntity(accountNumberDto);
-    ResponseEntity<CurrentBalanceDto> responseEntity = null;
-    try {
-      responseEntity = restTemplate.exchange(uri, HttpMethod.POST,
-          requestEntity,
-          new ParameterizedTypeReference<CurrentBalanceDto>() {
-          }
-      );
+    ResponseEntity<CurrentBalanceDto> responseEntity = createResponseEntity(requestEntity,
+        requestUrl, new ParameterizedTypeReference<CurrentBalanceDto>() {
+        });
 
-      return DataMask.mask(responseEntity.getBody(), crMUserRole, "dummy",
-          accessRepository, tokenCacheService);
-    } catch (Exception e) {
-      throw new NotFoundException("По данному запросу информация не найдена.");
-    }
+    return DataMask.mask(responseEntity.getBody(), crMUserRole, "dummy",
+        accessRepository, tokenCacheService);
   }
 
   /**
@@ -136,34 +109,21 @@ public class ClientApiController implements ClientApi {
   public ResponseEntity<List<OperationDto>> getAccountOperations(
       OperationSearchDto operationSearchDto, String crMUserRole, String crMUserName) {
     log.info("Поиск Операций счета клиента по входящим данным: {}", operationSearchDto);
+
+    final String requestUrl = "http://localhost:8082/dm/client/account/operation";
     operationSearchDto = DataMask.demask(operationSearchDto, tokenCacheService);
-
-    final String accountOperationUrl = "http://localhost:8082/dm/client/account/operation";
-
-    URI uri = null;
-    try {
-      uri = new URI(accountOperationUrl);
-    } catch (URISyntaxException e) {
-      e.printStackTrace();
-    }
     HttpEntity requestEntity = new HttpEntity(operationSearchDto);
-    List<OperationDto> operationDtoList = null;
-    try {
-      operationDtoList = restTemplate.exchange(uri, HttpMethod.POST,
-          requestEntity,
-          new ParameterizedTypeReference<List<OperationDto>>() {
-          }
-      ).getBody();
-      List<OperationDto> finalOperationDtoList = new ArrayList<>();
-      for (OperationDto operationDto : operationDtoList) {
-        finalOperationDtoList.add((OperationDto) DataMask.mask(operationDto, crMUserRole,
-            "operation", accessRepository, tokenCacheService).getBody());
-      }
+    List<OperationDto> operationDtoList = createResponseList(requestUrl, requestEntity,
+        new ParameterizedTypeReference<List<OperationDto>>() {
+        });
 
-      return new ResponseEntity<>(finalOperationDtoList, HttpStatus.OK);
-    } catch (Exception e) {
-      throw new NotFoundException("По данному запросу информация не найдена.");
+    List<OperationDto> finalOperationDtoList = new ArrayList<>();
+    for (OperationDto operationDto : operationDtoList) {
+      finalOperationDtoList.add((OperationDto) DataMask.mask(operationDto, crMUserRole,
+          "operation", accessRepository, tokenCacheService).getBody());
     }
+
+    return new ResponseEntity<>(finalOperationDtoList, HttpStatus.OK);
   }
 
   /**
@@ -174,34 +134,21 @@ public class ClientApiController implements ClientApi {
   public ResponseEntity<List<ClientDto>> getClient(ClientSearchDto clientSearchDto,
       String crMUserRole, String crMUserName) {
     log.info("Поиск клиентов по входящим данным: {}", clientSearchDto);
+
+    final String requestUrl = "http://localhost:8082/dm/client/";
     clientSearchDto = DataMask.demask(clientSearchDto, tokenCacheService);
-
-    final String clientListUrl = "http://localhost:8082/dm/client/";
-
-    URI uri = null;
-    try {
-      uri = new URI(clientListUrl);
-    } catch (URISyntaxException e) {
-      e.printStackTrace();
-    }
     HttpEntity requestEntity = new HttpEntity(clientSearchDto);
-    List<ClientDto> clientDtoList = null;
-    try {
-      clientDtoList = restTemplate.exchange(uri, HttpMethod.POST,
-          requestEntity,
-          new ParameterizedTypeReference<List<ClientDto>>() {
-          }
-      ).getBody();
-      List<ClientDto> finalClientDtoList = new ArrayList<>();
-      for (ClientDto clientDto : clientDtoList) {
-        finalClientDtoList.add((ClientDto) DataMask.mask(clientDto, crMUserRole,
-            "client", accessRepository, tokenCacheService).getBody());
-      }
+    List<ClientDto> clientDtoList = createResponseList(requestUrl, requestEntity,
+        new ParameterizedTypeReference<List<ClientDto>>() {
+        });
 
-      return new ResponseEntity<>(finalClientDtoList, HttpStatus.OK);
-    } catch (Exception e) {
-      throw new NotFoundException("По данному запросу информация не найдена.");
+    List<ClientDto> finalClientDtoList = new ArrayList<>();
+    for (ClientDto clientDto : clientDtoList) {
+      finalClientDtoList.add((ClientDto) DataMask.mask(clientDto, crMUserRole,
+          "client", accessRepository, tokenCacheService).getBody());
     }
+
+    return new ResponseEntity<>(finalClientDtoList, HttpStatus.OK);
   }
 
   /**
@@ -212,30 +159,16 @@ public class ClientApiController implements ClientApi {
   public ResponseEntity<ClientLevelDto> getClientLevel(ClientIdDto clientIdDto, String crMUserRole,
       String crMUserName) {
     log.info("Получение уровня клиента по входящим данным: {}", clientIdDto);
+
+    final String requestUrl = "http://localhost:8082/dm/client/level";
     clientIdDto = DataMask.demask(clientIdDto, tokenCacheService);
-
-    final String clientLevelUrl = "http://localhost:8082/dm/client/level";
-
-    URI uri = null;
-    try {
-      uri = new URI(clientLevelUrl);
-    } catch (URISyntaxException e) {
-      e.printStackTrace();
-    }
     HttpEntity requestEntity = new HttpEntity(clientIdDto);
-    ResponseEntity<ClientLevelDto> responseEntity = null;
-    try {
-      responseEntity = restTemplate.exchange(uri, HttpMethod.POST,
-          requestEntity,
-          new ParameterizedTypeReference<ClientLevelDto>() {
-          }
-      );
+    ResponseEntity<ClientLevelDto> responseEntity = createResponseEntity(requestEntity, requestUrl,
+        new ParameterizedTypeReference<ClientLevelDto>() {
+        });
 
-      return DataMask.mask(responseEntity.getBody(), crMUserRole, "clientLevel",
-          accessRepository, tokenCacheService);
-    } catch (Exception e) {
-      throw new NotFoundException("По данному запросу информация не найдена.");
-    }
+    return DataMask.mask(responseEntity.getBody(), crMUserRole, "clientLevel",
+        accessRepository, tokenCacheService);
   }
 
   /**
@@ -246,34 +179,21 @@ public class ClientApiController implements ClientApi {
   public ResponseEntity<List<ContactDto>> getContact(ClientIdDto clientIdDto, String crMUserRole,
       String crMUserName) {
     log.info("Поиск Контактов клиента по входящим данным: {}", clientIdDto.getId());
+
+    final String requestUrl = "http://localhost:8082/dm/client/contact";
     clientIdDto = DataMask.demask(clientIdDto, tokenCacheService);
-
-    final String accountContactUrl = "http://localhost:8082/dm/client/contact";
-
-    URI uri = null;
-    try {
-      uri = new URI(accountContactUrl);
-    } catch (URISyntaxException e) {
-      e.printStackTrace();
-    }
     HttpEntity requestEntity = new HttpEntity(clientIdDto);
-    List<ContactDto> contactDtoList = null;
-    try {
-      contactDtoList = restTemplate.exchange(uri, HttpMethod.POST,
-          requestEntity,
-          new ParameterizedTypeReference<List<ContactDto>>() {
-          }
-      ).getBody();
-      List<ContactDto> finalContactDtoList = new ArrayList<>();
-      for (ContactDto contactDto : contactDtoList) {
-        finalContactDtoList.add((ContactDto) DataMask.mask(contactDto, crMUserRole,
-            "contact", accessRepository, tokenCacheService).getBody());
-      }
+    List<ContactDto> contactDtoList = createResponseList(requestUrl, requestEntity,
+        new ParameterizedTypeReference<List<ContactDto>>() {
+        });
 
-      return new ResponseEntity<>(finalContactDtoList, HttpStatus.OK);
-    } catch (Exception e) {
-      throw new NotFoundException("По данному запросу информация не найдена.");
+    List<ContactDto> finalContactDtoList = new ArrayList<>();
+    for (ContactDto contactDto : contactDtoList) {
+      finalContactDtoList.add((ContactDto) DataMask.mask(contactDto, crMUserRole,
+          "contact", accessRepository, tokenCacheService).getBody());
     }
+
+    return new ResponseEntity<>(finalContactDtoList, HttpStatus.OK);
   }
 
   /**
@@ -283,32 +203,18 @@ public class ClientApiController implements ClientApi {
   @Override
   public ResponseEntity<LoanPaymentDto> getLoanPayment(AccountNumberDto accountNumberDto,
       String crMUserRole, String crMUserName) {
-    log.info("Поиск суммы процентных платежей по счету Овердрафт"
-        + " по входящим данным: {}", accountNumberDto);
+    log.info("Поиск суммы процентных платежей по счету Овердрафт по входящим данным: {}",
+        accountNumberDto);
+
+    final String requestUrl = "http://localhost:8082/dm/client/account/loan-payment";
     accountNumberDto = DataMask.demask(accountNumberDto, tokenCacheService);
-
-    final String clientLoanPaymentUrl = "http://localhost:8082/dm/client/account/loan-payment";
-
-    URI uri = null;
-    try {
-      uri = new URI(clientLoanPaymentUrl);
-    } catch (URISyntaxException e) {
-      e.printStackTrace();
-    }
     HttpEntity requestEntity = new HttpEntity(accountNumberDto);
-    ResponseEntity<LoanPaymentDto> responseEntity = null;
-    try {
-      responseEntity = restTemplate.exchange(uri, HttpMethod.POST,
-          requestEntity,
-          new ParameterizedTypeReference<LoanPaymentDto>() {
-          }
-      );
+    ResponseEntity<LoanPaymentDto> responseEntity = createResponseEntity(requestEntity,
+        requestUrl, new ParameterizedTypeReference<LoanPaymentDto>() {
+        });
 
-      return DataMask.mask(responseEntity.getBody(), crMUserRole, "loanPayment",
-          accessRepository, tokenCacheService);
-    } catch (Exception e) {
-      throw new NotFoundException("По данному запросу информация не найдена.");
-    }
+    return DataMask.mask(responseEntity.getBody(), crMUserRole, "loanPayment",
+        accessRepository, tokenCacheService);
   }
 
   /**
@@ -319,30 +225,16 @@ public class ClientApiController implements ClientApi {
   public ResponseEntity<ContactDto> saveContact(ContactDto contactDto, String crMUserRole,
       String crMUserName) {
     log.info("Сохранение контакта клиента по входящим данным: {}", contactDto);
+
+    final String requestUrl = "http://localhost:8082/dm/client/contact/save";
     contactDto = DataMask.demask(contactDto, tokenCacheService);
-
-    final String clientSaveContactUrl = "http://localhost:8082/dm/client/contact/save";
-
-    URI uri = null;
-    try {
-      uri = new URI(clientSaveContactUrl);
-    } catch (URISyntaxException e) {
-      e.printStackTrace();
-    }
     HttpEntity requestEntity = new HttpEntity(contactDto);
-    ResponseEntity<ContactDto> responseEntity = null;
-    try {
-      responseEntity = restTemplate.exchange(uri, HttpMethod.POST,
-          requestEntity,
-          new ParameterizedTypeReference<ContactDto>() {
-          }
-      );
+    ResponseEntity<ContactDto> responseEntity = createResponseEntity(requestEntity, requestUrl,
+        new ParameterizedTypeReference<ContactDto>() {
+        });
 
-      return DataMask.mask(responseEntity.getBody(), crMUserRole, "contact",
-          accessRepository, tokenCacheService);
-    } catch (Exception e) {
-      throw new NotFoundException("По данному запросу информация не найдена.");
-    }
+    return DataMask.mask(responseEntity.getBody(), crMUserRole, "contact",
+        accessRepository, tokenCacheService);
   }
 
   /**
@@ -352,27 +244,52 @@ public class ClientApiController implements ClientApi {
   @Override
   public ResponseEntity<ClientDto> getClientInfo(ClientIdDto clientIdDto, String crMUserRole,
       String crMUserName) {
+    log.info("Запрос информации о Клиенте по его ID: {}", clientIdDto);
+
+    final String requestUrl = "http://localhost:8082/dm/client/info";
     clientIdDto = DataMask.demask(clientIdDto, tokenCacheService);
+    HttpEntity requestEntity = new HttpEntity(clientIdDto);
+    ResponseEntity<ClientDto> responseEntity = createResponseEntity(requestEntity, requestUrl,
+        new ParameterizedTypeReference<ClientDto>() {
+        });
 
-    final String clientInfoUrl = "http://localhost:8082/dm/client/info";
+    return DataMask.mask(responseEntity.getBody(), crMUserRole, "client",
+        accessRepository, tokenCacheService);
+  }
 
+  private <T> ResponseEntity createResponseEntity(HttpEntity requestEntity, String requestUrl,
+      ParameterizedTypeReference<T> responseType) {
     URI uri = null;
     try {
-      uri = new URI(clientInfoUrl);
+      uri = new URI(requestUrl);
     } catch (URISyntaxException e) {
       e.printStackTrace();
     }
-    HttpEntity requestEntity = new HttpEntity(clientIdDto);
-    ResponseEntity<ClientDto> responseEntity = null;
-    try {
-      responseEntity = restTemplate.exchange(uri, HttpMethod.POST,
-          requestEntity,
-          new ParameterizedTypeReference<ClientDto>() {
-          }
-      );
 
-      return DataMask.mask(responseEntity.getBody(), crMUserRole, "client",
-          accessRepository, tokenCacheService);
+    ResponseEntity<T> response = null;
+    try {
+      response = restTemplate.exchange(uri, HttpMethod.POST, requestEntity, responseType);
+
+      return response;
+    } catch (Exception e) {
+      throw new NotFoundException("По данному запросу информация не найдена.");
+    }
+  }
+
+  private <T> List createResponseList(String requestUrl, HttpEntity requestEntity,
+      ParameterizedTypeReference<List<T>> responseType) {
+    URI uri = null;
+    try {
+      uri = new URI(requestUrl);
+    } catch (URISyntaxException e) {
+      e.printStackTrace();
+    }
+
+    List<T> listDto = null;
+    try {
+      listDto = restTemplate.exchange(uri, HttpMethod.POST, requestEntity, responseType).getBody();
+
+      return listDto;
     } catch (Exception e) {
       throw new NotFoundException("По данному запросу информация не найдена.");
     }
