@@ -8,6 +8,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.ObjectWriter;
 import java.io.IOException;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.regex.Pattern;
@@ -54,6 +55,31 @@ public class DataMask {
     }).collect(HashMap::new, (m, v) -> m.put(v.getKey(), v.getValue()), HashMap::putAll);
 
     return new ResponseEntity<T>(createObjectFromJson(mapFromJson, mapper, body), HttpStatus.OK);
+  }
+
+  /**
+   * Метод маскирования данных поступающих в/из приложения DM для модуля Аудит.
+   */
+  public <T> String maskForAudit(T body, String entityName, AccessRepository accessRepository,
+      TokenCacheService tokenCacheService) {
+    log.info("Маскирование данных для аудита: {}", body);
+
+    ObjectMapper mapper = new ObjectMapper();
+    Map<String, Object> mapFromJson = createJsonFromObject(mapper, body);
+
+    List<String> allowedAccessList =
+        accessRepository.getAccessList(createAccessRequestDto(AUDITOR_ROLE, ACCESS_VERSION),
+            entityName);
+    mapFromJson = mapFromJson.entrySet().stream().filter(e -> e.getValue() != null).map(e -> {
+      if (!allowedAccessList.contains(e.getKey())) {
+        String s = tokenCacheService.saveTokenByValue(e.getValue().toString());
+        e.setValue(s);
+      }
+      return e;
+    }).collect(LinkedHashMap::new, (m, v) -> m.put(v.getKey(), v.getValue()),
+        LinkedHashMap::putAll);
+
+    return mapFromJson.toString();
   }
 
   /**

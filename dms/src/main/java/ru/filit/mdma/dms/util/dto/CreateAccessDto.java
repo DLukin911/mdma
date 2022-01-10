@@ -18,12 +18,13 @@ public class CreateAccessDto {
       case "[SUPERVISOR]":
         accessRequestDto.setRole(SUPERVISOR_ROLE);
         break;
-      case "[AUDITOR]":
+      case "AUDITOR":
         accessRequestDto.setRole(AUDITOR_ROLE);
         break;
       default:
         accessRequestDto.setRole(MANAGER_ROLE);
     }
+
     return accessRequestDto;
   }
 }

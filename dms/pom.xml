@@ -49,6 +49,11 @@
       <artifactId>ignite-slf4j</artifactId>
       <version>${ignite.version}</version>
     </dependency>
+    <!-- Модуль Spring Kafka -->
+    <dependency>
+      <groupId>org.springframework.kafka</groupId>
+      <artifactId>spring-kafka</artifactId>
+    </dependency>
   </dependencies>
 
   <build>
