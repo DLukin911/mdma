@@ -11,6 +11,7 @@ spring:
   kafka:
     consumer:
       group-id: one
+
 logging:
   pattern:
     console: "%d{HH:mm:ss.SSS} %highlight(%-5level) %cyan(%class{50}.%M:%L) - %msg%n"
@@ -20,6 +21,10 @@ logging:
     ru.filit.mdma.aw: DEBUG
   file:
     name: "aw/logs/application-debug.log"
+
+audit:
+  file:
+    name: "aw/src/main/resources/datafiles/dm-audit.txt"
 
 server:
   port: 8083
