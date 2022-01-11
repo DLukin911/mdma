@@ -71,7 +71,7 @@ public class DataMask {
         accessRepository.getAccessList(createAccessRequestDto(AUDITOR_ROLE, ACCESS_VERSION),
             entityName);
     mapFromJson = mapFromJson.entrySet().stream().filter(e -> e.getValue() != null).map(e -> {
-      if (!allowedAccessList.contains(e.getKey())) {
+      if (!allowedAccessList.contains(e.getKey()) && !e.getKey().equals("quantity")) {
         String s = tokenCacheService.saveTokenByValue(e.getValue().toString());
         e.setValue(s);
       }

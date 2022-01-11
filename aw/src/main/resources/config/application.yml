@@ -1,0 +1,33 @@
+spring:
+  profiles:
+    active: dev
+  application:
+    name: aw
+  jackson:
+    default-property-inclusion: non_null
+  mvc:
+    throw-exception-if-no-handler-found: true
+    static-path-pattern: /static
+  kafka:
+    consumer:
+      group-id: one
+logging:
+  pattern:
+    console: "%d{HH:mm:ss.SSS} %highlight(%-5level) %cyan(%class{50}.%M:%L) - %msg%n"
+    file: "%d{yyyy-MM-dd HH:mm:ss} [%thread] %-5level %logger{36} - %msg%n"
+  level:
+    root: WARN
+    ru.filit.mdma.aw: DEBUG
+  file:
+    name: "aw/logs/application-debug.log"
+
+server:
+  port: 8083
+  servlet:
+    context-path: /aw
+
+system:
+  element:
+    queue:
+      host: localhost
+      port: 9092

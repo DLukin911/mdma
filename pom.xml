@@ -20,6 +20,7 @@
     <module>crm-bh</module>
     <module>dms</module>
     <module>dm</module>
+    <module>aw</module>
   </modules>
 
   <properties>
